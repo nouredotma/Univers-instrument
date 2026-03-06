@@ -1,3 +1,4 @@
+import { offers, getOfferById, getTranslatedOffer } from './offers-data';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://api.marrakeshtravelservices.com/api/v1'
 
 export class ApiError extends Error {
@@ -248,38 +249,30 @@ export const authApi = {
   },
 }
 
-// Offers API methods
 export const offersApi = {
   getOffers: async (type?: string, language: string = 'en') => {
-    const client = new ApiClient()
-    const params = new URLSearchParams()
-    if (type) params.append('type', type)
-    params.append('language', language)
-    return client.get<{ offers: any[] }>(`/offers?${params.toString()}`)
+    // Return mock data directly. We ignore type mapping since there is only one type now, 
+    // unless you want to filter by type later.
+    return { offers };
   },
   getOfferById: async (id: string, language: string = 'en') => {
-    const client = new ApiClient()
-    return client.get<{ offer: any }>(`/offers/${id}?language=${language}`)
-  },
-  // Fetch offer with all language translations for admin editing
-  getOfferByIdWithAllLanguages: async (id: string) => {
-    const client = new ApiClient()
-    // Fetch all three languages in parallel
-    const [enResponse, frResponse, esResponse] = await Promise.all([
-      client.get<{ offer: any }>(`/offers/${id}?language=en`),
-      client.get<{ offer: any }>(`/offers/${id}?language=fr`),
-      client.get<{ offer: any }>(`/offers/${id}?language=es`),
-    ])
-    
-    // Return the English offer as base with translations from all languages
-    return {
-      offer: enResponse.offer,
-      translations: {
-        en: enResponse.offer,
-        fr: frResponse.offer,
-        es: esResponse.offer,
-      }
+    const foundOffer = getOfferById(id);
+    if (!foundOffer) {
+      throw new ApiError('Offer not found');
     }
+    // Note: the component expects a backend-style response format OR we can adapt it.
+    // Given we will rewrite app/offers/[id]/page.tsx, returning the raw typed offer is simpler:
+    return { offer: foundOffer };
+  },
+  getOfferByIdWithAllLanguages: async (id: string) => {
+    const foundOffer = getOfferById(id);
+    if (!foundOffer) {
+      throw new ApiError('Offer not found');
+    }
+    return {
+      offer: foundOffer,
+      translations: foundOffer.translations || {},
+    };
   },
 }
 

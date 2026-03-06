@@ -20,7 +20,7 @@ import { Check, ChevronsUpDown, Compass, MapPin, Search } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
-import Player from "@vimeo/player"
+
 
 const SERVICES = [
   { id: "tours", label: { en: "Tours", fr: "Circuits", es: "Circuitos" }, path: "/tours" },
@@ -54,44 +54,14 @@ export default function Hero() {
     router.push(`${activeService.path}?city=${selectedCity}`)
   }
 
-  const [videoLoaded, setVideoLoaded] = useState(false)
-  const [mounted, setMounted] = useState(false)
-  const playerRef = useRef<Player | null>(null)
-  const iframeRef = useRef<HTMLIFrameElement>(null)
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  useEffect(() => {
-    if (mounted && iframeRef.current) {
-      const player = new Player(iframeRef.current)
-      playerRef.current = player
-
-      player.on("playing", () => {
-        setVideoLoaded(true)
-      })
-
-      // Ensure autoplay and mute are set
-      player.setMuted(true)
-      player.play().catch(error => {
-        console.error("Autoplay prevented:", error)
-      })
-    }
-
-    return () => {
-      if (playerRef.current) {
-        playerRef.current.destroy()
-      }
-    }
-  }, [mounted])
 
   return (
     <section className="relative w-full overflow-hidden" style={{ height: "100svh" }}>
       {/* Background Image */}
       <div className="absolute inset-0 w-full h-full z-0">
         <Image
-          src="/videoframe_2741.png"
+          src="https://images.unsplash.com/photo-1542408985-0556c5476a66?q=80&w=2670&auto=format&fit=crop"
           alt="Univers Instrument Service"
           fill
           className="object-cover"
@@ -101,24 +71,6 @@ export default function Hero() {
         />
         <div className="absolute inset-0 bg-black/10" />
       </div>
-
-      {/* Vimeo Video Background */}
-      {mounted && (
-        <div className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}>
-          <iframe
-            ref={iframeRef}
-            src="https://player.vimeo.com/video/1148108674?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&background=1"
-            className="absolute top-1/2 left-1/2 w-[177.78vh] h-[56.25vw] min-w-full min-h-full"
-            style={{
-              transform: "translate(-50%, -50%)",
-              pointerEvents: "none"
-            }}
-            title="herobackground"
-            frameBorder="0"
-            allow="autoplay; fullscreen; picture-in-picture"
-          />
-        </div>
-      )}
 
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/30" />

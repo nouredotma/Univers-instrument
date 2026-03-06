@@ -2,7 +2,6 @@
 
 import { LanguageSwitcher } from "@/components/language-switcher"
 import { useLanguage } from "@/components/language-provider"
-import { useAuth } from "@/components/login-modal"
 import { Button } from "@/components/ui/button"
 import { Container } from "@/components/ui/container"
 import { cn } from "@/lib/utils"
@@ -19,7 +18,6 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false)
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
   const pathname = usePathname()
-  const { isLoggedIn, openLoginModal } = useAuth()
   const { t, languages, language, setLanguage } = useLanguage()
   
   // Check if we're in the users section
@@ -139,37 +137,8 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
         <Container className="max-w-7xl mx-auto">
           {/* Mobile layout - centered logo, login left, menu right */}
           <div className="md:hidden relative flex h-16 items-center justify-between px-1">
-            {/* Left: Login (or user) */}
-            <div className="flex items-center z-20">
-              {isLoggedIn ? (
-                <Link href="/users/profile">
-                  <Button
-                    size="icon-sm"
-                    className={cn(
-                      "rounded-full transition-all duration-300 border cursor-pointer",
-                      (scrolled || isUsersSection)
-                        ? "bg-linear-to-r from-[#fac360] to-[#fce97c] text-primary border-[#fac360]/50 hover:opacity-90"
-                        : "bg-primary text-white border-white/30 hover:bg-primary/90"
-                    )}
-                  >
-                    <User className="h-4 w-4" />
-                  </Button>
-                </Link>
-              ) : (
-                <Button
-                  size="sm"
-                  onClick={() => openLoginModal()}
-                  className={cn(
-                    "text-xs font-medium rounded-full px-4 py-1.5 transition-all duration-300 border cursor-pointer",
-                    (scrolled || isUsersSection)
-                      ? "bg-linear-to-r from-[#fac360] to-[#fce97c] text-primary border-[#fac360]/50 hover:opacity-90"
-                      : "bg-primary text-white border-white/30 hover:bg-primary/90"
-                  )}
-                >
-                  {t.header.login}
-                </Button>
-              )}
-            </div>
+            {/* Left: Empty spacer */}
+            <div className="flex items-center z-20 w-10"></div>
 
             {/* Center: Logo (absolutely centered for mobile) */}
             <Link href="/" className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
@@ -314,35 +283,8 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
                 </Link>
               </nav>
 
-              {/* Right: Contact & Login Buttons */}
-              <div className="flex items-center gap-3 shrink-0">    
-                {isLoggedIn ? (
-                  <Link href="/users/profile">
-                    <Button 
-                      className={cn(
-                        "rounded-full px-4 py-2 transition-all duration-300 cursor-pointer flex items-center gap-2",
-                        (scrolled || isUsersSection)
-                          ? "bg-linear-to-r from-[#fac360] to-[#fce97c] text-primary hover:opacity-90" 
-                          : "bg-primary text-white hover:bg-primary/90"
-                      )}
-                    >
-                      <User className="h-5 w-5" />
-                      <span className="text-sm font-medium">{t.header.myAccount}</span>
-                    </Button>
-                  </Link>
-                ) : (
-                  <Button 
-                    onClick={() => openLoginModal()}
-                    className={cn(
-                      "text-sm font-medium rounded-full px-6 transition-all duration-300 cursor-pointer",
-                      (scrolled || isUsersSection)
-                        ? "bg-linear-to-r from-[#fac360] to-[#fce97c] text-primary hover:opacity-90" 
-                        : "bg-primary text-white hover:bg-primary/90"
-                    )}
-                  >
-                    {t.header.login}
-                  </Button>
-                )}
+              {/* Right: Contact & Language */}
+              <div className="flex items-center gap-3 shrink-0">
                 {/* Desktop Language Dropdown */}
                 <LanguageSwitcher 
                   buttonClassName={cn(
@@ -554,36 +496,7 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
                       </div>
                     </motion.div>
 
-                    {/* Login Button */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.4 }}
-                    >
-                      {isLoggedIn ? (
-                        <Link
-                          href="/users/profile"
-                          className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-linear-to-r from-[#fac360] to-[#fce97c] text-primary font-semibold text-sm rounded-lg hover:opacity-90 transition-all duration-200 shadow-sm"
-                          onClick={() => setIsMenuOpen(false)}
-                        >
-                          <User className="h-5 w-5" />
-                          {t.header.myAccount}
-                        </Link>
-                      ) : (
-                        <button
-                          onClick={() => {
-                            setIsMenuOpen(false)
-                            openLoginModal()
-                          }}
-                          className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-linear-to-r from-[#fac360] to-[#fce97c] text-primary font-semibold text-sm rounded-lg hover:opacity-90 transition-all duration-200 shadow-sm"
-                        >
-                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                          </svg>
-                          {t.header.login}
-                        </button>
-                      )}
-                    </motion.div>
+
                   </div>
                 </div>
               </motion.div>

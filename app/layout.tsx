@@ -2,7 +2,7 @@ import type React from "react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import { AuthProvider } from "@/components/login-modal";
+
 import { LanguageProvider } from "@/components/language-provider";
 import CookieBanner from "@/components/cookie-banner";
 import { Toaster } from "@/components/ui/sonner";
@@ -255,9 +255,7 @@ export default function RootLayout({
       </head>
       <body className={`font-sans antialiased`} suppressHydrationWarning>
         <LanguageProvider>
-          <AuthProvider>
-            {children}
-          </AuthProvider>
+          {children}
           <CookieBanner />
         </LanguageProvider>
         <Toaster />

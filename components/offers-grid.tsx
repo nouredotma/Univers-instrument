@@ -6,7 +6,7 @@ import Image from "next/image"
 import { Heart, MapPin, ArrowRight, Search } from "lucide-react"
 import type { Offer } from "@/lib/offers-data"
 import { getTranslatedOffer } from "@/lib/offers-data"
-import { useAuth } from "@/components/login-modal"
+
 import { useLanguage } from "@/components/language-provider"
 import { userApi } from "@/lib/api"
 import { toast } from "sonner"
@@ -18,7 +18,7 @@ interface OffersGridProps {
 const OffersGrid = memo(function OffersGrid({ offers }: OffersGridProps) {
   const [favorites, setFavorites] = useState<Set<string>>(new Set())
   const [isToggling, setIsToggling] = useState<string | null>(null)
-  const { isLoggedIn, openLoginModal } = useAuth()
+  const isLoggedIn = false;
   const { language, t } = useLanguage()
 
   // Get translated offers based on current language
@@ -106,7 +106,7 @@ const OffersGrid = memo(function OffersGrid({ offers }: OffersGridProps) {
     e.stopPropagation()
 
     if (!isLoggedIn) {
-      openLoginModal("Please sign in to add items to your favorites")
+      toast.error("Please sign in to add items to your favorites");
       return
     }
 

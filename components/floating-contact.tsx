@@ -1,6 +1,6 @@
 "use client"
 
-import { useSiteSettings } from "@/hooks/use-site-settings"
+
 import { motion } from "framer-motion"
 import Link from "next/link"
 
@@ -17,27 +17,7 @@ const WhatsAppIcon = () => (
 )
 
 export default function FloatingContact() {
-  const { settings, loading } = useSiteSettings()
-  const whatsappNumber = settings.whatsapp_number
-
-  // Wait for settings to load
-  if (loading) {
-    return null
-  }
-
-  // Don't show widget if WhatsApp number is not configured
-  if (!whatsappNumber || whatsappNumber.trim() === '') {
-    // Log for debugging
-    if (process.env.NODE_ENV === 'development') {
-      console.log('WhatsApp widget hidden: No number configured', { 
-        settings, 
-        whatsappNumber, 
-        loading,
-        allSettings: Object.keys(settings)
-      })
-    }
-    return null
-  }
+  const whatsappNumber = "0666166945"
 
   return (
     <div className="fixed bottom-2 right-2 z-50 flex flex-col gap-3 items-end">
