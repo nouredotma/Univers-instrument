@@ -1,0 +1,477 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Hide browser's native password reveal button */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-credentials-auto-fill-button {
+  display: none !important;
+}
+
+/* Ensure password input text/dots are visible - force black color */
+input[type="password"] {
+  color: #1c1917 !important;
+  -webkit-text-fill-color: #1c1917 !important;
+  caret-color: #1c1917 !important;
+  /* Ensure masking glyphs are available and visible across browsers */
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif !important;
+  -webkit-text-security: disc;
+}
+
+input[type="password"]::placeholder {
+  color: #78716b !important;
+  -webkit-text-fill-color: #78716b !important;
+}
+
+.dark input[type="password"] {
+  color: #fafaf9 !important;
+  -webkit-text-fill-color: #fafaf9 !important;
+  caret-color: #fafaf9 !important;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif !important;
+  -webkit-text-security: disc;
+}
+
+.dark input[type="password"]::placeholder {
+  color: #a8a29e !important;
+  -webkit-text-fill-color: #a8a29e !important;
+}
+
+:root {
+  /* Brand colors */
+  --background: #ffffff;
+  --foreground: #1c1917;
+  --card: #fafaf9;
+  --card-foreground: #1c1917;
+  --popover: #ffffff;
+  --popover-foreground: #1c1917;
+  --primary: #2c3863;
+  --primary-foreground: #ffffff;
+  --secondary: #fac360;
+  --secondary-foreground: #1c1917;
+  --muted: #e7e5e4;
+  --muted-foreground: #78716b;
+  --accent: #fce97c;
+  --accent-foreground: #1c1917;
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: #d6d3d1;
+  --input: #f5f5f4;
+  --ring: #2c3863;
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: #2c3863;
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: #fac360;
+  --sidebar-accent-foreground: #1c1917;
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: #2c3863;
+
+  --color-gradient-start: #fac360;
+  --color-gradient-end: #fce97c;
+}
+
+.dark {
+  --background: #1c1917;
+  --foreground: #fafaf9;
+  --card: #292524;
+  --card-foreground: #fafaf9;
+  --popover: #1c1917;
+  --popover-foreground: #fafaf9;
+  --primary: #fce97c;
+  --primary-foreground: #2c3863;
+  --secondary: #fac360;
+  --secondary-foreground: #1c1917;
+  --muted: #292524;
+  --muted-foreground: #a8a29e;
+  --accent: #fac360;
+  --accent-foreground: #1c1917;
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: #44403c;
+  --input: #292524;
+  --ring: #fce97c;
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: #fce97c;
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: #fac360;
+  --sidebar-accent-foreground: #1c1917;
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+@theme inline {
+  --font-sans: "URWClassico", sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "URWClassico", sans-serif;
+  }
+}
+
+/* Moved hero section styles to global CSS to fix styling delays and loading issues */
+/* Updated hero section height to use dvh (dynamic viewport height) for proper mobile support */
+.hero-carousel {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  will-change: transform;
+}
+
+.slider {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  will-change: transform;
+}
+
+.carousel-item {
+  width: 200px;
+  height: 300px;
+  list-style-type: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  background-position: center;
+  background-size: cover;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.1s, left 0.75s, top 0.75s, width 0.75s, height 0.75s;
+  will-change: transform, left, top, width, height;
+  cursor: pointer;
+}
+
+.carousel-item:nth-child(1),
+.carousel-item:nth-child(2) {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+  border-radius: 0;
+  box-shadow: none;
+  opacity: 1;
+  cursor: default;
+}
+
+.carousel-item:nth-child(3) {
+  left: 50%;
+  cursor: pointer;
+}
+.carousel-item:nth-child(4) {
+  left: calc(50% + 220px);
+  cursor: pointer;
+}
+.carousel-item:nth-child(5) {
+  left: calc(50% + 440px);
+  cursor: pointer;
+}
+.carousel-item:nth-child(6) {
+  left: calc(50% + 660px);
+  opacity: 0;
+}
+
+.content {
+  width: min(30vw, 400px);
+  position: absolute;
+  top: 50%;
+  left: 3rem;
+  transform: translateY(-50%);
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  display: none;
+}
+
+.title {
+  text-transform: uppercase;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.description {
+  line-height: 1.7;
+  margin: 1rem 0 1.5rem;
+  font-size: 0.9rem;
+}
+
+.carousel-item:nth-of-type(2) .content {
+  display: block;
+  animation: show 0.75s ease-in-out 0.3s forwards;
+}
+
+.hero-button {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid white !important;
+  color: white !important;
+  background: transparent !important;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.hero-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+  z-index: -1;
+}
+
+.hero-button:hover {
+  color: var(--primary) !important;
+  text-shadow: none !important;
+}
+
+.hero-button:hover::before {
+  transform: scaleX(1);
+}
+
+@keyframes show {
+  0% {
+    filter: blur(5px);
+    transform: translateY(calc(-50% + 75px));
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.nav {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  user-select: none;
+  display: flex;
+}
+
+.nav-btn {
+  background-color: rgba(255, 255, 255, 0.5);
+  color: rgba(0, 0, 0, 0.7);
+  border: 2px solid rgba(0, 0, 0, 0.6);
+  margin: 0 0.25rem;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  transition: background-color 0.3s ease;
+}
+
+.nav-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.nav-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+.carousel-item:nth-child(1)::before,
+.carousel-item:nth-child(2)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+@media (min-width: 650px) and (max-width: 900px) {
+  .hero-carousel {
+    height: calc(100vh - 60px);
+  }
+  .title {
+    font-size: 1.5rem;
+  }
+  .description {
+    font-size: 0.8rem;
+  }
+
+  .carousel-item {
+    width: 160px;
+    height: 270px;
+  }
+
+  .carousel-item:nth-child(3) {
+    left: 50%;
+  }
+  .carousel-item:nth-child(4) {
+    left: calc(50% + 170px);
+  }
+  .carousel-item:nth-child(5) {
+    left: calc(50% + 340px);
+  }
+  .carousel-item:nth-child(6) {
+    left: calc(50% + 510px);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 650px) {
+  .hero-carousel {
+    height: calc(100vh - 50px);
+  }
+  .content {
+    width: 80%;
+    left: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+  .description {
+    font-size: 0.75rem;
+  }
+
+  .carousel-item:nth-child(3),
+  .carousel-item:nth-child(4),
+  .carousel-item:nth-child(5),
+  .carousel-item:nth-child(6) {
+    display: none;
+  }
+
+  /* Reduce overlay contrast on mobile */
+  .carousel-item:nth-child(1)::before,
+  .carousel-item:nth-child(2)::before {
+    background: rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Marrakesh-specific utility classes */
+.gradient-accent {
+  background: linear-gradient(
+    180deg,
+    var(--color-gradient-start) 0%,
+    var(--color-gradient-end) 100%
+  );
+}
+
+.gradient-accent-reverse {
+  background: linear-gradient(
+    0deg,
+    var(--color-gradient-start) 0%,
+    var(--color-gradient-end) 100%
+  );
+}
+
+.text-gradient {
+  background: linear-gradient(
+    180deg,
+    var(--color-gradient-start) 0%,
+    var(--color-gradient-end) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Hero Search Dropdown Styling */
+.hero-search-select {
+  background-color: #fff;
+  border-radius: 0.75rem;
+}
+
+.hero-search-select option {
+  padding: 12px 16px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #1c1917;
+  background-color: #ffffff;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.15s ease;
+}
+
+.hero-search-select option:hover,
+.hero-search-select option:focus {
+  background: linear-gradient(135deg, #2c3863 0%, #3d4d7a 100%);
+  color: #ffffff;
+}
+
+.hero-search-select option:checked {
+  background: linear-gradient(135deg, #fac360 0%, #fce97c 100%);
+  color: #1c1917;
+  font-weight: 600;
+}
+
+.hero-search-select option:last-child {
+  border-bottom: none;
+  border-radius: 0 0 0.75rem 0.75rem;
+}
+
+.hero-search-select option:first-child {
+  border-radius: 0.75rem 0.75rem 0 0;
+}
