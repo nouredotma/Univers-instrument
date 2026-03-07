@@ -53,31 +53,14 @@ export const en = {
 
   // Hero Section
   hero: {
-    tours: {
-      title: "Tours",
-      description: "Discover the beauty of Morocco through our expertly curated tours. From desert adventures to cultural experiences, explore iconic landmarks with knowledgeable local guides.",
-      buttonText: "View Tours",
-    },
-    excursions: {
-      title: "Excursions",
-      description: "Experience thrilling day excursions to Morocco's most scenic destinations. Our excursions offer the perfect blend of adventure, culture, and natural beauty.",
-      buttonText: "Book Excursion",
-    },
-    activities: {
-      title: "Activities",
-      description: "Engage in unforgettable activities tailored to your interests. From cultural workshops to outdoor adventures, find the perfect activity for your Moroccan getaway.",
-      buttonText: "Discover Activities",
-    },
-    packages: {
-      title: "Packages",
-      description: "Explore our comprehensive travel packages designed for every budget and preference. All-inclusive packages with accommodations, transportation, and curated experiences.",
-      buttonText: "View Packages",
-    },
-    transfers: {
-      title: "Transfers",
-      description: "Reliable and professional transportation services throughout Morocco. From airport pickups to intercity transfers, we ensure comfortable and timely service.",
-      buttonText: "Book Transfer",
-    },
+    title: "Your Partner in Scientific Excellence",
+    subtitles: [
+      "High-precision Laboratory Equipment.",
+      "Reliable After-Sales Maintenance.",
+      "Trusted Technical Solutions."
+    ],
+    phoneButton: "0666-166945",
+    productsButton: "Explore Our Products",
   },
 
   // Travel Themes Section

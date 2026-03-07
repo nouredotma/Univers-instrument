@@ -26,7 +26,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="w-full bg-[#414141] text-white">
+    <footer className="w-full bg-[#414141] text-white rounded-t-2xl md:rounded-t-4xl">
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-10">
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10 lg:gap-8">

@@ -55,31 +55,14 @@ export const es: TranslationKeys = {
 
   // Hero Section
   hero: {
-    tours: {
-      title: "Tours",
-      description: "Descubra la belleza de Marruecos a través de nuestros tours cuidadosamente seleccionados. Desde aventuras en el desierto hasta experiencias culturales, explore lugares emblemáticos con guías locales expertos.",
-      buttonText: "Ver Tours",
-    },
-    excursions: {
-      title: "Excursiones",
-      description: "Viva emocionantes excursiones de un día a los destinos más pintorescos de Marruecos. Nuestras excursiones ofrecen la combinación perfecta de aventura, cultura y belleza natural.",
-      buttonText: "Reservar Excursión",
-    },
-    activities: {
-      title: "Actividades",
-      description: "Participe en actividades inolvidables adaptadas a sus intereses. Desde talleres culturales hasta aventuras al aire libre, encuentre la actividad perfecta para su escapada marroquí.",
-      buttonText: "Descubrir Actividades",
-    },
-    packages: {
-      title: "Paquetes",
-      description: "Explore nuestros paquetes de viaje completos diseñados para todos los presupuestos y preferencias. Paquetes todo incluido con alojamiento, transporte y experiencias personalizadas.",
-      buttonText: "Ver Paquetes",
-    },
-    transfers: {
-      title: "Traslados",
-      description: "Servicios de transporte confiables y profesionales en todo Marruecos. Desde traslados al aeropuerto hasta viajes interurbanos, garantizamos un servicio cómodo y puntual.",
-      buttonText: "Reservar Traslado",
-    },
+    title: "Su Socio en Excelencia Científica",
+    subtitles: [
+      "Equipos de Laboratorio de Alta Precisión.",
+      "Mantenimiento Post-Venta Confiable.",
+      "Soluciones Técnicas de Confianza."
+    ],
+    phoneButton: "0666-166945",
+    productsButton: "Explorar Nuestros Productos",
   },
 
   // Travel Themes Section

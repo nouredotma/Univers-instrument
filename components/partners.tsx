@@ -164,12 +164,12 @@ import { useLanguage } from "@/components/language-provider";
 
 export default function Partners() {
     const { t } = useLanguage();
-    const [computedGap, setComputedGap] = useState<number>(80);
+    const [computedGap, setComputedGap] = useState<number>(40);
 
     useEffect(() => {
         const calc = () => {
             // match Tailwind's `md` breakpoint (768px)
-            setComputedGap(0);
+            setComputedGap(window.innerWidth < 768 ? 40 : 80);
         };
         calc();
         window.addEventListener('resize', calc);

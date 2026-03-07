@@ -55,31 +55,14 @@ export const fr: TranslationKeys = {
 
   // Hero Section
   hero: {
-    tours: {
-      title: "Tours",
-      description: "Découvrez la beauté du Maroc à travers nos circuits soigneusement sélectionnés. Des aventures dans le désert aux expériences culturelles, explorez des sites emblématiques avec des guides locaux compétents.",
-      buttonText: "Voir les Tours",
-    },
-    excursions: {
-      title: "Excursions",
-      description: "Vivez des excursions d'une journée palpitantes vers les destinations les plus pittoresques du Maroc. Nos excursions offrent le mélange parfait d'aventure, de culture et de beauté naturelle.",
-      buttonText: "Réserver une Excursion",
-    },
-    activities: {
-      title: "Activités",
-      description: "Participez à des activités inoubliables adaptées à vos intérêts. Des ateliers culturels aux aventures en plein air, trouvez l'activité parfaite pour votre escapade marocaine.",
-      buttonText: "Découvrir les Activités",
-    },
-    packages: {
-      title: "Forfaits",
-      description: "Explorez nos forfaits voyage complets conçus pour tous les budgets et préférences. Forfaits tout compris avec hébergement, transport et expériences sur mesure.",
-      buttonText: "Voir les Forfaits",
-    },
-    transfers: {
-      title: "Transferts",
-      description: "Services de transport fiables et professionnels dans tout le Maroc. Des transferts aéroport aux trajets interurbains, nous assurons un service confortable et ponctuel.",
-      buttonText: "Réserver un Transfert",
-    },
+    title: "Votre Partenaire en Excellence Scientifique",
+    subtitles: [
+      "Équipement de Laboratoire de Haute Précision.",
+      "Maintenance Après-Vente Fiable.",
+      "Solutions Techniques de Confiance."
+    ],
+    phoneButton: "0666-166945",
+    productsButton: "Découvrir NOS Produits",
   },
 
   // Travel Themes Section
