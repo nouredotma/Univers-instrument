@@ -90,7 +90,7 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
             scrolled ? "h-0 opacity-0" : "h-[60px] sm:h-10 opacity-100"
           )}
         >
-          <Container className="max-w-7xl mx-auto h-full flex flex-col sm:flex-row items-stretch sm:items-center justify-center sm:justify-between px-4 text-[11px] sm:text-xs font-medium text-white/90 py-1.5 sm:py-0">
+          <Container className="max-w-full mx-auto px-4 md:px-12 h-full flex flex-col sm:flex-row items-stretch sm:items-center justify-center sm:justify-between text-[11px] sm:text-xs font-medium text-white/90 py-1.5 sm:py-0">
             {/* Desktop: Phone & Email Left | Mobile: Row 1 - Phone */}
             <div className="flex items-center justify-start gap-6 mb-1 sm:mb-0">
               <a href="tel:0666166945" className="flex items-center gap-2 hover:text-white transition-colors">
@@ -133,7 +133,7 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
           </Container>
         </div>
 
-        <Container className="max-w-7xl mx-auto">
+        <Container className="max-w-full mx-auto px-4 md:px-12">
           {/* Mobile layout - logo left, menu right */}
           <div className="md:hidden flex h-16 items-center justify-between px-1">
             {/* Left: Logo */}

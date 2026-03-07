@@ -53,7 +53,7 @@ export default function FloatingContact() {
           {/* Red Notification Dot */}
           <span className="absolute top-0.5 right-0.5 md:top-1 md:right-1 flex h-3.5 w-3.5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-red-500"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 md:h-3.5 md:w-3.5 bg-red-500"></span>
           </span>
         </motion.div>
       </Link>

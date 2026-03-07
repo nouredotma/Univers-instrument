@@ -15,9 +15,9 @@ export default function HomePage() {
     <main className="w-full">
       <Header />
       <Hero />
+      <OurProducts />
       <AboutUs />
       <Partners />
-      <OurProducts />
       <Testimonials />
       <Footer />
       <FloatingContact />

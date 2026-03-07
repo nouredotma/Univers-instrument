@@ -23,7 +23,7 @@ export default function PageHero({ title, backgroundImage, showOverlay = true }:
   }
   
   return (
-    <section className="relative h-[50dvh] md:h-[60dvh] w-full flex items-end overflow-hidden bg-white">
+    <section className="relative h-[50svh] md:h-[60svh] w-full flex items-end overflow-hidden bg-white rounded-b-2xl md:rounded-b-4xl">
       {/* Background Image */}
       {finalImageUrl && (
         <img
@@ -46,12 +46,12 @@ export default function PageHero({ title, backgroundImage, showOverlay = true }:
       
       {/* Dark overlay for better text readability - conditionally rendered */}
       {showOverlay && (
-        <div className="absolute inset-0 bg-linear-to-t from-black/30 via-black/5 z-10" />
+        <div className="absolute inset-0 bg-black/40 z-10" />
       )}
       
       {/* Content */}
-      <Container className="relative z-20 max-w-7xl mx-auto pb-8 px-4">
-        <h1 className="text-xl md:text-3xl font-bold font-trajan-pro uppercase tracking-wider text-white drop-shadow-lg">{title}</h1>
+      <Container className="relative z-20 max-w-7xl mx-auto pb-8 flex justify-center">
+        <h1 className="text-xl md:text-3xl font-bold tracking-wider text-white text-center">{title}</h1>
       </Container>
     </section>
   )

@@ -61,7 +61,7 @@ export default function Testimonials() {
 
   return (
     <section id="testimonials" className="py-16 sm:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-2 md:px-6">
+      <div className="max-w-full mx-auto px-4 md:px-12">
         <div className="flex flex-col gap-3 sm:gap-8 mb-3 sm:mb-6">
           <div className="flex justify-center">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary">

@@ -28,7 +28,7 @@ export default function Footer() {
   return (
     <footer className="w-full bg-[#414141] text-white rounded-t-2xl md:rounded-t-4xl">
       {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-10">
+      <div className="max-w-full mx-auto px-4 md:px-12 pt-14 pb-10">
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10 lg:gap-8">
           {/* Brand Section */}
           <div className="col-span-2 md:col-span-1 lg:col-span-1 space-y-4">
@@ -73,23 +73,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-md font-semibold text-amber-400 mb-2">
-              {t.footer.explore}
-            </h4>
-            <nav className="space-y-2.5">
-              {quickLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="block text-xs sm:text-sm font-light text-white/80 hover:text-white transition-colors duration-200"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </nav>
-          </div>
+          
 
           {/* Products List */}
           <div>
@@ -109,6 +93,23 @@ export default function Footer() {
             </nav>
           </div>
 
+{/* Quick Links */}
+          <div>
+            <h4 className="text-md font-semibold text-amber-400 mb-2">
+              {t.footer.explore}
+            </h4>
+            <nav className="space-y-2.5">
+              {quickLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="block text-xs sm:text-sm font-light text-white/80 hover:text-white transition-colors duration-200"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+          </div>
           {/* Contact Info */}
           <div className="col-span-2 md:col-span-1 lg:col-span-1">
             <h4 className="text-md font-semibold text-amber-400 mb-2">

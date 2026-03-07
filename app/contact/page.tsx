@@ -89,17 +89,17 @@ export default function ContactPage() {
   return (
     <main className="w-full">
       <Header />
-      <PageHero title={t.contact.pageTitle} backgroundImage="https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/07/a5/17/55.jpg" />
+      <PageHero title={t.contact.pageTitle} backgroundImage="https://images.unsplash.com/photo-1579154204601-01588f351e67?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
 
       <section className="py-16 md:py-24 bg-white">
-        <Container className="max-w-7xl mx-auto px-2 md:px-8">
+        <Container className="max-w-full mx-auto px-4 md:px-12">
           {/* Quick Contact Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-12 md:mb-16">
             {contactInfo.map((info, index) => (
               <a
                 key={index}
                 href={info.action || "#"}
-                className="group relative bg-card rounded-xl p-4 md:p-5 border border-border/50 hover:border-primary/40 hover:shadow-md transition-all duration-300 cursor-pointer"
+                className="group relative bg-card rounded-xl p-4 md:p-5 border border-border/50 hover:border-primary transition-all duration-300 cursor-pointer"
               >
                 <div className="flex flex-col items-center text-center gap-3 w-full">
                   <div className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
@@ -158,7 +158,7 @@ export default function ContactPage() {
 
             {/* Right Side - Form */}
             <div className="lg:col-span-3">
-              <div className="bg-card rounded-2xl p-6 md:p-8 border border-border shadow-sm">
+              <div className="bg-card rounded-2xl p-6 md:p-8 border border-border shadow-none">
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
