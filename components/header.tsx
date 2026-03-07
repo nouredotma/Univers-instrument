@@ -59,14 +59,14 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
   }, [productsDropdownOpen])
 
   const productLinks = [
-    { href: "/products", label: t.footer.productNames.consumables },
-    { href: "/products", label: t.footer.productNames.water },
-    { href: "/products", label: t.footer.productNames.agriculture },
-    { href: "/products", label: t.footer.productNames.laboratory },
-    { href: "/products", label: t.footer.productNames.medical },
-    { href: "/products", label: t.footer.productNames.furniture },
-    { href: "/products", label: t.footer.productNames.weighing },
-    { href: "/products", label: t.footer.productNames.chemicals },
+    { href: "/products?condition=consumables", label: t.footer.productNames.consumables },
+    { href: "/products?condition=water", label: t.footer.productNames.water },
+    { href: "/products?condition=agriculture", label: t.footer.productNames.agriculture },
+    { href: "/products?condition=laboratory", label: t.footer.productNames.laboratory },
+    { href: "/products?condition=medical", label: t.footer.productNames.medical },
+    { href: "/products?condition=furniture", label: t.footer.productNames.furniture },
+    { href: "/products?condition=weighing", label: t.footer.productNames.weighing },
+    { href: "/products?condition=chemicals", label: t.footer.productNames.chemicals },
   ]
 
   return (
@@ -270,10 +270,10 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
                 </div>
 
                 <Link
-                  href="/products-used"
+                  href="/products?condition=used"
                   className={cn(
                     "text-sm font-medium transition-all duration-300 relative group font-trajan-pro tracking-wider hover:text-secondary",
-                    pathname === "/products-used" ? "text-secondary" : (scrolled || isUsersSection ? "text-gray-800" : "text-white")
+                    pathname === "/products" && typeof window !== 'undefined' && window.location.search.includes('condition=used') ? "text-secondary" : (scrolled || isUsersSection ? "text-gray-800" : "text-white")
                   )}
                 >
                   {t.header.usedProducts}
@@ -457,11 +457,11 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
                         transition={{ delay: 0.12 }}
                       >
                         <Link
-                          href="/products-used"
+                          href="/products?condition=used"
                           onClick={() => setIsMenuOpen(false)}
                           className={cn(
                             "flex items-center w-full py-4 px-4 transition-all duration-200 text-sm font-medium tracking-wide border-b border-gray-100",
-                            pathname === "/products-used" ? "bg-primary/5 text-primary" : "text-gray-700 hover:text-primary"
+                            pathname === "/products" && typeof window !== 'undefined' && window.location.search.includes('condition=used') ? "bg-primary/5 text-primary" : "text-gray-700 hover:text-primary"
                           )}
                         >
                           {t.header.usedProducts}

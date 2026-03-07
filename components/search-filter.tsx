@@ -50,7 +50,7 @@ function FilterDropdown({
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "w-full px-4 py-2.5 bg-background border border-border rounded-lg text-sm font-medium",
+          "w-full px-4 py-2.5 bg-background border border-border rounded-lg text-xs md:text-sm font-medium",
           "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary",
           "transition-all cursor-pointer flex items-center justify-between gap-2",
           isOpen && "ring-2 ring-primary/20 border-primary"
@@ -96,7 +96,7 @@ function FilterDropdown({
                     : "text-foreground hover:bg-muted/50"
                 )}
               >
-                <span className="flex-1 text-sm">{option.name}</span>
+                <span className="flex-1 text-xs md:text-sm">{option.name}</span>
                 {isSelected && <Check className="w-4 h-4 text-primary" />}
               </button>
             )
@@ -112,8 +112,15 @@ export default function SearchFilter({ onChange, initial }: Props) {
   const [minPrice, setMinPrice] = useState<number | "">(initial?.minPrice ?? "")
   const [maxPrice, setMaxPrice] = useState<number | "">(initial?.maxPrice ?? "")
   const [search, setSearch] = useState<string>(initial?.search ?? "")
+  // Whenever the URL changes outside, update the local state if needed
+  useEffect(() => {
+    setSearch(initial?.search ?? "")
+    setMinPrice(initial?.minPrice ?? "")
+    setMaxPrice(initial?.maxPrice ?? "")
+    setCondition(initial?.condition ?? "all")
+  }, [initial?.search, initial?.minPrice, initial?.maxPrice, initial?.condition])
+
   const [condition, setCondition] = useState<string>(initial?.condition ?? "all")
-  const [isExpanded, setIsExpanded] = useState(false)
 
   const CONDITIONS = [
     { name: "All Categories", value: "all" },
@@ -142,169 +149,87 @@ export default function SearchFilter({ onChange, initial }: Props) {
     setMaxPrice("")
     setSearch("")
     setCondition("all")
-    onChange({})
+    setTimeout(() => {
+      onChange({})
+    }, 0)
   }
 
-  const hasActiveFilters = minPrice !== "" || maxPrice !== "" || search !== "" || condition !== "all"
-
   return (
-    <div className="w-full mb-10">
-      {/* Compact Filter Bar */}
-      <div className="flex items-center gap-4 flex-wrap">
-        {/* Toggle Button */}
-        <button
-          type="button"
-          onClick={() => setIsExpanded(!isExpanded)}
-          className={cn(
-            "inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-sm font-bold transition-all duration-300",
-            "border shadow-sm hover:shadow-lg",
-            isExpanded
-              ? "bg-primary text-white border-primary"
-              : "bg-background text-foreground border-border hover:border-primary/50"
-          )}
-        >
-          <SlidersHorizontal className="w-4 h-4" />
-          FILTERS
-          {hasActiveFilters && (
-            <span className="ml-1 w-6 h-6 rounded-full bg-white/20 text-[10px] flex items-center justify-center border border-white/30">
-              {[minPrice, maxPrice, search, condition !== "all" ? condition : ""].filter(Boolean).length}
-            </span>
-          )}
-        </button>
+    <div className="w-full">
+      <div className="bg-white border border-border rounded-md px-3 py-4 lg:p-5 h-fit">
+        <h3 className="text-sm font-bold uppercase tracking-widest mb-4 lg:mb-6 border-b pb-3 lg:pb-4">Filters</h3>
+        
+        <div className="flex flex-col gap-4 lg:gap-6">
+          {/* Search Bar */}
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-foreground">
+              Search Products
+            </label>
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && emit()}
+              className="w-full px-3 py-2 bg-background border border-border rounded-md text-xs md:text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all"
+              placeholder="Keywords..."
+            />
+          </div>
 
-        {/* Quick Filter Pills */}
-        <div className="flex items-center gap-2 flex-wrap">
-          {search && (
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-bold ring-1 ring-primary/20">
-              <Search className="w-3.5 h-3.5" />
-              "{search}"
-              <button onClick={() => { setSearch(""); emit() }} className="ml-1 hover:bg-primary/20 rounded-full p-0.5 transition-colors">
-                <X className="w-3.5 h-3.5" />
-              </button>
-            </span>
-          )}
-          {(minPrice !== "" || maxPrice !== "") && (
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-bold ring-1 ring-primary/20">
-              <DollarSign className="w-3.5 h-3.5" />
-              {minPrice !== "" && maxPrice !== "" 
-                ? `€${minPrice} - €${maxPrice}` 
-                : minPrice !== "" 
-                  ? `From €${minPrice}` 
-                  : `Up to €${maxPrice}`}
-              <button onClick={() => { setMinPrice(""); setMaxPrice(""); emit() }} className="ml-1 hover:bg-primary/20 rounded-full p-0.5 transition-colors">
-                <X className="w-3.5 h-3.5" />
-              </button>
-            </span>
-          )}
-          {condition !== "all" && (
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-bold ring-1 ring-primary/20">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              {condition}
-              <button onClick={() => { setCondition("all"); emit() }} className="ml-1 hover:bg-primary/20 rounded-full p-0.5 transition-colors">
-                <X className="w-3.5 h-3.5" />
-              </button>
-            </span>
-          )}
-        </div>
+          <div className="grid grid-cols-2 lg:grid-cols-1 gap-3 lg:gap-6">
+            {/* Condition / Category */}
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-foreground">
+                Category
+              </label>
+              <FilterDropdown
+                options={CONDITIONS}
+                value={condition}
+                onChange={(val) => { setCondition(val); }}
+                placeholder="Select category"
+              />
+            </div>
 
-        {/* Clear All */}
-        {hasActiveFilters && (
-          <button
-            type="button"
-            onClick={reset}
-            className="text-xs text-muted-foreground hover:text-primary font-bold uppercase tracking-widest transition-colors"
-          >
-            {t.searchFilter.clearAll}
-          </button>
-        )}
-      </div>
-
-      {/* Expanded Filter Panel */}
-      <div
-        className={cn(
-          "transition-all duration-500 ease-in-out",
-          isExpanded ? "opacity-100 mt-6 max-h-[800px]" : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
-        )}
-      >
-        <div className="relative">
-          <div className="p-6 sm:p-8 bg-card rounded-2xl border border-border shadow-2xl">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {/* Search Bar */}
-              <div className="space-y-3">
-                <label className="flex items-center gap-2 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
-                  <Search className="w-4 h-4" />
-                  Search Products
-                </label>
-                <div className="relative">
-                   <input
-                    type="text"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && emit()}
-                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all"
-                    placeholder="Keywords..."
-                  />
-                </div>
-              </div>
-
-              {/* Price Range */}
-              <div className="space-y-3">
-                <label className="flex items-center gap-2 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
-                  <DollarSign className="w-4 h-4" />
-                  Price Range (€)
-                </label>
-                <div className="flex items-center gap-3">
-                  <input
-                    type="number"
-                    value={minPrice as any}
-                    onChange={(e) => setMinPrice(e.target.value === "" ? "" : Number(e.target.value))}
-                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all"
-                    placeholder="Min"
-                  />
-                  <span className="text-muted-foreground font-black text-xs">TO</span>
-                  <input
-                    type="number"
-                    value={maxPrice as any}
-                    onChange={(e) => setMaxPrice(e.target.value === "" ? "" : Number(e.target.value))}
-                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all"
-                    placeholder="Max"
-                  />
-                </div>
-              </div>
-
-              {/* Condition */}
-              <div className="space-y-3">
-                <label className="flex items-center gap-2 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
-                  <ShieldCheck className="w-4 h-4" />
-                  Category
-                </label>
-                <FilterDropdown
-                  options={CONDITIONS}
-                  value={condition}
-                  onChange={(val) => { setCondition(val); }}
-                  placeholder="Select category"
+            {/* Price Range */}
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-foreground">
+                Price Range (€)
+              </label>
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <input
+                  type="number"
+                  value={minPrice as any}
+                  onChange={(e) => setMinPrice(e.target.value === "" ? "" : Number(e.target.value))}
+                  className="w-full px-2 sm:px-3 py-2 bg-background border border-border rounded-md text-xs md:text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all min-w-0"
+                  placeholder="Min"
+                />
+                <span className="text-muted-foreground text-xs shrink-0">-</span>
+                <input
+                  type="number"
+                  value={maxPrice as any}
+                  onChange={(e) => setMaxPrice(e.target.value === "" ? "" : Number(e.target.value))}
+                  className="w-full px-2 sm:px-3 py-2 bg-background border border-border rounded-md text-xs md:text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all min-w-0"
+                  placeholder="Max"
                 />
               </div>
-
-              {/* Actions */}
-              <div className="flex items-end gap-3">
-                <button
-                  type="button"
-                  onClick={emit}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-primary text-white text-xs font-black uppercase tracking-widest rounded-xl hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/25"
-                >
-                  <Search className="w-4 h-4" />
-                  {t.searchFilter.search}
-                </button>
-                <button
-                  type="button"
-                  onClick={reset}
-                  className="px-6 py-3.5 text-xs font-black uppercase tracking-widest text-muted-foreground hover:text-foreground border border-border rounded-xl hover:bg-muted/50 transition-all"
-                >
-                  {t.searchFilter.reset}
-                </button>
-              </div>
             </div>
+          </div>
+
+          {/* Actions */}
+          <div className="flex flex-row lg:flex-col gap-2 mt-1">
+            <button
+              type="button"
+              onClick={emit}
+              className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 bg-primary text-white text-xs font-bold rounded-sm hover:bg-primary/90 transition-all cursor-pointer"
+            >
+              Apply Filter
+            </button>
+            <button
+              type="button"
+              onClick={reset}
+              className="flex-1 px-3 py-2.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 border border-border lg:border-transparent rounded-sm cursor-pointer transition-all"
+            >
+              Clear all
+            </button>
           </div>
         </div>
       </div>

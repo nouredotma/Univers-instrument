@@ -323,3 +323,5 @@ export function getTranslatedProduct(product: Product, language: Language) {
     longDescription: translation.longDescription,
   }
 }
+
+export const bestSellers: Product[] = products.slice(0, 4);

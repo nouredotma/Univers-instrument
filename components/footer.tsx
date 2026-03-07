@@ -14,15 +14,15 @@ export default function Footer() {
   ];
 
   const productLinks = [
-    { href: "/products", label: t.footer.productNames.consumables },
-    { href: "/products", label: t.footer.productNames.water },
-    { href: "/products", label: t.footer.productNames.agriculture },
-    { href: "/products", label: t.footer.productNames.laboratory },
-    { href: "/products", label: t.footer.productNames.medical },
-    { href: "/products", label: t.footer.productNames.furniture },
-    { href: "/products", label: t.footer.productNames.weighing },
-    { href: "/products", label: t.footer.productNames.chemicals },
-    { href: "/products", label: t.footer.productNames.used },
+    { href: "/products?condition=consumables", label: t.footer.productNames.consumables },
+    { href: "/products?condition=water", label: t.footer.productNames.water },
+    { href: "/products?condition=agriculture", label: t.footer.productNames.agriculture },
+    { href: "/products?condition=laboratory", label: t.footer.productNames.laboratory },
+    { href: "/products?condition=medical", label: t.footer.productNames.medical },
+    { href: "/products?condition=furniture", label: t.footer.productNames.furniture },
+    { href: "/products?condition=weighing", label: t.footer.productNames.weighing },
+    { href: "/products?condition=chemicals", label: t.footer.productNames.chemicals },
+    { href: "/products?condition=used", label: t.footer.productNames.used },
   ];
 
   return (

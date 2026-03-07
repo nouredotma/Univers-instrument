@@ -1,9 +1,10 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Link from "next/link"
 import ProductsGrid from "./products-grid"
 import { useLanguage } from "@/components/language-provider"
-import { products, getTranslatedProduct, type Product } from "@/lib/products-data"
+import { bestSellers, getTranslatedProduct, type Product } from "@/lib/products-data"
 import { Loader2 } from "lucide-react"
 
 export default function OurProducts() {
@@ -15,8 +16,8 @@ export default function OurProducts() {
     const fetchBestProducts = () => {
       setIsLoading(true)
       
-      // Get all products from local data
-      const localProducts = products
+      // Get best products from local data
+      const localProducts = bestSellers
         .map(product => getTranslatedProduct(product, language))
       
       setBestProducts(localProducts)
@@ -39,15 +40,13 @@ export default function OurProducts() {
   }
 
   return (
-    <section className="w-full py-20 bg-white">
+    <section className="w-full py-16 bg-white">
       <div className="max-w-full mx-auto px-4 md:px-12">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary mb-4">
-            <span className="text-lg font-semibold">{t.bestOffers.sectionTitle}</span>
-          </div>
-          <p className="text-muted-foreground max-w-xl mx-auto">
-            {t.bestOffers.sectionDescription}
-          </p>
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-lg md:text-3xl font-bold text-black">{t.bestOffers.sectionTitle}</h2>
+          <Link href="/products" className="bg-primary hover:bg-primary/90 transition-colors text-white px-4 py-2.5 rounded-xs md:rounded-sm text-xs md:text-sm font-medium">
+            View all products
+          </Link>
         </div>
 
         {bestProducts.length > 0 ? (

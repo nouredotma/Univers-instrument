@@ -20,11 +20,16 @@ function ProductsContent() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const searchParam = searchParams.get('q')
+  const conditionParam = searchParams.get('condition')
+  const minParam = searchParams.get('min')
+  const maxParam = searchParams.get('max')
   
   const [allProducts, setAllProducts] = useState<Product[]>([])
   const [filters, setFilters] = useState<Filters>({
     search: searchParam ?? "",
-    condition: "all"
+    condition: conditionParam ?? "all",
+    minPrice: minParam ? Number(minParam) : null,
+    maxPrice: maxParam ? Number(maxParam) : null,
   })
   const [isLoading, setIsLoading] = useState(true)
 
@@ -63,18 +68,29 @@ function ProductsContent() {
   }, [allProducts, filters])
 
   useEffect(() => {
-    if (searchParam && filters.search !== searchParam) {
-      setFilters(prev => ({ ...prev, search: searchParam }))
-    }
-  }, [searchParam])
+    setFilters(prev => ({ 
+      ...prev, 
+      search: searchParam ?? "", 
+      condition: conditionParam ?? "all" ,
+      minPrice: minParam ? Number(minParam) : null,
+      maxPrice: maxParam ? Number(maxParam) : null,
+    }))
+  }, [searchParam, conditionParam, minParam, maxParam])
 
   const handleFilterChange = (newFilters: Filters) => {
     const params = new URLSearchParams(searchParams.toString())
-    if (newFilters.search) {
-      params.set('q', newFilters.search)
-    } else {
-      params.delete('q')
-    }
+    
+    if (newFilters.search) params.set('q', newFilters.search)
+    else params.delete('q')
+
+    if (newFilters.condition && newFilters.condition !== "all") params.set('condition', newFilters.condition)
+    else params.delete('condition')
+
+    if (newFilters.minPrice != null) params.set('min', newFilters.minPrice.toString())
+    else params.delete('min')
+
+    if (newFilters.maxPrice != null) params.set('max', newFilters.maxPrice.toString())
+    else params.delete('max')
     
     const newUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname
     router.replace(newUrl, { scroll: false })
@@ -91,23 +107,34 @@ function ProductsContent() {
       />
 
       <section className="py-12 md:py-20 bg-white">
-        <Container className="max-w-7xl px-4 md:px-8">
-          <SearchFilter 
-            onChange={handleFilterChange} 
-            initial={{ 
-              search: searchParam ?? "",
-              condition: "all"
-            }} 
-          />
-
-          {isLoading ? (
-            <div className="flex flex-col items-center justify-center py-24">
-              <Loader2 className="h-12 w-12 animate-spin text-primary mb-6" />
-              <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground">Initializing Inventory...</p>
+        <Container className="max-w-full mx-auto px-4 md:px-12">
+          
+          <div className="flex flex-col lg:flex-row gap-4 items-start">
+            {/* Sidebar Filters */}
+            <div className="w-full lg:w-[280px] shrink-0 lg:sticky lg:top-24">
+              <SearchFilter 
+                onChange={handleFilterChange} 
+                initial={{ 
+                  search: searchParam ?? "",
+                  condition: conditionParam ?? "all",
+                  minPrice: minParam ? Number(minParam) : null,
+                  maxPrice: maxParam ? Number(maxParam) : null
+                }} 
+              />
             </div>
-          ) : (
-            <ProductsGrid products={filteredProducts} />
-          )}
+
+            {/* Products Grid Main Area */}
+            <div className="w-full lg:flex-1">
+              {isLoading ? (
+                <div className="flex flex-col items-center justify-center py-24">
+                  <Loader2 className="h-12 w-12 animate-spin text-primary mb-6" />
+                  <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground">Initializing Inventory...</p>
+                </div>
+              ) : (
+                <ProductsGrid products={filteredProducts} />
+              )}
+            </div>
+          </div>
         </Container>
       </section>
 

@@ -42,7 +42,7 @@ export default function Hero() {
               {t.hero.title}
             </motion.h1>
             
-            <div className="h-4 md:h-8 flex items-center justify-center">
+            <div className="h-6 md:h-8 flex items-center justify-center">
               <AnimatePresence mode="wait">
                 <motion.p
                   key={currentSubtitle}

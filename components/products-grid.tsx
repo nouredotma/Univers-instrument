@@ -16,14 +16,14 @@ const ProductsGrid = memo(function ProductsGrid({ products }: ProductsGridProps)
   const { t } = useLanguage()
 
   return (
-    <div className="products-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="products-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3">
       {products.length === 0 ? (
         <div className="col-span-full flex flex-col items-center justify-center py-24 text-center">
-          <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-6">
-            <Package className="w-10 h-10 text-slate-400" />
+          <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mb-6">
+            <Package className="w-10 h-10 text-red-500" />
           </div>
-          <h3 className="text-2xl font-black text-slate-900 mb-2 uppercase tracking-tight">No Products Found</h3>
-          <p className="text-slate-500 max-w-sm mx-auto font-medium">
+          <h3 className="text-xl font-bold mb-2">No Products Found</h3>
+          <p className="text-sm mx-auto max-w-sm font-medium text-neutral-500">
             We couldn't find any instruments matching your current filters. Try resetting them.
           </p>
         </div>
@@ -40,36 +40,36 @@ const ProductsGrid = memo(function ProductsGrid({ products }: ProductsGridProps)
               className="group block relative bg-white transition-all duration-300 h-full flex flex-col"
             >
               {/* Image Section */}
-              <div className="relative aspect-square overflow-hidden bg-slate-50 rounded-md rounded-b-none">
+              <div className="relative aspect-square overflow-hidden bg-slate-50 rounded-xs md:rounded-md rounded-b-none md:rounded-b-none">
                 <Image
                   src={product.mainImage || "/placeholder.svg"}
                   alt={product.name}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
+                <div className="absolute top-0 right-0 bg-green-500 text-white px-2 py-0.5 md:py-1 rounded-none  rounded-bl-md  text-[10px] md:text-xs font-bold z-10 shadow-sm">
+                  Stock: {product.stock}
+                </div>
               </div>
 
               {/* Content Section */}
-              <div className="py-3 flex flex-col grow">
-                <div className="flex justify-between items-start mb-1 gap-1">
-                  <h3 className="text-lg font-bold text-black group-hover:text-primary transition-colors line-clamp-1">
+              <div className="py-2 md:py-3 flex flex-col grow">
+                <div className="flex mb-1">
+                  <h3 className="text-sm md:text-lg font-bold text-black group-hover:text-primary transition-colors line-clamp-1 w-full">
                     {product.name}
                   </h3>
-                  <div className="text-emerald-500 font-bold whitespace-nowrap text-sm mt-1">
-                    Stock: {product.stock}
-                  </div>
                 </div>
 
-                <p className="text-sm text-black font-light mb-2 line-clamp-2 leading-relaxed">
+                <p className="text-[10px] md:text-sm text-black font-light mb-1 line-clamp-2">
                   {product.shortDescription}
                 </p>
 
                 {/* Bottom Row */}
-                <div className="mt-auto flex items-center justify-between pt-2">
-                  <div className="bg-primary text-white px-3 py-2.5 rounded-sm text-sm font-medium">
+                <div className="mt-auto flex items-center justify-between pt-1 md:pt-2">
+                  <div className="bg-primary text-white px-2 py-2 md:px-3 md:py-2.5 rounded-xs md:rounded-sm text-[10px] md:text-sm font-medium">
                     View Product
                   </div>
-                  <div className="text-lg font-bold text-black">
+                  <div className="text-xs md:text-base font-bold text-black">
                     €{product.price}
                   </div>
                 </div>
