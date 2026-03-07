@@ -106,17 +106,18 @@ export const fr: TranslationKeys = {
     transfers: "Transferts",
   },
 
-  // Our Best Offers Section
+  // Our Best Products Section
   bestOffers: {
-    sectionTitle: "Nos Meilleures Offres",
-    sectionDescription: "Découvrez notre sélection triée sur le volet de tours, excursions, activités et forfaits premium",
+    sectionTitle: "Meilleures Ventes",
+    sectionDescription: "Équipement de laboratoire de haute qualité et instruments scientifiques pour vos besoins de recherche.",
     badge: {
+      product: "Meilleure Vente",
       tours: "Meilleur Tour !",
       excursions: "Meilleure Excursion !",
       activities: "Meilleure Activité !",
       packages: "Meilleur Forfait !",
       transfers: "Meilleur Transfert !",
-      default: "Meilleure Offre !",
+      default: "Meilleur Produit !",
     },
   },
 

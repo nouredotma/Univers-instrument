@@ -106,17 +106,18 @@ export const es: TranslationKeys = {
     transfers: "Traslados",
   },
 
-  // Our Best Offers Section
+  // Our Best Products Section
   bestOffers: {
-    sectionTitle: "Nuestras Mejores Ofertas",
-    sectionDescription: "Descubra nuestra selección cuidadosamente elegida de tours, excursiones, actividades y paquetes premium",
+    sectionTitle: "Los Más Vendidos",
+    sectionDescription: "Equipos de laboratorio e instrumentos científicos de alta calidad para sus necesidades de investigación.",
     badge: {
+      product: "Más Vendido",
       tours: "¡Mejor Tour!",
       excursions: "¡Mejor Excursión!",
       activities: "¡Mejor Actividad!",
       packages: "¡Mejor Paquete!",
       transfers: "¡Mejor Traslado!",
-      default: "¡Mejor Oferta!",
+      default: "¡Mejor Producto!",
     },
   },
 

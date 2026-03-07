@@ -1,36 +1,20 @@
 "use client"
 
 import { useLanguage } from "@/components/language-provider"
-import type { OfferType } from "@/lib/offers-data"
 import { cn } from "@/lib/utils"
-import { Calendar, Check, ChevronDown, DollarSign, MapPin, Search, SlidersHorizontal, X } from "lucide-react"
-import { useEffect, useMemo, useRef, useState } from "react"
-
-const CITIES_DATA = [
-  "Agadir", "Al Hoceima", "Asilah", "Azemmour", "Azrou", "Beni Mellal",
-  "Berkane", "Berrechid", "Boujdour", "Bouznika", "Casablanca", "Chefchaouen",
-  "Dakhla", "El Jadida", "Errachidia", "Essaouira", "Fes", "Guelmim",
-  "Ifrane", "Kelaat M'Gouna", "Kenitra", "Khemisset", "Khenifra", "Khouribga",
-  "Ksar El Kebir", "Laayoune", "Larache", "Marrakech", "Meknes", "M'diq",
-  "Midelt", "Mohammedia", "Nador", "Ouarzazate", "Ouezzane", "Oujda",
-  "Rabat", "Safi", "Saidia", "Salé", "Settat", "Sidi Ifni", "Sidi Kacem",
-  "Sidi Slimane", "Skhirat", "Tanger", "Tan-Tan", "Taroudant", "Tata",
-  "Taza", "Témara", "Tétouan", "Tiznit", "Zagora"
-]
+import { Check, ChevronDown, DollarSign, Search, SlidersHorizontal, X, Package, ShieldCheck } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
 
 export interface Filters {
   minPrice?: number | null
   maxPrice?: number | null
-  theme?: string
-  category?: OfferType | "all"
-  availableOn?: string | null
-  departureCity?: string | null
+  search?: string
+  condition?: string | null
 }
 
 interface Props {
   onChange: (filters: Filters) => void
   initial?: Filters
-  showCategoryFilter?: boolean
 }
 
 // Custom Dropdown Component
@@ -66,7 +50,7 @@ function FilterDropdown({
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "w-full px-3 py-2 sm:py-2.5 bg-background border border-border rounded-lg text-sm",
+          "w-full px-4 py-2.5 bg-background border border-border rounded-lg text-sm font-medium",
           "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary",
           "transition-all cursor-pointer flex items-center justify-between gap-2",
           isOpen && "ring-2 ring-primary/20 border-primary"
@@ -86,7 +70,7 @@ function FilterDropdown({
       {/* Dropdown Menu */}
       <div 
         className={cn(
-          "absolute left-0 top-full mt-1.5 w-full min-w-[200px] bg-card rounded-xl shadow-xl border border-border overflow-hidden",
+          "absolute left-0 top-full mt-2 w-full min-w-[200px] bg-card rounded-xl shadow-2xl border border-border overflow-hidden",
           "transition-all duration-200 origin-top",
           isOpen 
             ? "opacity-100 scale-100 translate-y-0" 
@@ -94,7 +78,7 @@ function FilterDropdown({
         )}
         style={{ zIndex: 9999 }}
       >
-        <div className="py-1.5 max-h-64 overflow-y-auto">
+        <div className="py-2 max-h-64 overflow-y-auto">
           {options.map((option) => {
             const isSelected = option.value === value
             return (
@@ -106,13 +90,13 @@ function FilterDropdown({
                   setIsOpen(false)
                 }}
                 className={cn(
-                  "w-full px-3 py-2 flex items-center gap-2.5 text-left transition-all duration-150",
+                  "w-full px-4 py-2.5 flex items-center gap-3 text-left transition-all duration-150",
                   isSelected 
-                    ? "bg-primary/10 text-primary" 
+                    ? "bg-primary/10 text-primary font-semibold" 
                     : "text-foreground hover:bg-muted/50"
                 )}
               >
-                <span className="flex-1 font-medium text-sm">{option.name}</span>
+                <span className="flex-1 text-sm">{option.name}</span>
                 {isSelected && <Check className="w-4 h-4 text-primary" />}
               </button>
             )
@@ -123,100 +107,95 @@ function FilterDropdown({
   )
 }
 
-export default function SearchFilter({ onChange, initial, showCategoryFilter = true }: Props) {
-  const { t, language } = useLanguage()
+export default function SearchFilter({ onChange, initial }: Props) {
+  const { t } = useLanguage()
   const [minPrice, setMinPrice] = useState<number | "">(initial?.minPrice ?? "")
   const [maxPrice, setMaxPrice] = useState<number | "">(initial?.maxPrice ?? "")
-  const [availableOn, setAvailableOn] = useState<string>(initial?.availableOn ?? "")
-  const [departureCity, setDepartureCity] = useState<string>(initial?.departureCity ?? "all")
+  const [search, setSearch] = useState<string>(initial?.search ?? "")
+  const [condition, setCondition] = useState<string>(initial?.condition ?? "all")
   const [isExpanded, setIsExpanded] = useState(false)
 
-  const CITIES = useMemo(() => [
-    { name: t.searchFilter.allCities, value: "all" },
-    ...CITIES_DATA.map(city => ({ name: city, value: city }))
-  ], [t.searchFilter.allCities])
+  const CONDITIONS = [
+    { name: "All Conditions", value: "all" },
+    { name: "New", value: "New" },
+    { name: "Used", value: "Used" },
+    { name: "Service", value: "Service" }
+  ]
 
   const emit = () => {
     onChange({
       minPrice: minPrice === "" ? null : Number(minPrice),
       maxPrice: maxPrice === "" ? null : Number(maxPrice),
-      // category removed from UI but keeping type compatibility if needed, though strictly it should be removed. 
-      // The parent component expects Filters which includes category, so we can just omit it or pass 'all' / undefined effectively.
-      // Actually, let's keep passing whatever the parent might expect or just omit it if the parent handles 'all' default.
-      // Based on previous code, category was part of state. 
-      // We'll pass category: "all" or simply omit if the interface allows optional.
-      // Checking interface: category?: OfferType | "all". So acceptable.
-      category: "all",
-      availableOn: availableOn || null,
-      departureCity: departureCity === "all" ? null : departureCity,
+      search: search || "",
+      condition: condition === "all" ? null : condition,
     })
   }
 
   const reset = () => {
     setMinPrice("")
     setMaxPrice("")
-    setAvailableOn("")
-    setDepartureCity("all")
+    setSearch("")
+    setCondition("all")
     onChange({})
   }
 
-  const hasActiveFilters = minPrice !== "" || maxPrice !== "" || availableOn !== "" || departureCity !== "all"
+  const hasActiveFilters = minPrice !== "" || maxPrice !== "" || search !== "" || condition !== "all"
 
   return (
-    <div className="w-full mb-8">
+    <div className="w-full mb-10">
       {/* Compact Filter Bar */}
-      <div className="flex items-center gap-3 flex-wrap">
+      <div className="flex items-center gap-4 flex-wrap">
         {/* Toggle Button */}
         <button
           type="button"
           onClick={() => setIsExpanded(!isExpanded)}
           className={cn(
-            "inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-200",
-            "border shadow-sm hover:shadow-md",
+            "inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-sm font-bold transition-all duration-300",
+            "border shadow-sm hover:shadow-lg",
             isExpanded
               ? "bg-primary text-white border-primary"
               : "bg-background text-foreground border-border hover:border-primary/50"
           )}
         >
           <SlidersHorizontal className="w-4 h-4" />
-          {t.searchFilter.title}
+          FILTERS
           {hasActiveFilters && (
-            <span className="ml-1 w-5 h-5 rounded-full bg-white/20 text-xs flex items-center justify-center">
-              {[minPrice, maxPrice, availableOn, departureCity !== "all" ? departureCity : ""].filter(Boolean).length}
+            <span className="ml-1 w-6 h-6 rounded-full bg-white/20 text-[10px] flex items-center justify-center border border-white/30">
+              {[minPrice, maxPrice, search, condition !== "all" ? condition : ""].filter(Boolean).length}
             </span>
           )}
         </button>
 
         {/* Quick Filter Pills */}
         <div className="flex items-center gap-2 flex-wrap">
+          {search && (
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-bold ring-1 ring-primary/20">
+              <Search className="w-3.5 h-3.5" />
+              "{search}"
+              <button onClick={() => { setSearch(""); emit() }} className="ml-1 hover:bg-primary/20 rounded-full p-0.5 transition-colors">
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </span>
+          )}
           {(minPrice !== "" || maxPrice !== "") && (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium">
-              <DollarSign className="w-3 h-3" />
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-bold ring-1 ring-primary/20">
+              <DollarSign className="w-3.5 h-3.5" />
               {minPrice !== "" && maxPrice !== "" 
-                ? `€ ${minPrice} - € ${maxPrice}` 
+                ? `€${minPrice} - €${maxPrice}` 
                 : minPrice !== "" 
-                  ? `${t.searchFilter.fromPrice} € ${minPrice}` 
-                  : `${t.searchFilter.upToPrice} € ${maxPrice}`}
-              <button onClick={() => { setMinPrice(""); setMaxPrice(""); emit() }} className="ml-1 hover:bg-primary/20 rounded-full p-0.5">
-                <X className="w-3 h-3" />
+                  ? `From €${minPrice}` 
+                  : `Up to €${maxPrice}`}
+              <button onClick={() => { setMinPrice(""); setMaxPrice(""); emit() }} className="ml-1 hover:bg-primary/20 rounded-full p-0.5 transition-colors">
+                <X className="w-3.5 h-3.5" />
               </button>
             </span>
           )}
-          {availableOn && (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium">
-              <Calendar className="w-3 h-3" />
-              {new Date(availableOn).toLocaleDateString(language === 'en' ? 'en-US' : language === 'fr' ? 'fr-FR' : 'es-ES', { month: "short", day: "numeric" })}
-              <button onClick={() => { setAvailableOn(""); emit() }} className="ml-1 hover:bg-primary/20 rounded-full p-0.5">
-                <X className="w-3 h-3" />
-              </button>
-            </span>
-          )}
-          {departureCity !== "all" && (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium">
-              <MapPin className="w-3 h-3" />
-              {departureCity}
-              <button onClick={() => { setDepartureCity("all"); emit() }} className="ml-1 hover:bg-primary/20 rounded-full p-0.5">
-                <X className="w-3 h-3" />
+          {condition !== "all" && (
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-bold ring-1 ring-primary/20">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              {condition}
+              <button onClick={() => { setCondition("all"); emit() }} className="ml-1 hover:bg-primary/20 rounded-full p-0.5 transition-colors">
+                <X className="w-3.5 h-3.5" />
               </button>
             </span>
           )}
@@ -227,7 +206,7 @@ export default function SearchFilter({ onChange, initial, showCategoryFilter = t
           <button
             type="button"
             onClick={reset}
-            className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2 transition-colors"
+            className="text-xs text-muted-foreground hover:text-primary font-bold uppercase tracking-widest transition-colors"
           >
             {t.searchFilter.clearAll}
           </button>
@@ -237,82 +216,76 @@ export default function SearchFilter({ onChange, initial, showCategoryFilter = t
       {/* Expanded Filter Panel */}
       <div
         className={cn(
-          "transition-all duration-300 ease-in-out",
-          isExpanded ? "opacity-100 mt-2 sm:mt-4 max-h-[500px]" : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
+          "transition-all duration-500 ease-in-out",
+          isExpanded ? "opacity-100 mt-6 max-h-[800px]" : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
         )}
       >
         <div className="relative">
-          <div className="p-3 sm:p-5 bg-card rounded-xl border border-border shadow-sm">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-              {/* Price Range */}
-              <div className="space-y-2">
-                <label className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                  <DollarSign className="w-3.5 h-3.5" />
-                  {t.searchFilter.priceRange}
+          <div className="p-6 sm:p-8 bg-card rounded-2xl border border-border shadow-2xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Search Bar */}
+              <div className="space-y-3">
+                <label className="flex items-center gap-2 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
+                  <Search className="w-4 h-4" />
+                  Search Products
                 </label>
-                <div className="flex items-center gap-2">
-                  <div className="relative flex-1">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-xs font-semibold">€</span>
-                    <input
-                      type="number"
-                      value={minPrice as any}
-                      onChange={(e) => setMinPrice(e.target.value === "" ? "" : Number(e.target.value))}
-                      onBlur={emit}
-                      className="w-full pl-11 pr-3 py-2 sm:py-2.5 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-                      placeholder={t.searchFilter.minPrice}
-                      min={0}
-                    />
-                  </div>
-                  <span className="text-muted-foreground text-sm">–</span>
-                  <div className="relative flex-1">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-xs font-semibold">€</span>
-                    <input
-                      type="number"
-                      value={maxPrice as any}
-                      onChange={(e) => setMaxPrice(e.target.value === "" ? "" : Number(e.target.value))}
-                      onBlur={emit}
-                      className="w-full pl-11 pr-3 py-2 sm:py-2.5 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-                      placeholder={t.searchFilter.maxPrice}
-                      min={0}
-                    />
-                  </div>
+                <div className="relative">
+                   <input
+                    type="text"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && emit()}
+                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all"
+                    placeholder="Keywords..."
+                  />
                 </div>
               </div>
 
-              {/* Departure City */}
-              <div className="space-y-2">
-                <label className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                  <MapPin className="w-3.5 h-3.5" />
-                  {t.searchFilter.departureCity}
+              {/* Price Range */}
+              <div className="space-y-3">
+                <label className="flex items-center gap-2 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
+                  <DollarSign className="w-4 h-4" />
+                  Price Range (€)
                 </label>
-                <FilterDropdown
-                  options={CITIES}
-                  value={departureCity}
-                  onChange={(val) => { setDepartureCity(val); setTimeout(emit, 0) }}
-                  placeholder={t.searchFilter.selectCity}
-                />
+                <div className="flex items-center gap-3">
+                  <input
+                    type="number"
+                    value={minPrice as any}
+                    onChange={(e) => setMinPrice(e.target.value === "" ? "" : Number(e.target.value))}
+                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all"
+                    placeholder="Min"
+                  />
+                  <span className="text-muted-foreground font-black text-xs">TO</span>
+                  <input
+                    type="number"
+                    value={maxPrice as any}
+                    onChange={(e) => setMaxPrice(e.target.value === "" ? "" : Number(e.target.value))}
+                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all"
+                    placeholder="Max"
+                  />
+                </div>
               </div>
 
-              {/* Available On */}
-              <div className="space-y-2">
-                <label className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                  <Calendar className="w-3.5 h-3.5" />
-                  {t.searchFilter.availableOn}
+              {/* Condition */}
+              <div className="space-y-3">
+                <label className="flex items-center gap-2 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
+                  <ShieldCheck className="w-4 h-4" />
+                  Condition
                 </label>
-                <input
-                  type="date"
-                  value={availableOn}
-                  onChange={(e) => { setAvailableOn(e.target.value); setTimeout(emit, 0) }}
-                  className="w-full px-3 py-2 sm:py-2.5 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer"
+                <FilterDropdown
+                  options={CONDITIONS}
+                  value={condition}
+                  onChange={(val) => { setCondition(val); }}
+                  placeholder="Select condition"
                 />
               </div>
 
               {/* Actions */}
-              <div className="flex items-end gap-2">
+              <div className="flex items-end gap-3">
                 <button
                   type="button"
                   onClick={emit}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 sm:py-2.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors shadow-sm"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-primary text-white text-xs font-black uppercase tracking-widest rounded-xl hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/25"
                 >
                   <Search className="w-4 h-4" />
                   {t.searchFilter.search}
@@ -320,7 +293,7 @@ export default function SearchFilter({ onChange, initial, showCategoryFilter = t
                 <button
                   type="button"
                   onClick={reset}
-                  className="px-4 py-2 sm:py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground border border-border rounded-lg hover:bg-muted/50 transition-colors"
+                  className="px-6 py-3.5 text-xs font-black uppercase tracking-widest text-muted-foreground hover:text-foreground border border-border rounded-xl hover:bg-muted/50 transition-all"
                 >
                   {t.searchFilter.reset}
                 </button>
@@ -332,4 +305,3 @@ export default function SearchFilter({ onChange, initial, showCategoryFilter = t
     </div>
   )
 }
-

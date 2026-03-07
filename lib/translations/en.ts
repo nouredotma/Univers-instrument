@@ -63,131 +63,17 @@ export const en = {
     productsButton: "Explore Our Products",
   },
 
-  // Travel Themes Section
-  travelThemes: {
-    sectionTitle: "Choose Your Adventure",
-    sectionDescription: "Discover curated experiences tailored to your travel style",
-    tours: {
-      title: "Tours",
-      subtitle: "Explore with Expert Local Guides",
-      buttonText: "Explore",
-    },
-    excursions: {
-      title: "Excursions",
-      subtitle: "Full-Day Trips & Desert Adventures",
-      buttonText: "Discover",
-    },
-    activities: {
-      title: "Activities",
-      subtitle: "Thrilling Experiences & Workshops",
-      buttonText: "View All",
-    },
-    transfers: {
-      title: "Transfers",
-      subtitle: "Airport & Private Car Services",
-      buttonText: "Book Now",
-    },
-    packages: {
-      title: "Packages",
-      subtitle: "All-Inclusive Travel Bundles",
-      buttonText: "Browse",
-    },
-    offers: "offers",
-  },
-
-  // Page Hero Section
-  pageHero: {
-    tours: "Tours",
-    excursions: "Excursions",
-    activities: "Activities",
-    packages: "Packages",
-    transfers: "Transfers",
-  },
-
-  // Our Best Offers Section
+  // Our Best Products Section
   bestOffers: {
-    sectionTitle: "Our Best Offers",
-    sectionDescription: "Discover our handpicked selection of premium tours, excursions, activities, and packages",
+    sectionTitle: "Best Sellers",
+    sectionDescription: "High-quality laboratory equipment and scientific instruments for your research needs.",
     badge: {
-      tours: "Best Tour!",
-      excursions: "Best Excursion!",
-      activities: "Best Activity!",
-      packages: "Best Package!",
-      transfers: "Best Transfer!",
-      default: "Best Offer!",
+      product: "Best Seller",
+      default: "Best Product!",
     },
   },
 
-  // Offer Details Page
-  offerDetails: {
-    availableNow: "Available Now",
-    freeCancellation: "Free Cancellation",
-    instantConfirmation: "Instant Confirmation",
-    aboutExperience: "About This Experience",
-    aboutTransfer: "About This Transfer",
-    whatsIncluded: "What's Included",
-    notIncluded: "Not Included",
-    overview: "Overview",
-    highlights: "Highlights",
-    items: "items",
-    itinerary: "Itinerary",
-    stops: "stops",
-    tipsRecommendations: "Tips & Recommendations",
-    duration: "Duration",
-    difficulty: "Difficulty",
-    groupSize: "Group Size",
-    pricing: "Pricing",
-    adult: "Adult",
-    child: "Child",
-    perPerson: "/person",
-    perChild: "/child",
-    group: "Group",
-    persons: "persons",
-    perGroup: "per group",
-    for2Persons: "For 2 persons",
-    for4Persons: "For 4 persons",
-    for6Persons: "For 6 persons",
-    for8Persons: "For 8 persons",
-    availability: "Availability",
-    bookWithinDates: "Book within these dates",
-    // Transfer specific
-    transferRoute: "Transfer Route",
-    from: "From",
-    to: "To",
-    distance: "Distance",
-    vehicleOptions: "Vehicle Options",
-    perVehicle: "per vehicle",
-    passengers: "passengers",
-    // Reservation Form
-    reservationForm: {
-      fromPrice: "From",
-      fullName: "Full Name",
-      fullNamePlaceholder: "John Doe",
-      email: "Email",
-      emailPlaceholder: "you@email.com",
-      phone: "Phone",
-      phonePlaceholder: "+1 234 567",
-      preferredDate: "Preferred Date",
-      transferDate: "Transfer Date",
-      adults: "Adults",
-      children: "Children",
-      numberOfPassengers: "Number of Passengers",
-      specialRequests: "Special Requests",
-      specialRequestsPlaceholder: "Any special requests?",
-      pickupDetails: "Pickup Details & Requests",
-      pickupDetailsPlaceholder: "Flight number, pickup address, special requests...",
-      total: "Total",
-      startingFrom: "Starting from",
-      finalPriceNote: "Final price depends on vehicle selection",
-      reserveNow: "Reserve Now",
-      requestCustomQuote: "Request Custom Quote",
-      secure: "Secure",
-      instantConfirm: "Instant confirm",
-      passenger: "passenger",
-      passengers: "passengers",
-      transfer: "Transfer",
-    },
-  },
+
 
   // Testimonials Section
   testimonials: {
