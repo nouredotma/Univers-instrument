@@ -11,10 +11,16 @@ export type ProductCategory =
   | "chemicals"
   | "used"
 
+export interface SpecificationsTable {
+  headers: string[]
+  rows: string[][]
+}
+
 export interface ProductTranslations {
   name: string
   shortDescription: string
   longDescription: string
+  specificationsTable?: SpecificationsTable
 }
 
 export interface Product {
@@ -22,6 +28,7 @@ export interface Product {
   name: string
   shortDescription: string
   longDescription: string
+  specificationsTable?: SpecificationsTable
   mainImage: string
   thumbnailImages: string[]
   category: ProductCategory
@@ -51,24 +58,56 @@ export const products: Product[] = [
     price: 850,
     oldPrice: 1050,
     stock: 12,
+    specificationsTable: {
+      headers: ["Parameter", "Range", "Resolution", "Accuracy"],
+      rows: [
+        ["pH", "0.00 to 14.00 pH", "0.01 pH", "±0.01 pH"],
+        ["mV", "±1999.9 mV", "0.1 mV", "±0.2 mV"],
+        ["Temperature", "0.0 to 100.0 °C", "0.1 °C", "±0.5 °C"],
+      ],
+    },
     translations: {
       en: {
         name: "Digital pH Meter Pro",
         shortDescription: "High-precision benchtop pH meter for laboratory analysis.",
         longDescription:
           "The Digital pH Meter Pro is a state-of-the-art benchtop instrument designed for accurate and reliable pH measurement in research and quality control laboratories. Featuring a large backlit LCD display, automatic temperature compensation (ATC), and a 3-point calibration system, this meter delivers exceptional accuracy (±0.01 pH). Its robust design includes a built-in electrode holder, data logging capability with USB export, and GLP-compliant results. Ideal for pharmaceutical, food & beverage, environmental, and educational applications.",
+        specificationsTable: {
+          headers: ["Parameter", "Range", "Resolution", "Accuracy"],
+          rows: [
+            ["pH", "0.00 to 14.00 pH", "0.01 pH", "±0.01 pH"],
+            ["mV", "±1999.9 mV", "0.1 mV", "±0.2 mV"],
+            ["Temperature", "0.0 to 100.0 °C", "0.1 °C", "±0.5 °C"],
+          ],
+        },
       },
       fr: {
         name: "pH-mètre numérique Pro",
         shortDescription: "pH-mètre de paillasse haute précision pour analyses en laboratoire.",
         longDescription:
           "Le pH-mètre numérique Pro est un instrument de paillasse de pointe conçu pour des mesures de pH précises et fiables dans les laboratoires de recherche et de contrôle qualité. Doté d'un grand écran LCD rétroéclairé, d'une compensation automatique de température (ATC) et d'un système de calibration à 3 points, il offre une précision exceptionnelle (±0.01 pH). Sa conception robuste inclut un support d'électrode intégré, une capacité d'enregistrement des données avec export USB et des résultats conformes aux BPL.",
+        specificationsTable: {
+          headers: ["Paramètre", "Plage", "Résolution", "Précision"],
+          rows: [
+            ["pH", "0.00 à 14.00 pH", "0.01 pH", "±0.01 pH"],
+            ["mV", "±1999.9 mV", "0.1 mV", "±0.2 mV"],
+            ["Température", "0.0 à 100.0 °C", "0.1 °C", "±0.5 °C"],
+          ],
+        },
       },
       es: {
         name: "Medidor de pH Digital Pro",
         shortDescription: "Medidor de pH de sobremesa de alta precisión para análisis de laboratorio.",
         longDescription:
           "El Medidor de pH Digital Pro es un instrumento de sobremesa de última generación diseñado para mediciones de pH precisas y fiables en laboratorios de investigación y control de calidad. Con una gran pantalla LCD retroiluminada, compensación automática de temperatura (ATC) y un sistema de calibración de 3 puntos, ofrece una precisión excepcional (±0.01 pH). Su diseño robusto incluye un soporte de electrodo integrado, capacidad de registro de datos con exportación USB y resultados conformes con BPL.",
+        specificationsTable: {
+          headers: ["Parámetro", "Rango", "Resolución", "Precisión"],
+          rows: [
+            ["pH", "0.00 a 14.00 pH", "0.01 pH", "±0.01 pH"],
+            ["mV", "±1999.9 mV", "0.1 mV", "±0.2 mV"],
+            ["Temperatura", "0.0 a 100.0 °C", "0.1 °C", "±0.5 °C"],
+          ],
+        },
       },
     },
   },
@@ -84,24 +123,60 @@ export const products: Product[] = [
     price: 1200,
     oldPrice: 1450,
     stock: 8,
+    specificationsTable: {
+      headers: ["Feature", "Specification"],
+      rows: [
+        ["Measurement Range", "0.00 to 1000 NTU"],
+        ["Accuracy", "±2% of reading or 0.02 NTU"],
+        ["Light Source", "Infrared LED (860 nm)"],
+        ["Data Memory", "500 measurements"],
+      ],
+    },
     translations: {
       en: {
         name: "Portable Turbidity Meter",
         shortDescription: "Compact handheld turbidity meter for water quality testing.",
         longDescription:
           "The Portable Turbidity Meter is an essential field instrument for rapid and accurate turbidity measurement in water and environmental applications.",
+        specificationsTable: {
+          headers: ["Feature", "Specification"],
+          rows: [
+            ["Measurement Range", "0.00 to 1000 NTU"],
+            ["Accuracy", "±2% of reading or 0.02 NTU"],
+            ["Light Source", "Infrared LED (860 nm)"],
+            ["Data Memory", "500 measurements"],
+          ],
+        },
       },
       fr: {
         name: "Turbidimètre portable",
         shortDescription: "Turbidimètre portable compact pour l'analyse de la qualité de l'eau.",
         longDescription:
           "Le Turbidimètre portable est un instrument de terrain essentiel pour la mesure rapide et précise de la turbidité dans les applications liées à l'eau et à l'environnement.",
+        specificationsTable: {
+          headers: ["Caractéristique", "Spécification"],
+          rows: [
+            ["Plage de mesure", "0.00 à 1000 NTU"],
+            ["Précision", "±2% de la lecture ou 0.02 NTU"],
+            ["Source lumineuse", "LED Infrarouge (860 nm)"],
+            ["Mémoire", "500 mesures"],
+          ],
+        },
       },
       es: {
         name: "Turbidímetro portátil",
         shortDescription: "Turbidímetro portátil compacto para análisis de calidad del agua.",
         longDescription:
           "El Turbidímetro portátil es un instrumento de campo esencial para la medición rápida y precisa de la turbidez en aplicaciones de agua y medio ambiente.",
+        specificationsTable: {
+          headers: ["Característica", "Especificación"],
+          rows: [
+            ["Rango de medición", "0.00 a 1000 NTU"],
+            ["Precisión", "±2% de la lectura o 0.02 NTU"],
+            ["Fuente de luz", "LED Infrarrojo (860 nm)"],
+            ["Memoria", "500 mediciones"],
+          ],
+        },
       },
     },
   },
@@ -117,24 +192,60 @@ export const products: Product[] = [
     price: 680,
     oldPrice: 850,
     stock: 15,
+    specificationsTable: {
+      headers: ["Parameter", "Testing Method"],
+      rows: [
+        ["pH", "Digital Probe (0-14 pH)"],
+        ["NPK", "Colorimetric / Reagents"],
+        ["Moisture", "TDR Sensor (0-100%)"],
+        ["Conductivity", "Direct Soil Electrode"],
+      ],
+    },
     translations: {
       en: {
         name: "Soil Analysis Kit Pro",
         shortDescription: "Complete portable soil testing kit for agriculture and agronomy.",
         longDescription:
           "The Soil Analysis Kit Pro is a comprehensive portable testing solution designed for agronomists, farmers, and environmental scientists.",
+        specificationsTable: {
+          headers: ["Parameter", "Testing Method"],
+          rows: [
+            ["pH", "Digital Probe (0-14 pH)"],
+            ["NPK", "Colorimetric / Reagents"],
+            ["Moisture", "TDR Sensor (0-100%)"],
+            ["Conductivity", "Direct Soil Electrode"],
+          ],
+        },
       },
       fr: {
         name: "Kit d'analyse de sol Pro",
         shortDescription: "Kit d'analyse de sol portable complet pour l'agriculture et l'agronomie.",
         longDescription:
           "Le Kit d'analyse de sol Pro est une solution de test portable complète conçue pour les agronomes, les agriculteurs et les scientifiques environnementaux.",
+        specificationsTable: {
+          headers: ["Paramètre", "Méthode de test"],
+          rows: [
+            ["pH", "Sonde numérique (0-14 pH)"],
+            ["NPK", "Colorimétrie / Réactifs"],
+            ["Humidité", "Capteur TDR (0-100%)"],
+            ["Conductivité", "Électrode de sol directe"],
+          ],
+        },
       },
       es: {
         name: "Kit de análisis de suelo Pro",
         shortDescription: "Kit completo portátil de análisis de suelo para agricultura y agronomía.",
         longDescription:
           "El Kit de análisis de suelo Pro es una solución de pruebas portátil completa diseñada para agrónomos, agricultores y científicos ambientales.",
+        specificationsTable: {
+          headers: ["Parámetro", "Método de prueba"],
+          rows: [
+            ["pH", "Sonda digital (0-14 pH)"],
+            ["NPK", "Colorimétrico / Reactivos"],
+            ["Humedad", "Sensor TDR (0-100%)"],
+            ["Conductividad", "Electrodo de suelo directo"],
+          ],
+        },
       },
     },
   },
@@ -150,24 +261,60 @@ export const products: Product[] = [
     price: 2450,
     oldPrice: 2800,
     stock: 5,
+    specificationsTable: {
+      headers: ["Model Feature", "Analytical Specification"],
+      rows: [
+        ["Max Capacity", "220 g"],
+        ["Readability", "0.0001 g (0.1 mg)"],
+        ["Repeatability", "±0.0001 g"],
+        ["Pan Size", "Ø 90 mm"],
+      ],
+    },
     translations: {
       en: {
         name: "Precision Analytical Balance",
         shortDescription: "0.0001g readability analytical balance for precise weighing.",
         longDescription:
           "The Precision Analytical Balance is engineered for the most demanding weighing applications in pharmaceutical, chemical, and research laboratories.",
+        specificationsTable: {
+          headers: ["Model Feature", "Analytical Specification"],
+          rows: [
+            ["Max Capacity", "220 g"],
+            ["Readability", "0.0001 g (0.1 mg)"],
+            ["Repeatability", "±0.0001 g"],
+            ["Pan Size", "Ø 90 mm"],
+          ],
+        },
       },
       fr: {
         name: "Balance analytique de précision",
         shortDescription: "Balance analytique avec lisibilité de 0.0001 g pour pesée de précision.",
         longDescription:
           "La Balance analytique de précision est conçue pour les applications de pesée les plus exigeantes dans les laboratoires pharmaceutiques, chimiques et de recherche.",
+        specificationsTable: {
+          headers: ["Caractéristique", "Spécification"],
+          rows: [
+            ["Capacité max", "220 g"],
+            ["Lisibilité", "0.0001 g (0.1 mg)"],
+            ["Répétabilité", "±0.0001 g"],
+            ["Plateau", "Ø 90 mm"],
+          ],
+        },
       },
       es: {
         name: "Balanza analítica de precisión",
         shortDescription: "Balanza analítica con legibilidad de 0.0001 g para pesaje de precisión.",
         longDescription:
           "La Balanza analítica de precisión está diseñada para las aplicaciones de pesaje más exigentes en laboratorios farmacéuticos, químicos y de investigación.",
+        specificationsTable: {
+          headers: ["Característica", "Especificación"],
+          rows: [
+            ["Capacidad máx", "220 g"],
+            ["Legibilidad", "0.0001 g (0.1 mg)"],
+            ["Repetibilidad", "±0.0001 g"],
+            ["Platillo", "Ø 90 mm"],
+          ],
+        },
       },
     },
   },
@@ -183,24 +330,56 @@ export const products: Product[] = [
     price: 520,
     oldPrice: 650,
     stock: 25,
+    specificationsTable: {
+      headers: ["Pipette Type", "Volume Range", "Increment"],
+      rows: [
+        ["Single Channel P10", "0.5 – 10 µL", "0.01 µL"],
+        ["Single Channel P200", "20 – 200 µL", "0.2 µL"],
+        ["Single Channel P1000", "100 – 1000 µL", "1.0 µL"],
+      ],
+    },
     translations: {
       en: {
         name: "Laboratory Pipette Set",
         shortDescription: "Premium micropipette set with calibration certificate.",
         longDescription:
           "This Laboratory Pipette Set includes three ergonomic single-channel micropipettes covering volumes from 0.5 µL to 1000 µL.",
+        specificationsTable: {
+          headers: ["Pipette Type", "Volume Range", "Increment"],
+          rows: [
+            ["Single Channel P10", "0.5 – 10 µL", "0.01 µL"],
+            ["Single Channel P200", "20 – 200 µL", "0.2 µL"],
+            ["Single Channel P1000", "100 – 1000 µL", "1.0 µL"],
+          ],
+        },
       },
       fr: {
         name: "Set de pipettes de laboratoire",
         shortDescription: "Set de micropipettes premium avec certificat de calibration.",
         longDescription:
           "Ce Set de pipettes de laboratoire comprend trois micropipettes monocanal ergonomiques couvrant des volumes de 0,5 µL à 1000 µL.",
+        specificationsTable: {
+          headers: ["Type de pipette", "Plage de volume", "Incrément"],
+          rows: [
+            ["Monocanal P10", "0,5 – 10 µL", "0,01 µL"],
+            ["Monocanal P200", "20 – 200 µL", "0,2 µL"],
+            ["Monocanal P1000", "100 – 1000 µL", "1,0 µL"],
+          ],
+        },
       },
       es: {
         name: "Set de pipetas de laboratorio",
         shortDescription: "Set de micropipetas premium con certificado de calibración.",
         longDescription:
           "Este Set de pipetas de laboratorio incluye tres micropipetas monocanal ergonómicas que cubren volúmenes de 0,5 µL a 1000 µL.",
+        specificationsTable: {
+          headers: ["Tipo de pipeta", "Rango de volumen", "Incremento"],
+          rows: [
+            ["Monocanal P10", "0,5 – 10 µL", "0,01 µL"],
+            ["Monocanal P200", "20 – 200 µL", "0,2 µL"],
+            ["Monocanal P1000", "100 – 1000 µL", "1,0 µL"],
+          ],
+        },
       },
     },
   },
@@ -216,24 +395,60 @@ export const products: Product[] = [
     price: 3200,
     oldPrice: 3800,
     stock: 3,
+    specificationsTable: {
+      headers: ["Paramater", "Range / Spec"],
+      rows: [
+        ["Display", "12.1\" Color TFT LCD"],
+        ["ECG", "3/5-lead (Heart Rate, ST)"],
+        ["SpO2", "0% – 100%"],
+        ["NIBP", "Manual, Auto, Continuous"],
+      ],
+    },
     translations: {
       en: {
         name: "Patient Vital Signs Monitor",
         shortDescription: "Multi-parameter bedside vital signs monitor for clinical use.",
         longDescription:
           "The Patient Vital Signs Monitor is a professional-grade multi-parameter monitoring system designed for hospitals, clinics, and ambulatory care.",
+        specificationsTable: {
+          headers: ["Paramater", "Range / Spec"],
+          rows: [
+            ["Display", "12.1\" Color TFT LCD"],
+            ["ECG", "3/5-lead (Heart Rate, ST)"],
+            ["SpO2", "0% – 100%"],
+            ["NIBP", "Manual, Auto, Continuous"],
+          ],
+        },
       },
       fr: {
         name: "Moniteur de signes vitaux patient",
         shortDescription: "Moniteur multi-paramètres de chevet pour utilisation clinique.",
         longDescription:
           "Le Moniteur de signes vitaux patient est un système de surveillance multi-paramètres de grade professionnel conçu pour les hôpitaux, les cliniques et les soins ambulatoires.",
+        specificationsTable: {
+          headers: ["Paramètre", "Plage / Spéc."],
+          rows: [
+            ["Écran", "12.1\" TFT LCD Couleur"],
+            ["ECG", "3/5-fils (FC, Segment ST)"],
+            ["SpO2", "0% – 100%"],
+            ["PNI", "Manuel, Auto, Continu"],
+          ],
+        },
       },
       es: {
         name: "Monitor de signos vitales del paciente",
         shortDescription: "Monitor multiparamétrico de cabecera para uso clínico.",
         longDescription:
           "El Monitor de signos vitales del paciente es un sistema de monitorización multiparamétrico de grado profesional diseñado para hospitales, clínicas y atención ambulatoria.",
+        specificationsTable: {
+          headers: ["Parámetro", "Rango / Especif."],
+          rows: [
+            ["Pantalla", "12.1\" Color TFT LCD"],
+            ["ECG", "3/5-conductores (FC, ST)"],
+            ["SpO2", "0% – 100%"],
+            ["PNI", "Manual, Auto, Continuo"],
+          ],
+        },
       },
     },
   },
@@ -249,24 +464,60 @@ export const products: Product[] = [
     price: 1850,
     oldPrice: 2200,
     stock: 7,
+    specificationsTable: {
+      headers: ["Component", "Specification"],
+      rows: [
+        ["Frame Structure", "Powder-coated C-Frame Steel"],
+        ["Worktop", "30 mm Phenolic Resin"],
+        ["Standard Width", "1500 / 1800 mm"],
+        ["Load Capacity", "250 kg per linear meter"],
+      ],
+    },
     translations: {
       en: {
         name: "C-Frame Laboratory Workstation",
         shortDescription: "Modular laboratory workstation with chemical-resistant surface.",
         longDescription:
           "The C-Frame Laboratory Workstation is a premium modular bench designed for modern research and teaching laboratories.",
+        specificationsTable: {
+          headers: ["Component", "Specification"],
+          rows: [
+            ["Frame Structure", "Powder-coated C-Frame Steel"],
+            ["Worktop", "30 mm Phenolic Resin"],
+            ["Standard Width", "1500 / 1800 mm"],
+            ["Load Capacity", "250 kg per linear meter"],
+          ],
+        },
       },
       fr: {
         name: "Paillasse de laboratoire en C",
         shortDescription: "Paillasse de laboratoire modulaire avec surface résistante aux produits chimiques.",
         longDescription:
           "La Paillasse de laboratoire en C est une paillasse modulaire premium conçue pour les laboratoires de recherche et d'enseignement modernes.",
+        specificationsTable: {
+          headers: ["Composant", "Spécification"],
+          rows: [
+            ["Structure", "Acier en C avec revêtement époxy"],
+            ["Plan de travail", "Résine phénolique 30 mm"],
+            ["Largeur standard", "1500 / 1800 mm"],
+            ["Charge utile", "250 kg par mètre linéaire"],
+          ],
+        },
       },
       es: {
         name: "Estación de trabajo de laboratorio en C",
         shortDescription: "Estación de trabajo modular con superficie resistente a químicos.",
         longDescription:
           "La Estación de trabajo de laboratorio en C es un banco modular premium diseñado para laboratorios modernos de investigación y enseñanza.",
+        specificationsTable: {
+          headers: ["Componente", "Especificación"],
+          rows: [
+            ["Estructura", "Acero en C recubierto"],
+            ["Encimera", "Resina fenólica de 30 mm"],
+            ["Ancho estándar", "1500 / 1800 mm"],
+            ["Carga máxima", "250 kg por metro lineal"],
+          ],
+        },
       },
     },
   },
@@ -282,24 +533,60 @@ export const products: Product[] = [
     price: 390,
     oldPrice: 480,
     stock: 20,
+    specificationsTable: {
+      headers: ["Reagent Name", "Grade / Concentration"],
+      rows: [
+        ["Hydrochloric Acid", "ACS Grade (37%)"],
+        ["Sulfuric Acid", "ACS Grade (95-98%)"],
+        ["Sodium Hydroxide", "Analytical Pellets"],
+        ["Buffer Solutions", "pH 4, 7, 10"],
+      ],
+    },
     translations: {
       en: {
         name: "Analytical Grade Reagent Kit",
         shortDescription: "Complete analytical-grade chemical reagent kit for laboratory analyses.",
         longDescription:
           "The Analytical Grade Reagent Kit is a curated collection of high-purity chemicals essential for routine and advanced laboratory analyses.",
+        specificationsTable: {
+          headers: ["Reagent Name", "Grade / Concentration"],
+          rows: [
+            ["Hydrochloric Acid", "ACS Grade (37%)"],
+            ["Sulfuric Acid", "ACS Grade (95-98%)"],
+            ["Sodium Hydroxide", "Analytical Pellets"],
+            ["Buffer Solutions", "pH 4, 7, 10"],
+          ],
+        },
       },
       fr: {
         name: "Kit de réactifs de grade analytique",
         shortDescription: "Kit complet de réactifs chimiques de grade analytique pour analyses en laboratoire.",
         longDescription:
           "Le Kit de réactifs de grade analytique est une collection soigneusement sélectionnée de produits chimiques de haute pureté essentiels pour les analyses de laboratoire courantes et avancées.",
+        specificationsTable: {
+          headers: ["Nom du réactif", "Grade / Concentration"],
+          rows: [
+            ["Acide chlorhydrique", "Grade ACS (37%)"],
+            ["Acide sulfurique", "Grade ACS (95-98%)"],
+            ["Hydroxyde de sodium", "Pastilles analytiques"],
+            ["Solutions tampons", "pH 4, 7, 10"],
+          ],
+        },
       },
       es: {
         name: "Kit de reactivos de grado analítico",
         shortDescription: "Kit completo de reactivos químicos de grado analítico para análisis de laboratorio.",
         longDescription:
           "El Kit de reactivos de grado analítico es una colección cuidadosamente seleccionada de químicos de alta pureza esenciales para análisis de laboratorio rutinarios y avanzados.",
+        specificationsTable: {
+          headers: ["Nombre del reactivo", "Grado / Concentración"],
+          rows: [
+            ["Ácido clorhídrico", "Grado ACS (37%)"],
+            ["Ácido sulfúrico", "Grado ACS (95-98%)"],
+            ["Hidróxido de sodio", "Pellets analíticos"],
+            ["Soluciones tampón", "pH 4, 7, 10"],
+          ],
+        },
       },
     },
   },
@@ -320,6 +607,7 @@ export function getTranslatedProduct(product: Product, language: Language) {
         name: englishTranslation.name,
         shortDescription: englishTranslation.shortDescription,
         longDescription: englishTranslation.longDescription,
+        specificationsTable: englishTranslation.specificationsTable,
       }
     }
     return product
@@ -330,6 +618,7 @@ export function getTranslatedProduct(product: Product, language: Language) {
     name: translation.name,
     shortDescription: translation.shortDescription,
     longDescription: translation.longDescription,
+    specificationsTable: translation.specificationsTable,
   }
 }
 

@@ -13,6 +13,16 @@ import Image from "next/image"
 import Link from "next/link"
 import { use, useState } from "react"
 import { motion } from "framer-motion"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+
+import OurProducts from "@/components/our-products"
 
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { language } = useLanguage()
@@ -67,7 +77,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         </Container>
       </div>
 
-      <section className="pb-20">
+      <section className="pb-10 md:pb-20">
         <Container className="max-w-full mx-auto px-4 md:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 md:gap-8 items-start">
             
@@ -132,7 +142,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
             {/* Right Column: Product Info & CTA */}
             <div className="lg:col-span-7 flex flex-col pt-2 lg:pt-0">
-              <div className="flex flex-col gap-5 md:gap-7 lg:max-w-3xl">
+              <div className="flex flex-col gap-4 md:gap-5 lg:max-w-3xl">
                 
                 {/* 1. Product Name & Stock */}
                 <div className="flex items-center justify-between gap-4">
@@ -158,7 +168,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 </div>
 
                 {/* 3. Pricing (Old, New, Savings) */}
-                <div className="flex flex-col gap-1.5 pt-1">
+                <div className="flex flex-col gap-1 pt-0.5">
                   {product.oldPrice && (
                     <span className="text-sm md:text-base font-light text-neutral-400 line-through">
                       €{product.oldPrice}
@@ -180,7 +190,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 </p>
 
                 {/* 5. Delivery Div */}
-                <div className="border-l-4 border-green-500 bg-green-50 p-3 flex items-center gap-2">
+                <div className="border-l-4 border-green-500 bg-green-50 p-2.5 flex items-center gap-2">
                    <div className="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center shrink-0">
                       <Truck className="w-4 h-4" />
                    </div>
@@ -191,9 +201,9 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 </div>
 
                 {/* 6. Quantity Selector */}
-                <div className="flex items-center gap-4">
-                  <span className="text-xs font-medium text-neutral-500 uppercase tracking-widest text-[10px] md:text-xs">Quantity</span>
-                  <div className="flex border border-neutral-200 rounded-xs overflow-hidden bg-white">
+                <div className="flex flex-col gap-2">
+                  <span className="text-xs font-bold text-neutral-900 text-[10px] md:text-xs">Quantity</span>
+                  <div className="flex border border-neutral-200 rounded-xs overflow-hidden bg-white w-fit">
                     <button 
                       onClick={handleDecreaseQuantity}
                       disabled={quantity <= 1}
@@ -215,7 +225,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 </div>
 
                 {/* 7. CTA Buttons */}
-                <div className="flex flex-row gap-2 pt-1">
+                <div className="flex flex-row gap-2 pt-0">
                   <Button className="flex-2 h-12 md:h-14 rounded-xs text-xs md:text-sm font-bold" asChild>
                     <a href={`mailto:uis.instruments@gmail.com?subject=Order for ${product.name}&body=I would like to order ${quantity}x ${product.name}.`}>
                       <Package className="w-4 h-4 md:w-5 md:h-5 mr-2" />
@@ -233,12 +243,43 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 </div>
 
                 {/* 8. Long Description */}
-                <div className="pt-6 border-t border-neutral-200 flex flex-col gap-3">
-                  <h3 className="text-lg font-bold text-neutral-900 uppercase tracking-tight">Overview</h3>
+                <div className="pt-4 border-t border-neutral-200 flex flex-col gap-2">
+                  <h3 className="text-lg font-bold text-neutral-900 tracking-tight">Overview</h3>
                   <div className="text-sm md:text-base text-neutral-600 leading-relaxed space-y-4 font-light">
                     {product.longDescription}
                   </div>
                 </div>
+
+                {/* 9. Specifications Table */}
+                {product.specificationsTable && (
+                  <div className="pt-8 border-t border-neutral-200 flex flex-col gap-4">
+                    <h3 className="text-lg font-bold text-neutral-900 tracking-tight">Technical Specifications</h3>
+                    <div className="rounded-xs border border-neutral-200 overflow-hidden bg-white">
+                      <Table className="text-[10px] md:text-xs">
+                        <TableHeader className="bg-neutral-50/50">
+                          <TableRow className="hover:bg-transparent">
+                            {product.specificationsTable.headers.map((header, index) => (
+                              <TableHead key={index} className="font-bold text-neutral-900 border-r last:border-r-0 h-10 px-2 md:px-4">
+                                {header}
+                              </TableHead>
+                            ))}
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {product.specificationsTable.rows.map((row, rowIndex) => (
+                            <TableRow key={rowIndex} className="last:border-0">
+                              {row.map((cell, cellIndex) => (
+                                <TableCell key={cellIndex} className="border-r last:border-r-0 text-neutral-600 py-2.5 px-2 md:px-4">
+                                  {cell}
+                                </TableCell>
+                              ))}
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
+                  </div>
+                )}
 
               </div>
             </div>
@@ -246,6 +287,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
           </div>
         </Container>
       </section>
+
+      <OurProducts />
 
       <Footer />
       <FloatingContact />

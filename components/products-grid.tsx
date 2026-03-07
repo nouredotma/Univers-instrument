@@ -55,7 +55,7 @@ const ProductsGrid = memo(function ProductsGrid({ products }: ProductsGridProps)
               {/* Content Section */}
               <div className="py-2 md:py-3 flex flex-col grow">
                 <div className="flex mb-1">
-                  <h3 className="text-sm md:text-lg font-bold text-black group-hover:text-primary transition-colors line-clamp-1 w-full">
+                  <h3 className="text-sm md:text-lg font-semibold text-black group-hover:text-primary transition-colors line-clamp-1 w-full">
                     {product.name}
                   </h3>
                 </div>
