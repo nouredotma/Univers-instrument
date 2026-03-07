@@ -156,13 +156,13 @@ export default function SearchFilter({ onChange, initial }: Props) {
 
   return (
     <div className="w-full">
-      <div className="bg-white border border-border rounded-md px-3 py-4 lg:p-5 h-fit">
-        <h3 className="text-sm font-bold uppercase tracking-widest mb-4 lg:mb-6 border-b pb-3 lg:pb-4">Filters</h3>
+      <div className="bg-[#414141] rounded-md px-3 py-4 lg:p-5 h-fit">
+        <h3 className="text-sm font-bold uppercase tracking-widest mb-4 lg:mb-6 border-b border-white/20 pb-3 lg:pb-4 text-amber-400">Filters</h3>
         
         <div className="flex flex-col gap-4 lg:gap-6">
           {/* Search Bar */}
           <div className="space-y-2">
-            <label className="text-xs font-bold text-foreground">
+            <label className="text-xs font-bold text-white">
               Search Products
             </label>
             <input
@@ -170,7 +170,7 @@ export default function SearchFilter({ onChange, initial }: Props) {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && emit()}
-              className="w-full px-3 py-2 bg-background border border-border rounded-md text-xs md:text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all"
+              className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-md text-xs md:text-sm text-white placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-white/40 focus:border-white/40 transition-all"
               placeholder="Keywords..."
             />
           </div>
@@ -178,7 +178,7 @@ export default function SearchFilter({ onChange, initial }: Props) {
           <div className="grid grid-cols-2 lg:grid-cols-1 gap-3 lg:gap-6">
             {/* Condition / Category */}
             <div className="space-y-2">
-              <label className="text-xs font-bold text-foreground">
+              <label className="text-xs font-bold text-white">
                 Category
               </label>
               <FilterDropdown
@@ -191,7 +191,7 @@ export default function SearchFilter({ onChange, initial }: Props) {
 
             {/* Price Range */}
             <div className="space-y-2">
-              <label className="text-xs font-bold text-foreground">
+              <label className="text-xs font-bold text-white">
                 Price Range (€)
               </label>
               <div className="flex items-center gap-1.5 sm:gap-2">
@@ -199,15 +199,15 @@ export default function SearchFilter({ onChange, initial }: Props) {
                   type="number"
                   value={minPrice as any}
                   onChange={(e) => setMinPrice(e.target.value === "" ? "" : Number(e.target.value))}
-                  className="w-full px-2 sm:px-3 py-2 bg-background border border-border rounded-md text-xs md:text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all min-w-0"
+                  className="w-full px-2 sm:px-3 py-2 bg-white/10 border border-white/20 rounded-md text-xs md:text-sm text-white placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-white/40 focus:border-white/40 transition-all min-w-0"
                   placeholder="Min"
                 />
-                <span className="text-muted-foreground text-xs shrink-0">-</span>
+                <span className="text-white/50 text-xs shrink-0">-</span>
                 <input
                   type="number"
                   value={maxPrice as any}
                   onChange={(e) => setMaxPrice(e.target.value === "" ? "" : Number(e.target.value))}
-                  className="w-full px-2 sm:px-3 py-2 bg-background border border-border rounded-md text-xs md:text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all min-w-0"
+                  className="w-full px-2 sm:px-3 py-2 bg-white/10 border border-white/20 rounded-md text-xs md:text-sm text-white placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-white/40 focus:border-white/40 transition-all min-w-0"
                   placeholder="Max"
                 />
               </div>
@@ -219,14 +219,14 @@ export default function SearchFilter({ onChange, initial }: Props) {
             <button
               type="button"
               onClick={emit}
-              className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 bg-primary text-white text-xs font-bold rounded-sm hover:bg-primary/90 transition-all cursor-pointer"
+              className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 bg-white text-[#414141] text-xs font-bold rounded-sm hover:bg-white/90 transition-all cursor-pointer"
             >
               Apply Filter
             </button>
             <button
               type="button"
               onClick={reset}
-              className="flex-1 px-3 py-2.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 border border-border lg:border-transparent rounded-sm cursor-pointer transition-all"
+              className="flex-1 px-3 py-2.5 text-xs font-medium text-white/60 hover:text-white hover:bg-white/10 border border-white/20 lg:border-transparent rounded-sm cursor-pointer transition-all"
             >
               Clear all
             </button>
