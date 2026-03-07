@@ -28,8 +28,8 @@ export default function OurProducts() {
 
   if (isLoading) {
     return (
-      <section className="w-full py-20 px-2 md:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
+      <section className="w-full py-20 bg-white">
+        <div className="max-w-full mx-auto px-4 md:px-12">
           <div className="flex items-center justify-center py-16">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
           </div>
@@ -39,8 +39,8 @@ export default function OurProducts() {
   }
 
   return (
-    <section className="w-full py-20 px-2 md:px-8 bg-white">
-      <div className="max-w-7xl mx-auto">
+    <section className="w-full py-20 bg-white">
+      <div className="max-w-full mx-auto px-4 md:px-12">
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary mb-4">
             <span className="text-lg font-semibold">{t.bestOffers.sectionTitle}</span>

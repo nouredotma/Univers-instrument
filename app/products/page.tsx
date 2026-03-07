@@ -46,15 +46,15 @@ function ProductsContent() {
       if (filters.minPrice != null && p.price < filters.minPrice) return false
       if (filters.maxPrice != null && p.price > filters.maxPrice) return false
 
-      // Condition filtering
+      // Category filtering
       if (filters.condition && filters.condition !== "all") {
-        if (p.condition !== filters.condition) return false
+        if (p.category !== filters.condition) return false
       }
 
       // Search filtering
       if (filters.search) {
         const searchStr = filters.search.toLowerCase()
-        const hay = (p.name + " " + p.description).toLowerCase()
+        const hay = (p.name + " " + p.shortDescription).toLowerCase()
         if (!hay.includes(searchStr)) return false
       }
 

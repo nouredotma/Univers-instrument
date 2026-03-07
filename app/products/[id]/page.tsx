@@ -26,15 +26,15 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   const product = getTranslatedProduct(productRaw, language)
   const [activeImage, setActiveImage] = useState(product.mainImage)
 
-  const allImages = [product.mainImage, ...product.subImages].filter(Boolean)
+  const allImages = [product.mainImage, ...product.thumbnailImages].filter(Boolean)
 
   return (
     <main className="w-full bg-slate-50/50 min-h-screen">
       <Header />
       
       {/* Breadcrumb / Back Button */}
-      <div className="pt-24 pb-6 px-4 md:px-8">
-        <Container className="max-w-7xl">
+      <div className="pt-56 pb-6 px-4 md:px-8">
+        <Container className="max-w-full mx-auto px-4 md:px-12">
           <Link 
             href="/products" 
             className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-primary transition-colors group"
@@ -45,15 +45,15 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         </Container>
       </div>
 
-      <section className="pb-20 px-4 md:px-8">
-        <Container className="max-w-7xl">
+      <section className="pb-20">
+        <Container className="max-w-full mx-auto px-4 md:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-20">
             
             {/* Left Column: Image Gallery */}
             <div className="lg:col-span-7 space-y-6">
               <motion.div 
                 layoutId="main-image"
-                className="relative aspect-[4/3] rounded-3xl overflow-hidden bg-white shadow-2xl border border-white"
+                className="relative aspect-[4/3] rounded-3xl overflow-hidden bg-white border border-slate-200"
               >
                 <Image
                   src={activeImage}
@@ -63,8 +63,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   priority
                 />
                 <div className="absolute top-6 left-6 flex flex-col gap-3">
-                   <div className="bg-primary/90 backdrop-blur-md text-white px-4 py-1.5 rounded-full text-xs font-black shadow-xl uppercase tracking-widest border border-white/20">
-                    {product.condition}
+                   <div className="bg-primary/90 backdrop-blur-md text-white px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest border border-white/20">
+                    {product.category}
                   </div>
                 </div>
               </motion.div>
@@ -75,8 +75,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                     <button
                       key={idx}
                       onClick={() => setActiveImage(img)}
-                      className={`relative w-24 h-24 rounded-2xl overflow-hidden border-4 transition-all duration-300 shrink-0 shadow-lg ${
-                        activeImage === img ? "border-primary scale-105 shadow-primary/20" : "border-transparent opacity-70 hover:opacity-100"
+                      className={`relative w-24 h-24 rounded-2xl overflow-hidden border-4 transition-all duration-300 shrink-0 ${
+                        activeImage === img ? "border-primary" : "border-transparent opacity-70 hover:opacity-100"
                       }`}
                     >
                       <Image src={img} alt={`${product.name} thumbnail ${idx}`} fill className="object-cover" />
@@ -105,10 +105,10 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 </h1>
 
                 <p className="text-lg text-slate-600 leading-relaxed font-medium">
-                  {product.description}
+                  {product.longDescription}
                 </p>
 
-                <div className="p-8 rounded-3xl bg-white border border-slate-200 shadow-xl relative overflow-hidden group">
+                <div className="p-8 rounded-3xl bg-white border border-slate-200 relative overflow-hidden group">
                   <div className="absolute top-0 right-0 p-4 opacity-10">
                     <Zap className="w-20 h-20 text-primary rotate-12" />
                   </div>
@@ -119,7 +119,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   </div>
                   
                   <div className="grid grid-cols-1 gap-4 mt-8">
-                     <Button size="lg" className="h-16 rounded-2xl text-base font-black uppercase tracking-widest shadow-2xl shadow-primary/30 hover:shadow-primary/50 transition-all hover:scale-[1.02]" asChild>
+                     <Button size="lg" className="h-16 rounded-2xl text-base font-black uppercase tracking-widest transition-all" asChild>
                         <a href="tel:0666166945">
                           <Phone className="w-5 h-5 mr-3" />
                           Call Now for Details
@@ -164,56 +164,24 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             </div>
           </div>
 
-          {/* Detailed Specifications / About */}
+          {/* Sidebar Info */}
           <div className="mt-24 pt-20 border-t border-slate-200">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-              <div className="lg:col-span-8 space-y-16">
-                
-                {/* Overview Section */}
+              <div className="lg:col-span-8">
                 <div className="space-y-6">
                   <h2 className="text-3xl font-black text-slate-900 flex items-center gap-4">
                     <span className="h-1.5 w-12 bg-primary rounded-full"></span>
                     Overview
                   </h2>
                   <div className="prose prose-slate prose-lg max-w-none font-medium text-slate-600">
-                    {product.details.overview}
+                    {product.longDescription}
                   </div>
                 </div>
-
-                {/* Advantages / Highlights */}
-                <div className="space-y-8">
-                  <h2 className="text-3xl font-black text-slate-900 flex items-center gap-4">
-                    <span className="h-1.5 w-12 bg-primary rounded-full"></span>
-                    Key Advantages
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {product.details.highlights.map((highlight, idx) => (
-                      <div key={idx} className="flex items-center gap-4 p-6 rounded-2xl bg-white border border-slate-100 shadow-sm group hover:border-primary/30 transition-all">
-                        <div className="h-10 w-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-all">
-                          <CheckCircle2 className="w-5 h-5" />
-                        </div>
-                        <span className="font-bold text-slate-700">{highlight}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Additional Sections */}
-                {product.details.sections.map((section, idx) => (
-                  <div key={idx} className="space-y-6">
-                    <h2 className="text-2xl font-black text-slate-900 uppercase tracking-widest text-primary/80">
-                      {section.title}
-                    </h2>
-                    <div className="prose prose-slate prose-lg max-w-none font-medium text-slate-600">
-                      {section.content}
-                    </div>
-                  </div>
-                ))}
               </div>
 
               {/* Sidebar Info */}
               <div className="lg:col-span-4 space-y-8">
-                <div className="p-8 rounded-3xl bg-slate-900 text-white shadow-2xl relative overflow-hidden">
+                <div className="p-8 rounded-3xl bg-slate-900 text-white relative overflow-hidden">
                    <div className="absolute -bottom-10 -right-10 opacity-20 transform rotate-12">
                       <div className="relative h-24 w-40">
                         <Image src="/whitelogo.png" alt="UIS" fill className="object-contain" />

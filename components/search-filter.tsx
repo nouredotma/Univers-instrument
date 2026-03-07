@@ -116,10 +116,16 @@ export default function SearchFilter({ onChange, initial }: Props) {
   const [isExpanded, setIsExpanded] = useState(false)
 
   const CONDITIONS = [
-    { name: "All Conditions", value: "all" },
-    { name: "New", value: "New" },
-    { name: "Used", value: "Used" },
-    { name: "Service", value: "Service" }
+    { name: "All Categories", value: "all" },
+    { name: "Laboratory Instruments", value: "laboratory" },
+    { name: "Consumables & Accessories", value: "consumables" },
+    { name: "Water & Environment", value: "water" },
+    { name: "Agricultural Instruments", value: "agriculture" },
+    { name: "Medical", value: "medical" },
+    { name: "Laboratory Furniture", value: "furniture" },
+    { name: "Weighing", value: "weighing" },
+    { name: "Chemicals & Reagents", value: "chemicals" },
+    { name: "Used Products", value: "used" },
   ]
 
   const emit = () => {
@@ -270,13 +276,13 @@ export default function SearchFilter({ onChange, initial }: Props) {
               <div className="space-y-3">
                 <label className="flex items-center gap-2 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
                   <ShieldCheck className="w-4 h-4" />
-                  Condition
+                  Category
                 </label>
                 <FilterDropdown
                   options={CONDITIONS}
                   value={condition}
                   onChange={(val) => { setCondition(val); }}
-                  placeholder="Select condition"
+                  placeholder="Select category"
                 />
               </div>
 
