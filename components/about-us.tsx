@@ -26,7 +26,7 @@ export default function AboutUs() {
 
   return (
     <section className="py-16 md:py-20 bg-white">
-      <Container className="max-w-6xl mx-auto px-2 md:px-8">
+      <Container className="max-w-7xl mx-auto px-2 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-center">
           {/* Image Column */}
           <div className="lg:col-span-2 order-1 lg:order-1">

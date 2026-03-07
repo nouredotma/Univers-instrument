@@ -138,34 +138,24 @@ function BlurredInfiniteSlider({
 
 const PARTNER_LOGOS = [
   {
-    src: "https://th.bing.com/th/id/OADD2.8108982943622_1JLMIX77UXV5TKOYDU?w=32&h=32&o=6&cb=ucfimg1&pid=21.2&ucfimg=1",
-    alt: "Viator",
-    height: 32,
+    src: "/p1.png",
+    alt: "Atago",
   },
   {
-    src: "https://upload.wikimedia.org/wikipedia/commons/0/02/TripAdvisor_Logo.svg",
-    alt: "TripAdvisor",
-    height: 32,
+    src: "/p2.jpeg",
+    alt: "Testo",
   },
   {
-    src: "https://upload.wikimedia.org/wikipedia/commons/d/dd/Booking.com_Logo.svg",
-    alt: "Booking.com",
-    height: 28,
+    src: "/p3.png",
+    alt: "Merck",
   },
   {
-    src: "https://upload.wikimedia.org/wikipedia/commons/3/3b/Expedia_Logo_2023.svg",
-    alt: "Expedia",
-    height: 28,
+    src: "/p4.jpeg",
+    alt: "Palintest",
   },
   {
-    src: "https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_Bélo.svg",
-    alt: "Airbnb",
-    height: 32,
-  },
-  {
-    src: "https://upload.wikimedia.org/wikipedia/commons/e/e2/GetYourGuide_logo.svg",
-    alt: "GetYourGuide",
-    height: 32,
+    src: "/p5.jpeg",
+    alt: "Ika",
   },
 ];
 
@@ -179,7 +169,7 @@ export default function Partners() {
     useEffect(() => {
         const calc = () => {
             // match Tailwind's `md` breakpoint (768px)
-            setComputedGap(window.innerWidth < 768 ? 32 : 80);
+            setComputedGap(0);
         };
         calc();
         window.addEventListener('resize', calc);
@@ -187,7 +177,7 @@ export default function Partners() {
     }, []);
 
     return (
-        <section className="bg-white py-8 w-full">
+        <section className="bg-white py-2 w-full">
             <Container className="max-w-7xl mx-auto px-2 md:px-6">
                 <div className="flex flex-col items-center md:flex-row gap-8">
                     <div className="shrink-0 text-center md:text-right md:max-w-44 md:border-r md:border-gray-200 md:pr-6">
@@ -206,17 +196,15 @@ export default function Partners() {
                                                         fadeWidth={80}
                                                 >
                             {PARTNER_LOGOS.map((logo, index) => (
-                                                                <div key={index} className="flex items-center justify-center min-w-20 md:min-w-[120px] h-12 md:h-16 px-2 md:px-4 relative group/logo">
-                                                                    <div className="relative h-6 w-20 md:h-8 md:w-24">
+                                                                 <div key={index} className="flex items-center justify-center h-12 md:h-16 px-0 relative group/logo w-20 md:w-28">
                                                                         <Image
                                                                             src={logo.src}
                                                                             alt={logo.alt}
                                                                             fill
                                                                             className="object-contain"
-                                                                            sizes="96px"
+                                                                            sizes="(max-width: 768px) 80px, 112px"
                                                                         />
-                                  </div>
-                                </div>
+                                                                </div>
                             ))}
                         </BlurredInfiniteSlider>
                     </div>
