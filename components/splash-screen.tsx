@@ -47,7 +47,7 @@ export default function SplashScreen() {
       }}
     >
       <Image
-        src="/blacklogo.png"
+        src="/logo.png"
         alt="Univers Instrument Service"
         width={200}
         height={200}
