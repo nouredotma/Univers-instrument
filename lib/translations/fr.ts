@@ -543,7 +543,7 @@ export const fr: TranslationKeys = {
   },
 
     partners: {
-      title: "NOS PARTENAIRES",
+      title: "Nos Partenaires",
       description: "Approuvés par les leaders de l'industrie",
     },
 
@@ -739,8 +739,8 @@ export const fr: TranslationKeys = {
         percentage: "Pourcentage",
         fixedAmount: "Montant fixe",
         discountValue: "Valeur de la remise",
-        maxDiscount: "Remise maximale (€) - Facultatif",
-        minPurchase: "Achat minimum (€) - Facultatif",
+        maxDiscount: "Remise maximale (MAD) - Facultatif",
+        minPurchase: "Achat minimum (MAD) - Facultatif",
         validFrom: "Valide à partir de",
         validTo: "Valide jusqu'à",
         usageLimit: "Limite d'utilisation - Facultatif",

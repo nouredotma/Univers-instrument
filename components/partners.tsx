@@ -182,7 +182,7 @@ export default function Partners() {
                 <div className="flex flex-col items-center md:flex-row gap-8">
                     <div className="shrink-0 text-center md:text-right md:max-w-44 md:border-r md:border-gray-200 md:pr-6">
                         <p className="text-lg font-trajan-pro tracking-widest text-primary font-bold">
-                            {t.partners?.title || "OUR PARTNERS"}
+                            {t.partners?.title || "Our Partners"}
                         </p>
                         <p className="text-sm text-gray-500 mt-1">
                             {t.partners?.description || "Trusted by industry leaders"}

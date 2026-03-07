@@ -5,31 +5,40 @@ import { Analytics } from "@vercel/analytics/next";
 
 import { LanguageProvider } from "@/components/language-provider";
 import CookieBanner from "@/components/cookie-banner";
+import SplashScreen from "@/components/splash-screen";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://univers-instrument-service.com"),
+  metadataBase: new URL("https://universinstrument.com"),
   title: {
     default:
-      "Univers Instrument Service | Equipment & Maintenance",
+      "Univers Instrument Service | Professional Scientific & Laboratory Equipment in Morocco",
     template: "%s | Univers Instrument Service",
   },
   description:
-    "Univers Instrument Service - Your trusted partner for equipment and maintenance services in Agadir, Morocco.",
+    "Univers Instrument — Leading supplier of professional scientific instruments, laboratory equipment, calibration tools, and maintenance services in Agadir, Morocco. Quality equipment for research, industry, and education.",
   keywords: [
     "Univers Instrument Service",
-    "equipment maintenance",
-    "Agadir",
-    "Morocco",
-    "instrument service",
+    "Univers Instrument Service",
+    "scientific instruments Morocco",
+    "laboratory equipment Agadir",
+    "calibration tools Morocco",
+    "equipment maintenance Agadir",
+    "pH meter Morocco",
+    "measuring instruments",
+    "industrial equipment Morocco",
+    "lab equipment supplier",
+    "instruments de laboratoire Maroc",
+    "équipement scientifique Agadir",
+    "matériel de mesure Maroc",
   ],
   authors: [
     {
       name: "Univers Instrument Service",
-      url: "https://univers-instrument-service.com",
+      url: "https://universinstrument.com",
     },
   ],
   creator: "Univers Instrument Service",
@@ -39,8 +48,8 @@ export const metadata: Metadata = {
     address: true,
     telephone: true,
   },
-  category: "Travel",
-  classification: "Travel Agency",
+  category: "Scientific Equipment",
+  classification: "Scientific Instruments & Laboratory Equipment Supplier",
   icons: {
     icon: [
       { url: "/favicon.png", sizes: "32x32", type: "image/png" },
@@ -51,17 +60,17 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   openGraph: {
-    title: "Univers Instrument Service",
+    title: "Univers Instrument Service | Professional Scientific & Laboratory Equipment",
     description:
-      "Univers Instrument Service - Your trusted partner for equipment and maintenance services in Agadir, Morocco.",
-    url: "https://univers-instrument-service.com",
+      "Leading supplier of professional scientific instruments, laboratory equipment, calibration tools, and maintenance services in Agadir, Morocco.",
+    url: "https://universinstrument.com",
     siteName: "Univers Instrument Service",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Univers Instrument Service",
+        alt: "Univers Instrument Service — Scientific & Laboratory Equipment in Morocco",
         type: "image/jpeg",
       },
       {
@@ -72,23 +81,25 @@ export const metadata: Metadata = {
       },
     ],
     locale: "en_US",
+    alternateLocale: ["fr_FR", "ar_MA"],
     type: "website",
     countryName: "Morocco",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Univers Instrument Service",
+    title: "Univers Instrument Service | Scientific & Laboratory Equipment",
     description:
-      "Univers Instrument Service - Your trusted partner for equipment and maintenance services in Agadir, Morocco.",
+      "Leading supplier of professional scientific instruments, laboratory equipment, and maintenance services in Agadir, Morocco.",
     images: ["/og-image.jpg"],
     creator: "@universinstrument",
     site: "@universinstrument",
   },
   alternates: {
-    canonical: "https://univers-instrument-service.com",
+    canonical: "https://universinstrument.com",
     languages: {
-      "en-US": "https://univers-instrument-service.com",
-      "fr-FR": "https://univers-instrument-service.com/fr",
+      "en-US": "https://universinstrument.com",
+      "fr-FR": "https://universinstrument.com/fr",
+      "ar-MA": "https://universinstrument.com/ar",
     },
   },
   robots: {
@@ -109,7 +120,7 @@ export const metadata: Metadata = {
     // bing: "your-bing-verification-code",
   },
   other: {
-    "geo.region": "MA",
+    "geo.region": "MA-AGD",
     "geo.placename": "Agadir",
     "geo.position": "30.427755;-9.598107",
     ICBM: "30.427755, -9.598107",
@@ -121,24 +132,24 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
-      "@id": "https://univers-instrument-service.com/#organization",
+      "@type": ["Organization", "Store"],
+      "@id": "https://universinstrument.com/#organization",
       name: "Univers Instrument Service",
-      url: "https://univers-instrument-service.com",
+      url: "https://universinstrument.com",
       logo: {
         "@type": "ImageObject",
-        url: "https://univers-instrument-service.com/favicon.png",
+        url: "https://universinstrument.com/favicon.png",
         width: 512,
         height: 512,
       },
-      image: "https://univers-instrument-service.com/og-image.jpg",
+      image: "https://universinstrument.com/og-image.jpg",
       description:
-        "Univers Instrument Service - Your trusted partner for equipment and maintenance services in Agadir, Morocco.",
+        "Univers Instrument Service — Leading supplier of professional scientific instruments, laboratory equipment, calibration tools, and maintenance services in Agadir, Morocco.",
       address: {
         "@type": "PostalAddress",
         streetAddress: "Bloc B, N 255 Hay assaka Tikiouine",
         addressLocality: "Agadir",
-        addressRegion: "Agadir",
+        addressRegion: "Souss-Massa",
         postalCode: "80000",
         addressCountry: "MA",
       },
@@ -147,7 +158,7 @@ const jsonLd = {
         latitude: 30.427755,
         longitude: -9.598107,
       },
-      telephone: "0666-166945",
+      telephone: "+212666166945",
       email: "uis.instruments@gmail.com",
       priceRange: "$$",
       openingHoursSpecification: [
@@ -172,36 +183,38 @@ const jsonLd = {
         "@type": "Country",
         name: "Morocco",
       },
+      knowsLanguage: ["en", "fr", "ar"],
     },
     {
       "@type": "WebSite",
-      "@id": "https://univers-instrument-service.com/#website",
-      url: "https://univers-instrument-service.com",
-      name: "Univers Instrument Service",
-      description: "Univers Instrument Service",
+      "@id": "https://universinstrument.com/#website",
+      url: "https://universinstrument.com",
+      name: "Univers Instrument",
+      description:
+        "Professional scientific instruments, laboratory equipment, and maintenance services in Morocco",
       publisher: {
-        "@id": "https://univers-instrument-service.com/#organization",
+        "@id": "https://universinstrument.com/#organization",
       },
       potentialAction: {
         "@type": "SearchAction",
         target: {
           "@type": "EntryPoint",
           urlTemplate:
-            "https://univers-instrument-service.com/search?q={search_term_string}",
+            "https://universinstrument.com/search?q={search_term_string}",
         },
         "query-input": "required name=search_term_string",
       },
-      inLanguage: "en-US",
+      inLanguage: ["en-US", "fr-FR", "ar-MA"],
     },
     {
       "@type": "BreadcrumbList",
-      "@id": "https://univers-instrument-service.com/#breadcrumb",
+      "@id": "https://universinstrument.com/#breadcrumb",
       itemListElement: [
         {
           "@type": "ListItem",
           position: 1,
           name: "Home",
-          item: "https://univers-instrument-service.com",
+          item: "https://universinstrument.com",
         },
       ],
     },
@@ -214,7 +227,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="loading-lock" suppressHydrationWarning>
       <head>
         {/* Preconnect to external resources for performance */}
         <link
@@ -229,8 +242,6 @@ export default function RootLayout({
         />
         <link rel="dns-prefetch" href="https://fonts.cdnfonts.com" />
 
-
-
         {/* Theme color for mobile browsers */}
         <meta name="theme-color" content="#c4a47c" />
         <meta name="msapplication-TileColor" content="#c4a47c" />
@@ -239,7 +250,7 @@ export default function RootLayout({
         <meta name="application-name" content="Univers Instrument Service" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Univers Instrument" />
+        <meta name="apple-mobile-web-app-title" content="Univers Instrument Service" />
         <meta name="mobile-web-app-capable" content="yes" />
 
         {/* JSON-LD Structured Data */}
@@ -249,6 +260,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} antialiased`} suppressHydrationWarning>
+        <SplashScreen />
         <LanguageProvider>
           {children}
           <CookieBanner />

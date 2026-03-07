@@ -175,6 +175,39 @@ input[type="password"]::placeholder {
     @apply bg-background text-foreground;
     font-family: "Inter", sans-serif;
   }
+
+  /* Prevent scroll for splash screen */
+  html.loading-lock,
+  html.loading-lock body {
+    overflow: hidden !important;
+    height: 100% !important;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #414141;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 10px;
+    border: 2px solid #414141;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+    filter: brightness(0.9);
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) #414141;
+  }
 }
 
 /* Moved hero section styles to global CSS to fix styling delays and loading issues */

@@ -55,28 +55,28 @@ const ProductsGrid = memo(function ProductsGrid({ products }: ProductsGridProps)
               {/* Content Section */}
               <div className="py-2 md:py-3 flex flex-col grow">
                 <div className="flex mb-1">
-                  <h3 className="text-sm md:text-lg font-semibold text-black group-hover:text-primary transition-colors line-clamp-1 w-full">
+                  <h3 className="text-sm md:text-lg font-semibold text-[#414141] group-hover:text-primary transition-colors line-clamp-1 w-full">
                     {product.name}
                   </h3>
                 </div>
 
-                <p className="text-[10px] md:text-sm text-black font-light mb-1 line-clamp-2">
+                <p className="text-[10px] md:text-[13px] text-[#414141] font-light mb-1 line-clamp-2">
                   {product.shortDescription}
                 </p>
 
                 {/* Bottom Row */}
                 <div className="mt-auto flex items-center justify-between pt-1 md:pt-2">
-                  <div className="bg-primary text-white px-2 py-2 md:px-3 md:py-2.5 rounded-xs md:rounded-sm text-[10px] md:text-sm font-medium">
+                  <div className="bg-primary text-white px-2 py-2 md:px-3 md:py-2.5 rounded-xs md:rounded-sm text-[10px] md:text-[13px] font-medium">
                     View Product
                   </div>
                   <div className="flex flex-col items-end gap-0.5">
                     {product.oldPrice && (
                       <span className="text-[10px] md:text-sm text-neutral-400 line-through font-light leading-none">
-                        €{product.oldPrice}
+                        {product.oldPrice} MAD
                       </span>
                     )}
-                    <span className="text-sm md:text-lg font-bold text-black leading-none">
-                      €{product.price}
+                    <span className="text-sm md:text-lg font-bold text-[#414141] leading-none">
+                      {product.price} MAD
                     </span>
                   </div>
                 </div>

@@ -425,7 +425,7 @@ export const en = {
   },
 
     partners: {
-      title: "OUR PARTNERS",
+      title: "Our Partners",
       description: "Trusted by industry leaders",
     },
 
@@ -622,8 +622,8 @@ export const en = {
         percentage: "Percentage",
         fixedAmount: "Fixed Amount",
         discountValue: "Discount Value",
-        maxDiscount: "Maximum Discount (€) - Optional",
-        minPurchase: "Minimum Purchase (€) - Optional",
+        maxDiscount: "Maximum Discount (MAD) - Optional",
+        minPurchase: "Minimum Purchase (MAD) - Optional",
         validFrom: "Valid From",
         validTo: "Valid To",
         usageLimit: "Usage Limit - Optional",

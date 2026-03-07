@@ -156,14 +156,14 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 </div>
 
                 {/* 2. Category & Condition */}
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs md:text-sm">
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[11px] md:text-xs">
                   <div className="flex items-center gap-2">
-                    <span className="text-neutral-500">Category:</span>
-                    <span className="font-medium text-neutral-900 capitalize">{product.category}</span>
+                    <span className="text-neutral-500 uppercase tracking-wider">Category:</span>
+                    <span className="font-semibold text-neutral-900 capitalize">{product.category}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-neutral-500">Condition:</span>
-                    <span className="font-medium text-neutral-900">{product.category === 'used' ? 'Used' : 'New'}</span>
+                    <span className="text-neutral-500 uppercase tracking-wider">Condition:</span>
+                    <span className="font-semibold text-neutral-900">{product.category === 'used' ? 'Used' : 'New'}</span>
                   </div>
                 </div>
 
@@ -171,15 +171,15 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 <div className="flex flex-col gap-1 pt-0.5">
                   {product.oldPrice && (
                     <span className="text-sm md:text-base font-light text-neutral-400 line-through">
-                      €{product.oldPrice}
+                      {product.oldPrice} MAD
                     </span>
                   )}
                   <span className="text-2xl md:text-2xl font-extrabold text-neutral-900 tracking-tight">
-                    €{product.price}
+                    {product.price} MAD
                   </span>
                   {product.oldPrice && (
                     <div className="inline-flex w-fit  text-green-500 px-0 text-[10px] md:text-xs font-bol">
-                      Save €{product.oldPrice - product.price}
+                      Save {product.oldPrice - product.price} MAD
                     </div>
                   )}
                 </div>

@@ -50,7 +50,7 @@ function FilterDropdown({
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "w-full px-4 py-2.5 bg-background border border-border rounded-lg text-xs md:text-sm font-medium",
+          "w-full px-4 py-2.5 bg-background border border-border rounded-sm text-xs md:text-xs font-medium",
           "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary",
           "transition-all cursor-pointer flex items-center justify-between gap-2",
           isOpen && "ring-2 ring-primary/20 border-primary"
@@ -70,7 +70,7 @@ function FilterDropdown({
       {/* Dropdown Menu */}
       <div 
         className={cn(
-          "absolute left-0 top-full mt-2 w-full min-w-[200px] bg-card rounded-xl shadow-2xl border border-border overflow-hidden",
+          "absolute left-0 top-full mt-2 w-full min-w-[200px] bg-card rounded-sm md:rounded-md shadow-2xl border border-border overflow-hidden",
           "transition-all duration-200 origin-top",
           isOpen 
             ? "opacity-100 scale-100 translate-y-0" 
@@ -192,7 +192,7 @@ export default function SearchFilter({ onChange, initial }: Props) {
             {/* Price Range */}
             <div className="space-y-2">
               <label className="text-xs font-bold text-white">
-                Price Range (€)
+                Price Range (MAD)
               </label>
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <input
@@ -226,7 +226,7 @@ export default function SearchFilter({ onChange, initial }: Props) {
             <button
               type="button"
               onClick={reset}
-              className="flex-1 px-3 py-2.5 text-xs font-medium text-white/60 hover:text-white hover:bg-white/10 border border-white/20 lg:border-transparent rounded-sm cursor-pointer transition-all"
+              className="flex-1 px-3 py-2.5 text-xs font-medium text-red-500 hover:text-white hover:bg-red-500 border border-red-500 rounded-sm cursor-pointer transition-all"
             >
               Clear all
             </button>

@@ -48,7 +48,7 @@ export default function AboutUs() {
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary mb-4">
             <span className="text-base md:text-lg font-semibold">{t.about.ourStory}</span>
           </div>
-            <h2 className="text-2xl md:text-4xl font-bold text-foreground mb-5 leading-tight">
+            <h2 className="text-2xl text-[#414141] md:text-4xl font-bold mb-5 leading-tight">
               {t.about.heroTitle} <span className="text-primary">{t.about.heroTitleHighlight}</span>
             </h2>
             <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-4">
