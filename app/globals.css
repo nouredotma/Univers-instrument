@@ -210,6 +210,16 @@ input[type="password"]::placeholder {
   }
 }
 
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+}
+
 /* Moved hero section styles to global CSS to fix styling delays and loading issues */
 /* Updated hero section height to use dvh (dynamic viewport height) for proper mobile support */
 .hero-carousel {

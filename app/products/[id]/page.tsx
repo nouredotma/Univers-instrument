@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button"
 import { CheckCircle2, ArrowLeft, Package, Minus, Plus, Truck, ChevronLeft, ChevronRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { use, useState } from "react"
+import { use, useState, useRef, useEffect } from "react"
 import { motion } from "framer-motion"
 import {
   Table,
@@ -37,6 +37,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   const [activeImage, setActiveImage] = useState(product.mainImage)
 
   const [quantity, setQuantity] = useState(1)
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
 
   const allImages = [product.mainImage, ...product.thumbnailImages].filter(Boolean)
 
@@ -60,8 +61,44 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
     setActiveImage(allImages[nextIndex])
   }
 
+  const thumbnailsRef = useRef<HTMLDivElement>(null)
+
+  const scrollThumbnails = (direction: 'left' | 'right') => {
+    if (thumbnailsRef.current) {
+      const scrollAmount = 200
+      thumbnailsRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      })
+    }
+  }
+
+  // Handle keyboard navigation for lightbox
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!isLightboxOpen) return
+    if (e.key === "ArrowLeft") handlePrevImage()
+    if (e.key === "ArrowRight") handleNextImage()
+    if (e.key === "Escape") setIsLightboxOpen(false)
+  }
+
+  // Prevent scroll when lightbox is open
+  useEffect(() => {
+    if (isLightboxOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isLightboxOpen])
+
   return (
-    <main className="w-full bg-neutral-50/50 min-h-screen">
+    <main 
+      className="w-full bg-neutral-50/50 min-h-screen"
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+    >
       <Header forceScrolled />
       
       {/* Breadcrumb / Back Button */}
@@ -91,8 +128,9 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   src={activeImage}
                   alt={product.name}
                   fill
-                  className="object-cover"
+                  className="object-cover cursor-zoom-in"
                   priority
+                  onClick={() => setIsLightboxOpen(true)}
                 />
 
                 {allImages.length > 1 && (
@@ -122,20 +160,41 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               </motion.div>
 
               {allImages.length > 1 && (
-                <div className="flex gap-3 overflow-x-auto p-1 scrollbar-hide">
-                  {allImages.map((img, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setActiveImage(img)}
-                      className={`relative w-16 h-16 md:w-20 md:h-20 rounded-xs md:rounded-md overflow-hidden transition-all duration-300 shrink-0 cursor-pointer ${
-                        activeImage === img 
-                          ? "ring-2 ring-primary ring-offset-1 ring-offset-neutral-50" 
-                          : "border border-neutral-200 opacity-70 hover:opacity-100"
-                      }`}
-                    >
-                      <Image src={img} alt={`${product.name} thumbnail ${idx}`} fill className="object-cover" />
-                    </button>
-                  ))}
+                <div className="relative group/thumbs w-full">
+                  <div 
+                    ref={thumbnailsRef}
+                    className="flex gap-3 overflow-x-auto p-1 scrollbar-hide scroll-smooth"
+                  >
+                    {allImages.map((img, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setActiveImage(img)}
+                        className={`relative w-16 h-16 md:w-20 md:h-20 rounded-xs md:rounded-md overflow-hidden transition-all duration-300 shrink-0 cursor-pointer ${
+                          activeImage === img 
+                            ? "ring-2 ring-primary ring-offset-1 ring-offset-neutral-50" 
+                            : "border border-neutral-200 opacity-70 hover:opacity-100"
+                        }`}
+                      >
+                        <Image src={img} alt={`${product.name} thumbnail ${idx}`} fill className="object-cover" />
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Thumbnail Navigation Arrows - Desktop Only */}
+                  <button 
+                    onClick={() => scrollThumbnails('left')}
+                    className="absolute -left-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-white/90 border border-neutral-200 text-neutral-900 opacity-0 group-hover/thumbs:opacity-100 transition-all shadow-md z-10 hidden lg:flex cursor-pointer hover:bg-white hover:scale-110"
+                    aria-label="Scroll thumbnails left"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button 
+                    onClick={() => scrollThumbnails('right')}
+                    className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-white/90 border border-neutral-200 text-neutral-900 opacity-0 group-hover/thumbs:opacity-100 transition-all shadow-md z-10 hidden lg:flex cursor-pointer hover:bg-white hover:scale-110"
+                    aria-label="Scroll thumbnails right"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
                 </div>
               )}
             </div>
@@ -287,6 +346,59 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
           </div>
         </Container>
       </section>
+
+      {/* Lightbox / Image Zoom */}
+      {isLightboxOpen && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 md:p-10"
+          onClick={() => setIsLightboxOpen(false)}
+        >
+          <button 
+            className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors p-2 cursor-pointer z-[110]"
+            onClick={() => setIsLightboxOpen(false)}
+          >
+            <Plus className="w-8 h-8 rotate-45" />
+          </button>
+
+          <div className="relative w-full max-w-5xl aspect-square md:aspect-[4/3] flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+            <motion.div
+              key={activeImage}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative w-full h-full"
+            >
+              <Image
+                src={activeImage}
+                alt={product.name}
+                fill
+                className="object-contain"
+                priority
+              />
+            </motion.div>
+
+            {allImages.length > 1 && (
+              <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 flex items-center gap-4 md:contents">
+                <button 
+                  onClick={handlePrevImage}
+                  className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white transition-all cursor-pointer border border-white/30 backdrop-blur-md z-50 md:absolute md:top-1/2 md:-translate-y-1/2 md:-left-16"
+                >
+                  <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
+                </button>
+                <button 
+                  onClick={handleNextImage}
+                  className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white transition-all cursor-pointer border border-white/30 backdrop-blur-md z-50 md:absolute md:top-1/2 md:-translate-y-1/2 md:-right-16"
+                >
+                  <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
+                </button>
+              </div>
+            )}
+          </div>
+        </motion.div>
+      )}
 
       <OurProducts />
 

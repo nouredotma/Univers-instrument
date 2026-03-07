@@ -93,7 +93,7 @@ export default function Testimonials() {
             {testimonials.map((t, i) => (
               <SwiperSlide key={i}>
                 <div className="px-1 py-1 flex flex-col h-full">
-                  <div className="bg-[#414141] rounded-md transition-all duration-300 p-4 h-full flex flex-col border border-white/10">
+                  <div className="bg-[#414141] rounded-md transition-all duration-300 p-4 h-full flex flex-col border border-white/10 md:min-h-[220px]">
                     {/* Header: Profile Top Left, Google Info Top Right */}
                     <div className="flex justify-between items-start mb-6">
                       <div className="flex items-center gap-3">
@@ -143,7 +143,7 @@ export default function Testimonials() {
                     </div>
 
                     {/* Review Text */}
-                    <div className="grow">
+                    <div className="grow flex items-center">
                       <p className="text-sm leading-relaxed text-white/80 italic">"{t.text}"</p>
                     </div>
                   </div>
