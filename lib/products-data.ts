@@ -26,6 +26,7 @@ export interface Product {
   thumbnailImages: string[]
   category: ProductCategory
   price: number
+  oldPrice?: number
   stock: number
   translations?: {
     en?: ProductTranslations
@@ -48,6 +49,7 @@ export const products: Product[] = [
     thumbnailImages: [PRODUCT_IMAGE, PRODUCT_IMAGE, PRODUCT_IMAGE],
     category: "laboratory",
     price: 850,
+    oldPrice: 1050,
     stock: 12,
     translations: {
       en: {
@@ -77,9 +79,10 @@ export const products: Product[] = [
     longDescription:
       "The Portable Turbidity Meter is an essential field instrument for rapid and accurate turbidity measurement in water and environmental applications. Conforming to ISO 7027 standards, it uses infrared LED technology to eliminate color interference and provide reliable readings from 0 to 1000 NTU. The rugged IP67-rated housing is designed for harsh field conditions, while the intuitive interface and automatic range selection make operation effortless. Features include a rechargeable battery with 200+ hour life, data memory for 500 measurements, and Bluetooth connectivity for wireless data transfer to smartphones or tablets.",
     mainImage: PRODUCT_IMAGE,
-    thumbnailImages: [PRODUCT_IMAGE, PRODUCT_IMAGE, PRODUCT_IMAGE],
+    thumbnailImages: [PRODUCT_IMAGE, PRODUCT_IMAGE, PRODUCT_IMAGE, PRODUCT_IMAGE, PRODUCT_IMAGE, PRODUCT_IMAGE],
     category: "water",
     price: 1200,
+    oldPrice: 1450,
     stock: 8,
     translations: {
       en: {
@@ -112,6 +115,7 @@ export const products: Product[] = [
     thumbnailImages: [PRODUCT_IMAGE, PRODUCT_IMAGE, PRODUCT_IMAGE],
     category: "agriculture",
     price: 680,
+    oldPrice: 850,
     stock: 15,
     translations: {
       en: {
@@ -144,6 +148,7 @@ export const products: Product[] = [
     thumbnailImages: [PRODUCT_IMAGE, PRODUCT_IMAGE, PRODUCT_IMAGE],
     category: "weighing",
     price: 2450,
+    oldPrice: 2800,
     stock: 5,
     translations: {
       en: {
@@ -176,6 +181,7 @@ export const products: Product[] = [
     thumbnailImages: [PRODUCT_IMAGE, PRODUCT_IMAGE, PRODUCT_IMAGE],
     category: "consumables",
     price: 520,
+    oldPrice: 650,
     stock: 25,
     translations: {
       en: {
@@ -208,6 +214,7 @@ export const products: Product[] = [
     thumbnailImages: [PRODUCT_IMAGE, PRODUCT_IMAGE, PRODUCT_IMAGE],
     category: "medical",
     price: 3200,
+    oldPrice: 3800,
     stock: 3,
     translations: {
       en: {
@@ -240,6 +247,7 @@ export const products: Product[] = [
     thumbnailImages: [PRODUCT_IMAGE, PRODUCT_IMAGE, PRODUCT_IMAGE],
     category: "furniture",
     price: 1850,
+    oldPrice: 2200,
     stock: 7,
     translations: {
       en: {
@@ -272,6 +280,7 @@ export const products: Product[] = [
     thumbnailImages: [PRODUCT_IMAGE, PRODUCT_IMAGE, PRODUCT_IMAGE],
     category: "chemicals",
     price: 390,
+    oldPrice: 480,
     stock: 20,
     translations: {
       en: {

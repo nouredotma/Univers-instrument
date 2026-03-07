@@ -69,8 +69,15 @@ const ProductsGrid = memo(function ProductsGrid({ products }: ProductsGridProps)
                   <div className="bg-primary text-white px-2 py-2 md:px-3 md:py-2.5 rounded-xs md:rounded-sm text-[10px] md:text-sm font-medium">
                     View Product
                   </div>
-                  <div className="text-xs md:text-base font-bold text-black">
-                    €{product.price}
+                  <div className="flex flex-col items-end gap-0.5">
+                    {product.oldPrice && (
+                      <span className="text-[10px] md:text-sm text-neutral-400 line-through font-light leading-none">
+                        €{product.oldPrice}
+                      </span>
+                    )}
+                    <span className="text-sm md:text-lg font-bold text-black leading-none">
+                      €{product.price}
+                    </span>
                   </div>
                 </div>
               </div>

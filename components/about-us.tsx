@@ -36,7 +36,7 @@ export default function AboutUs() {
                   src="/about-us-lab.png"
                   alt="Laboratory Equipment"
                   fill
-                  className="object-cover rounded-2xl md:rounded-4xl"
+                  className="object-cover rounded-xl md:rounded-2xl"
                   sizes="(max-width: 1024px) 100vw, 40vw"
                 />
               </div>

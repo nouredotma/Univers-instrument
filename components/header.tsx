@@ -12,9 +12,9 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 
-export default function Header({ isStatic = false }: { isStatic?: boolean }) {
+export default function Header({ isStatic = false, forceScrolled = false }: { isStatic?: boolean, forceScrolled?: boolean }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const [scrolled, setScrolled] = useState(forceScrolled)
   const [productsDropdownOpen, setProductsDropdownOpen] = useState(false)
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false)
   const pathname = usePathname()
@@ -24,6 +24,11 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
   const isUsersSection = pathname?.startsWith("/users") || isStatic
 
   useEffect(() => {
+    if (forceScrolled) {
+      setScrolled(true)
+      return
+    }
+
     const handleScroll = () => {
       setScrolled(window.scrollY > 10)
     }
@@ -32,7 +37,7 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
     return () => {
       window.removeEventListener("scroll", handleScroll)
     }
-  }, [])
+  }, [forceScrolled])
 
   useEffect(() => {
     if (isMenuOpen) {
