@@ -52,7 +52,7 @@ export function LanguageSwitcher({
 
       {isOpen && (
         <div className={cn(
-          "absolute right-0 mt-2 bg-white rounded-xl shadow-lg border border-gray-200 py-2 min-w-[160px] z-50 overflow-hidden",
+          "absolute right-0 mt-2 bg-white rounded-md shadow-lg border border-gray-200 py-2 min-w-[160px] z-50 overflow-hidden",
           dropdownClassName
         )}>
           {languages.map((lang) => (

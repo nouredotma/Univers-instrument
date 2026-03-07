@@ -187,7 +187,7 @@ export default function Partners() {
     }, []);
 
     return (
-        <section className="bg-gray-50 py-8 w-full">
+        <section className="bg-white py-8 w-full">
             <Container className="max-w-7xl mx-auto px-2 md:px-6">
                 <div className="flex flex-col items-center md:flex-row gap-8">
                     <div className="shrink-0 text-center md:text-right md:max-w-44 md:border-r md:border-gray-200 md:pr-6">

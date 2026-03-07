@@ -91,7 +91,7 @@ export default function ContactPage() {
       <Header />
       <PageHero title={t.contact.pageTitle} backgroundImage="https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/07/a5/17/55.jpg" />
 
-      <section className="py-16 md:py-24 bg-linear-to-b from-background to-muted/20">
+      <section className="py-16 md:py-24 bg-white">
         <Container className="max-w-7xl mx-auto px-2 md:px-8">
           {/* Quick Contact Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-12 md:mb-16">

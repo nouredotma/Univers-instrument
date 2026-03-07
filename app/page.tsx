@@ -3,7 +3,7 @@
 import Header from "@/components/header"
 import Hero from "@/components/hero"
 import AboutUs from "@/components/about-us"
-import OurBestOffers from "@/components/our-best-offers"
+import OurProducts from "@/components/our-products"
 import Testimonials from "@/components/testimonials"
 import Footer from "@/components/footer"
 import FloatingContact from "@/components/floating-contact"
@@ -17,7 +17,7 @@ export default function HomePage() {
       <Hero />
       <AboutUs />
       <Partners />
-      <OurBestOffers />
+      <OurProducts />
       <Testimonials />
       <Footer />
       <FloatingContact />

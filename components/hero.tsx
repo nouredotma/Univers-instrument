@@ -59,21 +59,14 @@ export default function Hero() {
   return (
     <section className="relative w-full overflow-hidden" style={{ height: "100svh" }}>
       {/* Background Image */}
-      <div className="absolute inset-0 w-full h-full z-0">
-        <Image
-          src="https://images.unsplash.com/photo-1542408985-0556c5476a66?q=80&w=2670&auto=format&fit=crop"
+      <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+        <img
+          src="/hero-bg.png"
           alt="Univers Instrument Service"
-          fill
-          className="object-cover"
-          priority
-          sizes="100vw"
-          quality={85}
+          className="w-full h-full object-cover select-none"
         />
-        <div className="absolute inset-0 bg-black/10" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/40 via-transparent to-black/60" />
       </div>
-
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/30" />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col justify-end h-full pb-2">
@@ -118,7 +111,7 @@ export default function Hero() {
                               setActiveService(service)
                               setOpenService(false)
                             }}
-                            className="flex items-center gap-3 px-3 py-2 cursor-pointer aria-selected:bg-primary/10 hover:bg-gray-50 mb-1 rounded-sm mx-1"
+                            className="flex items-center gap-3 px-3 py-2 cursor-pointer aria-selected:bg-primary/10 hover:bg-primary/5 mb-1 rounded-sm mx-1"
                           >
                             <div className={cn(
                               "flex items-center justify-center w-6 h-6 rounded-full border transition-all duration-200",
@@ -182,7 +175,7 @@ export default function Hero() {
                               setSelectedCity(city)
                               setOpenCity(false)
                             }}
-                            className="flex items-center gap-3 px-3 py-2 cursor-pointer aria-selected:bg-primary/10 hover:bg-gray-50 rounded-sm mb-1"
+                            className="flex items-center gap-3 px-3 py-2 cursor-pointer aria-selected:bg-primary/10 hover:bg-primary/5 rounded-sm mb-1"
                           >
                             <div className={cn(
                               "flex items-center justify-center w-6 h-6 rounded-full border transition-all duration-200",

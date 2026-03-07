@@ -6,7 +6,7 @@ import Footer from "@/components/footer"
 import FloatingContact from "@/components/floating-contact"
 import PageHero from "@/components/page-hero"
 import { Container } from "@/components/ui/container"
-import OffersGrid from "@/components/offers-grid"
+import ProductsGrid from "@/components/products-grid"
 import SearchFilter, { type Filters } from "@/components/search-filter"
 import { type Offer } from "@/lib/offers-data"
 import { useLanguage } from "@/components/language-provider"
@@ -16,7 +16,7 @@ import { useSiteSettings } from "@/hooks/use-site-settings"
 
 import { useRouter, usePathname, useSearchParams } from "next/navigation"
 
-function ToursContent() {
+function ProductsContent() {
   const { t, language } = useLanguage()
   const router = useRouter()
   const pathname = usePathname()
@@ -142,7 +142,7 @@ function ToursContent() {
         if (!hay.includes(filters.theme.toLowerCase())) return false
       }
 
-      if (filters.availableOn) {
+      if (filters.availableOn && o.availabilityDates) {
         const d = new Date(filters.availableOn)
         const start = new Date(o.availabilityDates.startDate)
         const end = new Date(o.availabilityDates.endDate)
@@ -182,7 +182,7 @@ function ToursContent() {
         key={settings.hero_tours} // Force re-render when hero image changes
       />
 
-      <section className="py-6 md:py-12 bg-gray-50">
+      <section className="py-6 md:py-12 bg-white">
         <Container className="max-w-6xl px-2 md:px-4">
           <SearchFilter 
             onChange={handleFilterChange} 
@@ -195,7 +195,7 @@ function ToursContent() {
           {isLoading ? (
             <div className="flex flex-col items-center justify-center py-16">
               <Loader2 className="h-8 w-8 animate-spin text-primary mb-4" />
-              <p className="text-sm text-muted-foreground">Loading tours...</p>
+              <p className="text-sm text-muted-foreground">Loading products...</p>
             </div>
           ) : error ? (
             <div className="flex flex-col items-center justify-center py-16">
@@ -208,7 +208,7 @@ function ToursContent() {
               </button>
             </div>
           ) : (
-            <OffersGrid offers={offers} />
+            <ProductsGrid products={offers} />
           )}
         </Container>
       </section>
@@ -219,10 +219,10 @@ function ToursContent() {
   )
 }
 
-export default function ToursPage() {
+export default function ProductsPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <ToursContent />
+      <ProductsContent />
     </Suspense>
   )
 }

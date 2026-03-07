@@ -23,7 +23,7 @@ export default function PageHero({ title, backgroundImage, showOverlay = true }:
   }
   
   return (
-    <section className="relative h-[50dvh] md:h-[60dvh] w-full flex items-end overflow-hidden bg-muted">
+    <section className="relative h-[50dvh] md:h-[60dvh] w-full flex items-end overflow-hidden bg-white">
       {/* Background Image */}
       {finalImageUrl && (
         <img

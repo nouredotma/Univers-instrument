@@ -13,14 +13,17 @@ export const en = {
     login: "Login",
     myAccount: "My Account",
     language: "Language",
-    services: "Services",
+    services: "Products",
+    products: "Products",
+    usedProducts: "Used Products",
+    ourProducts: "Our Products",
     downloadDate: "Download Date",
   },
 
   // Footer
   footer: {
     brandDescription: "Univers Instrument Service - Your trusted partner for equipment and maintenance services in Agadir, Morocco.",
-    explore: "Explore",
+    explore: "Quick Links",
     contactTitle: "Contact",
     phone: "Phone",
     email: "Email",
@@ -32,7 +35,20 @@ export const en = {
     paymentSecure: "The payment is encrypted and transmitted securely with an SSL protocol.",
     copyright: "© 2026 Univers Instrument Service. All rights reserved.",
     terms: "Terms & Conditions",
+    privacyPolicy: "Privacy Policy",
+    products: "Products",
     madeBy: "Made by",
+    productNames: {
+      consumables: "Consumables and Accessories",
+      water: "Water and Environment",
+      agriculture: "Agricultural Instruments",
+      laboratory: "Laboratory Instruments",
+      medical: "Medical",
+      furniture: "Laboratory Furniture",
+      weighing: "Weighing",
+      chemicals: "Chemicals and Reagents",
+      used: "Used Products"
+    }
   },
 
   // Hero Section

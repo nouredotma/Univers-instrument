@@ -15,14 +15,17 @@ export const es: TranslationKeys = {
     login: "Iniciar Sesión",
     myAccount: "Mi Cuenta",
     language: "Idioma",
-    services: "Servicios",
+    services: "Productos",
+    products: "Productos",
+    usedProducts: "Productos de Ocasión",
+    ourProducts: "Nuestros Productos",
     downloadDate: "Fecha de descarga",
   },
 
   // Footer
   footer: {
     brandDescription: "Univers Instrument Service - Su socio de confianza para servicios de mantenimiento y equipos en Agadir, Marruecos.",
-    explore: "Explorar",
+    explore: "Enlaces Rápidos",
     contactTitle: "Contacto",
     phone: "Teléfono",
     email: "Correo",
@@ -34,7 +37,20 @@ export const es: TranslationKeys = {
     paymentSecure: "El pago está encriptado y se transmite de forma segura con protocolo SSL.",
     copyright: "© 2026 Univers Instrument Service. Todos los derechos reservados.",
     terms: "Términos y Condiciones",
+    privacyPolicy: "Política de Privacidad",
+    products: "Productos",
     madeBy: "Hecho por",
+    productNames: {
+      consumables: "Consumibles y Accesorios",
+      water: "Agua y Medio Ambiente",
+      agriculture: "Instrumentos Agrícolas",
+      laboratory: "Instrumentos de Laboratorio",
+      medical: "Médico",
+      furniture: "Mobiliario de Laboratorio",
+      weighing: "Pesaje",
+      chemicals: "Productos Químicos y Reactivos",
+      used: "Productos de Ocasión"
+    }
   },
 
   // Hero Section

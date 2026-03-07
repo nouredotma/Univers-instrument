@@ -45,7 +45,7 @@ export default function AboutPage() {
       <AboutUs />
 
       {/* Core Values Section */}
-      <section className="py-14 md:py-18 bg-gray-50">
+      <section className="py-14 md:py-18 bg-white">
         <Container className="max-w-6xl mx-auto px-2 md:px-8">
           <div className="text-center mb-10">
             <span className="inline-block text-sm font-medium text-primary mb-2 tracking-wide uppercase">
@@ -74,7 +74,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 md:py-16 bg-gray-50">
+      <section className="py-12 md:py-16 bg-white">
         <Container className="max-w-4xl mx-auto px-2 md:px-8">
           <div className="bg-linear-to-br from-primary to-primary/90 rounded-2xl p-8 md:p-12">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">

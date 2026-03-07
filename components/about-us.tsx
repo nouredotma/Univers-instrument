@@ -25,7 +25,7 @@ export default function AboutUs() {
   ]
 
   return (
-    <section className="py-16 md:py-20 bg-gray-50">
+    <section className="py-16 md:py-20 bg-white">
       <Container className="max-w-6xl mx-auto px-2 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-center">
           {/* Image Column */}

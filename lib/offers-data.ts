@@ -1,6 +1,6 @@
 import type { Language } from "./translations"
 
-export type OfferType = "offer"
+export type OfferType = "offer" | "tours" | "excursions" | "activities" | "transfers" | "packages"
 
 export interface DetailSection {
   title: string
@@ -51,6 +51,13 @@ export interface Offer {
   availabilityDates?: {
     startDate: string
     endDate: string
+  }
+  transferDetails?: {
+    from: string
+    to: string
+    duration: string
+    distance: string
+    vehicleOptions: string[]
   }
 }
 

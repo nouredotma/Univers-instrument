@@ -16,8 +16,14 @@ input[type="password"] {
   -webkit-text-fill-color: #1c1917 !important;
   caret-color: #1c1917 !important;
   /* Ensure masking glyphs are available and visible across browsers */
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, sans-serif !important;
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif !important;
   -webkit-text-security: disc;
 }
 
@@ -30,8 +36,14 @@ input[type="password"]::placeholder {
   color: #fafaf9 !important;
   -webkit-text-fill-color: #fafaf9 !important;
   caret-color: #fafaf9 !important;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, sans-serif !important;
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif !important;
   -webkit-text-security: disc;
 }
 
@@ -44,11 +56,11 @@ input[type="password"]::placeholder {
   /* Brand colors */
   --background: #ffffff;
   --foreground: #1c1917;
-  --card: #fafaf9;
+  --card: #ffffff;
   --card-foreground: #1c1917;
   --popover: #ffffff;
   --popover-foreground: #1c1917;
-  --primary: #2c3863;
+  --primary: #f2762b;
   --primary-foreground: #ffffff;
   --secondary: #fac360;
   --secondary-foreground: #1c1917;
@@ -59,8 +71,8 @@ input[type="password"]::placeholder {
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
   --border: #d6d3d1;
-  --input: #f5f5f4;
-  --ring: #2c3863;
+  --input: #ffffff;
+  --ring: #f2762b;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -69,12 +81,12 @@ input[type="password"]::placeholder {
   --radius: 0.625rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: #2c3863;
+  --sidebar-primary: #f2762b;
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: #fac360;
   --sidebar-accent-foreground: #1c1917;
   --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: #2c3863;
+  --sidebar-ring: #f2762b;
 
   --color-gradient-start: #fac360;
   --color-gradient-end: #fce97c;
@@ -88,7 +100,7 @@ input[type="password"]::placeholder {
   --popover: #1c1917;
   --popover-foreground: #fafaf9;
   --primary: #fce97c;
-  --primary-foreground: #2c3863;
+  --primary-foreground: #ffffff;
   --secondary: #fac360;
   --secondary-foreground: #1c1917;
   --muted: #292524;
@@ -116,7 +128,7 @@ input[type="password"]::placeholder {
 }
 
 @theme inline {
-  --font-sans: "URWClassico", sans-serif;
+  --font-sans: "Inter", sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -161,7 +173,7 @@ input[type="password"]::placeholder {
   }
   body {
     @apply bg-background text-foreground;
-    font-family: "URWClassico", sans-serif;
+    font-family: "Inter", sans-serif;
   }
 }
 
@@ -196,7 +208,12 @@ input[type="password"]::placeholder {
   background-size: cover;
   border-radius: 20px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-  transition: transform 0.1s, left 0.75s, top 0.75s, width 0.75s, height 0.75s;
+  transition:
+    transform 0.1s,
+    left 0.75s,
+    top 0.75s,
+    width 0.75s,
+    height 0.75s;
   will-change: transform, left, top, width, height;
   cursor: pointer;
 }

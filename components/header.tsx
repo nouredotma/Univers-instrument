@@ -15,8 +15,8 @@ import { useEffect, useState } from "react"
 export default function Header({ isStatic = false }: { isStatic?: boolean }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false)
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
+  const [productsDropdownOpen, setProductsDropdownOpen] = useState(false)
+  const [mobileProductsOpen, setMobileProductsOpen] = useState(false)
   const pathname = usePathname()
   const { t, languages, language, setLanguage } = useLanguage()
   
@@ -49,25 +49,24 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement
-      if (servicesDropdownOpen && !target.closest('.services-dropdown-container')) {
-        setServicesDropdownOpen(false)
+      if (productsDropdownOpen && !target.closest('.products-dropdown-container')) {
+        setProductsDropdownOpen(false)
       }
     }
 
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [servicesDropdownOpen])
+  }, [productsDropdownOpen])
 
-  const serviceLinks = [
-    { href: "/tours", label: t.header.tours },
-  ]
-
-  const otherLinks = [
-    { href: "/", label: t.header.home },
-    { href: "/about", label: t.header.about },
-    // Services will be inserted here
-    { href: "/blog", label: t.header.blog },
-    { href: "/contact", label: t.header.contact },
+  const productLinks = [
+    { href: "/products", label: t.footer.productNames.consumables },
+    { href: "/products", label: t.footer.productNames.water },
+    { href: "/products", label: t.footer.productNames.agriculture },
+    { href: "/products", label: t.footer.productNames.laboratory },
+    { href: "/products", label: t.footer.productNames.medical },
+    { href: "/products", label: t.footer.productNames.furniture },
+    { href: "/products", label: t.footer.productNames.weighing },
+    { href: "/products", label: t.footer.productNames.chemicals },
   ]
 
   return (
@@ -76,10 +75,10 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
         className={cn(
           "top-0 z-40 w-full transition-all duration-300",
           isUsersSection 
-            ? "sticky top-0 bg-primary shadow-md border-b border-primary/20" 
+            ? "sticky top-0 bg-white border-b border-gray-200" 
             : cn(
                 "fixed",
-                scrolled ? "bg-primary shadow-md border-b border-primary/20" : "bg-transparent"
+                scrolled ? "bg-white border-b border-gray-200" : "bg-transparent"
               ),
         )}
       >
@@ -135,15 +134,12 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
         </div>
 
         <Container className="max-w-7xl mx-auto">
-          {/* Mobile layout - centered logo, login left, menu right */}
-          <div className="md:hidden relative flex h-16 items-center justify-between px-1">
-            {/* Left: Empty spacer */}
-            <div className="flex items-center z-20 w-10"></div>
-
-            {/* Center: Logo (absolutely centered for mobile) */}
-            <Link href="/" className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-              <div className="pointer-events-auto relative h-12 w-24">
-                <Image src="/logo.png" alt="Univers Instrument Service Logo" fill className="object-contain" priority sizes="(max-width: 768px) 96px, 128px" />
+          {/* Mobile layout - logo left, menu right */}
+          <div className="md:hidden flex h-16 items-center justify-between px-1">
+            {/* Left: Logo */}
+            <Link href="/" className="flex items-center z-10">
+              <div className="relative h-20 w-40">
+                <Image src={scrolled || isUsersSection ? "/logo.png" : "/whitelogo.png"} alt="Univers Instrument Service Logo" fill className="object-contain" priority sizes="(max-width: 768px) 112px, 128px" />
               </div>
             </Link>
 
@@ -151,7 +147,10 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
             <div className="flex items-center gap-2 z-20">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="relative flex flex-col justify-center items-center w-10 h-10 rounded-lg hover:bg-white/10 transition-colors"
+                className={cn(
+                  "relative flex flex-col justify-center items-center w-10 h-10 rounded-lg transition-colors",
+                  scrolled || isUsersSection ? "hover:bg-black/5" : "hover:bg-white/10"
+                )}
                 aria-label="Toggle menu"
               >
                 <svg
@@ -164,7 +163,7 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
                 >
                   <path
                     d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M3 12h18M3 6h18M3 18h18"}
-                    stroke="#ffffff"
+                    stroke={scrolled || isUsersSection ? "#000000" : "#ffffff"}
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -181,8 +180,8 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
               {/* Left: Logo */}
               <div className="flex items-center gap-6 shrink-0">
                 <Link href="/" className="flex items-center">
-                  <div className="relative h-16 w-32">
-                    <Image src="/logo.png" alt="Univers Instrument Service Logo" fill className="object-contain" priority sizes="(max-width: 768px) 96px, 128px" />
+                  <div className="relative h-28 w-44">
+                    <Image src={scrolled || isUsersSection ? "/logo.png" : "/whitelogo.png"} alt="Univers Instrument Service Logo" fill className="object-contain" priority sizes="(max-width: 768px) 96px, 128px" />
                   </div>
                 </Link>
               </div>
@@ -192,65 +191,75 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
                 <Link
                   href="/"
                   className={cn(
-                    "text-sm font-medium transition-all duration-300 relative group font-trajan-pro uppercase tracking-wider hover:text-secondary",
-                    pathname === "/" ? "text-secondary" : "text-white"
+                    "text-sm font-medium transition-all duration-300 relative group font-trajan-pro tracking-wider hover:text-secondary",
+                    pathname === "/" ? "text-secondary" : (scrolled || isUsersSection ? "text-gray-800" : "text-white")
                   )}
                 >
                   {t.header.home}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full"></span>
                 </Link>
 
-                {/* Services Dropdown - Premium Grid */}
-                <div 
-                  className="relative services-dropdown-container group"
-                  onMouseEnter={() => setServicesDropdownOpen(true)}
-                  onMouseLeave={() => setServicesDropdownOpen(false)}
+                <Link
+                  href="/about"
+                  className={cn(
+                    "text-sm font-medium transition-all duration-300 relative group font-trajan-pro tracking-wider hover:text-secondary",
+                    pathname === "/about" ? "text-secondary" : (scrolled || isUsersSection ? "text-gray-800" : "text-white")
+                  )}
                 >
-                  <button
+                  {t.header.about}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+
+                {/* Products Dropdown - Premium Grid */}
+                <div 
+                  className="relative products-dropdown-container group"
+                  onMouseEnter={() => setProductsDropdownOpen(true)}
+                  onMouseLeave={() => setProductsDropdownOpen(false)}
+                >
+                  <Link
+                    href="/products"
                     className={cn(
-                      "flex items-center gap-1 text-sm font-medium transition-all duration-300 relative font-trajan-pro uppercase tracking-wider hover:text-secondary py-4",
-                      serviceLinks.some(link => pathname === link.href) ? "text-secondary" : "text-white"
+                      "flex items-center gap-1 text-sm font-medium transition-all duration-300 relative font-trajan-pro tracking-wider hover:text-secondary py-4",
+                      pathname === "/products" || productLinks.some((link: any) => pathname === link.href) ? "text-secondary" : (scrolled || isUsersSection ? "text-gray-800" : "text-white")
                     )}
                   >
-                    {t.header.services}
-                    <ChevronDown className={cn("h-4 w-4 transition-transform duration-200", servicesDropdownOpen ? "rotate-180" : "")} />
-                  </button>
+                    {t.header.products}
+                    <ChevronDown className={cn("h-4 w-4 transition-transform duration-200", productsDropdownOpen ? "rotate-180" : "")} />
+                  </Link>
                   
                   <AnimatePresence>
-                    {servicesDropdownOpen && (
+                    {productsDropdownOpen && (
                       <motion.div
                         initial={{ opacity: 0, y: 15, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute top-full left-1/2 -translate-x-1/2 w-[400px] bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden p-2 grid grid-cols-2 gap-2"
+                        className="absolute top-full left-1/2 -translate-x-1/2 w-[500px] bg-white rounded-md border border-gray-100 shadow-xl overflow-hidden p-2 grid grid-cols-2 gap-1.5"
                       >
-                        {serviceLinks.map((link) => (
+                        {productLinks.map((link: any) => (
                           <Link
                             key={link.href}
                             href={link.href}
                             className={cn(
-                              "flex items-center gap-3 p-3 rounded-lg transition-all hover:bg-primary/5 hover:scale-[1.02] group/item",
-                              pathname === link.href ? "bg-primary/5 ring-1 ring-primary/20" : "bg-gray-50/50"
+                              "flex items-center gap-2.5 p-2 rounded-sm transition-all hover:bg-primary/5 hover:scale-[1.02] group/item",
+                              pathname === link.href ? "bg-primary/5 ring-1 ring-primary/20" : "bg-white"
                             )}
-                            onClick={() => setServicesDropdownOpen(false)}
+                            onClick={() => setProductsDropdownOpen(false)}
                           >
                             <div className={cn(
-                              "h-10 w-10 rounded-full flex items-center justify-center transition-colors group-hover/item:bg-primary group-hover/item:text-white",
+                              "h-8 w-8 rounded-full flex items-center justify-center transition-colors group-hover/item:bg-primary group-hover/item:text-white",
                               pathname === link.href ? "bg-primary text-white" : "bg-primary/10 text-primary"
                             )}>
                               {/* Icon placeholder logic */}
-                              <ChevronRight className="h-4 w-4" />
+                              <ChevronRight className="h-3 w-3" />
                             </div>
                             <div className="flex flex-col">
+
                               <span className={cn(
-                                "text-sm font-semibold transition-colors",
+                                "text-xs font-medium transition-colors",
                                 pathname === link.href ? "text-primary" : "text-gray-800 group-hover/item:text-primary"
                               )}>
                                 {link.label}
-                              </span>
-                              <span className="text-[10px] text-gray-500 uppercase tracking-wide">
-                                {t.common?.viewAll || "View"}
                               </span>
                             </div>
                           </Link>
@@ -261,21 +270,23 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
                 </div>
 
                 <Link
-                  href="/about"
+                  href="/products-used"
                   className={cn(
-                    "text-sm font-medium transition-all duration-300 relative group font-trajan-pro uppercase tracking-wider hover:text-secondary",
-                    pathname === "/about" ? "text-secondary" : "text-white"
+                    "text-sm font-medium transition-all duration-300 relative group font-trajan-pro tracking-wider hover:text-secondary",
+                    pathname === "/products-used" ? "text-secondary" : (scrolled || isUsersSection ? "text-gray-800" : "text-white")
                   )}
                 >
-                  {t.header.about}
+                  {t.header.usedProducts}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full"></span>
                 </Link>
+
+
 
                 <Link
                   href="/contact"
                   className={cn(
-                    "text-sm font-medium transition-all duration-300 relative group font-trajan-pro uppercase tracking-wider hover:text-secondary",
-                    pathname === "/contact" ? "text-secondary" : "text-white"
+                    "text-sm font-medium transition-all duration-300 relative group font-trajan-pro tracking-wider hover:text-secondary",
+                    pathname === "/contact" ? "text-secondary" : (scrolled || isUsersSection ? "text-gray-800" : "text-white")
                   )}
                 >
                   {t.header.contact}
@@ -286,10 +297,12 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
               {/* Right: Contact & Language */}
               <div className="flex items-center gap-3 shrink-0">
                 {/* Desktop Language Dropdown */}
-                <LanguageSwitcher 
+                <LanguageSwitcher
                   buttonClassName={cn(
-                    "bg-white/10 hover:bg-white/20",
-                    (scrolled || isUsersSection) && "bg-primary/5 hover:bg-primary/10 border border-primary/20"
+                    "transition-colors",
+                    (scrolled || isUsersSection)
+                      ? "bg-primary/5 hover:bg-primary/10 border border-primary/20 text-gray-800"
+                      : "bg-white/10 hover:bg-white/20 text-white"
                   )}
                 />
               </div>
@@ -316,14 +329,14 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
                 animate={{ x: 0 }}
                 exit={{ x: "100%" }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                className="fixed top-0 right-0 bottom-0 w-[80%] max-w-[320px] z-50 md:hidden overflow-hidden shadow-2xl bg-white"
+                className="fixed top-0 right-0 bottom-0 w-[80%] max-w-[320px] z-50 md:hidden overflow-hidden bg-white"
               >
                 <div className="h-full flex flex-col">
                   {/* Header with close button */}
                   <div className="flex items-center justify-between px-5 py-4 bg-primary">
                     <Link href="/" className="inline-block" onClick={() => setIsMenuOpen(false)}>
                       <div className="relative h-9 w-24">
-                        <Image src="/logo.png" alt="Univers Instrument Service Logo" fill className="object-contain" priority sizes="(max-width: 768px) 96px, 128px" />
+                        <Image src="/whitelogo.png" alt="Univers Instrument Service Logo" fill className="object-contain" priority sizes="(max-width: 768px) 96px, 128px" />
                       </div>
                     </Link>
                     <button
@@ -359,18 +372,34 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
                       >
                         <Link
                           href="/"
-                          className={cn(
-                            "flex items-center py-3 px-4 rounded-lg transition-all duration-200 text-sm font-medium tracking-wide group",
-                            pathname === "/" ? "bg-primary text-white" : "text-gray-700 hover:bg-gray-50 hover:text-primary"
-                          )}
                           onClick={() => setIsMenuOpen(false)}
+                          className={cn(
+                            "flex items-center w-full py-4 px-4 transition-all duration-200 text-sm font-medium tracking-wide border-b border-gray-100",
+                            pathname === "/" ? "bg-primary/5 text-primary" : "text-gray-700 hover:text-primary"
+                          )}
                         >
-                          <span className="flex-1">{t.header.home}</span>
-                          <ChevronRight className={cn("h-4 w-4 transition-transform duration-200", pathname === "/" ? "text-white/70" : "text-gray-400")} />
+                          {t.header.home}
                         </Link>
                       </motion.div>
 
-                      {/* Mobile Services Accordion */}
+                      <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.08 }}
+                      >
+                        <Link
+                          href="/about"
+                          onClick={() => setIsMenuOpen(false)}
+                          className={cn(
+                            "flex items-center w-full py-4 px-4 transition-all duration-200 text-sm font-medium tracking-wide border-b border-gray-100",
+                            pathname === "/about" ? "bg-primary/5 text-primary" : "text-gray-700 hover:text-primary"
+                          )}
+                        >
+                          {t.header.about}
+                        </Link>
+                      </motion.div>
+
+                      {/* Mobile Products Accordion */}
                       <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -378,31 +407,31 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
                       >
                         <div className="rounded-lg overflow-hidden">
                           <button
-                            onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                            onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
                             className={cn(
                               "flex items-center w-full py-3 px-4 transition-all duration-200 text-sm font-medium tracking-wide group",
-                              serviceLinks.some(link => pathname === link.href) && !mobileServicesOpen
-                                ? "bg-primary/5 text-primary" 
-                                : "text-gray-700 hover:bg-gray-50 hover:text-primary"
+                              productLinks.some((link: any) => pathname === link.href) && !mobileProductsOpen
+                                ? "bg-primary/5 text-primary"
+                                : "text-gray-700 hover:bg-primary/5 hover:text-primary"
                             )}
                           >
-                            <span className="flex-1 text-left">{t.header.services}</span>
+                            <span className="flex-1 text-left">{t.header.products}</span>
                             <ChevronDown className={cn(
                               "h-4 w-4 transition-transform duration-200",
-                               mobileServicesOpen ? "rotate-180" : "text-gray-400"
+                               mobileProductsOpen ? "rotate-180" : "text-gray-400"
                             )} />
                           </button>
-                          
+
                           <AnimatePresence>
-                            {mobileServicesOpen && (
+                            {mobileProductsOpen && (
                               <motion.div
                                 initial={{ height: 0, opacity: 0 }}
                                 animate={{ height: "auto", opacity: 1 }}
                                 exit={{ height: 0, opacity: 0 }}
                                 transition={{ duration: 0.2 }}
-                                className="bg-gray-50/50 overflow-hidden"
+                                className="bg-white overflow-hidden"
                               >
-                                {serviceLinks.map((link) => (
+                                {productLinks.map((link: any) => (
                                   <Link
                                     key={link.href}
                                     href={link.href}
@@ -425,20 +454,21 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
                       <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.15 }}
+                        transition={{ delay: 0.12 }}
                       >
                         <Link
-                          href="/about"
-                          className={cn(
-                            "flex items-center py-3 px-4 rounded-lg transition-all duration-200 text-sm font-medium tracking-wide group",
-                            pathname === "/about" ? "bg-primary text-white" : "text-gray-700 hover:bg-gray-50 hover:text-primary"
-                          )}
+                          href="/products-used"
                           onClick={() => setIsMenuOpen(false)}
+                          className={cn(
+                            "flex items-center w-full py-4 px-4 transition-all duration-200 text-sm font-medium tracking-wide border-b border-gray-100",
+                            pathname === "/products-used" ? "bg-primary/5 text-primary" : "text-gray-700 hover:text-primary"
+                          )}
                         >
-                          <span className="flex-1">{t.header.about}</span>
-                          <ChevronRight className={cn("h-4 w-4 transition-transform duration-200", pathname === "/about" ? "text-white/70" : "text-gray-400")} />
+                          {t.header.usedProducts}
                         </Link>
                       </motion.div>
+
+
 
                       <motion.div
                         initial={{ opacity: 0, x: 20 }}
@@ -447,21 +477,20 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
                       >
                         <Link
                           href="/contact"
-                          className={cn(
-                            "flex items-center py-3 px-4 rounded-lg transition-all duration-200 text-sm font-medium tracking-wide group",
-                            pathname === "/contact" ? "bg-primary text-white" : "text-gray-700 hover:bg-gray-50 hover:text-primary"
-                          )}
                           onClick={() => setIsMenuOpen(false)}
+                          className={cn(
+                            "flex items-center w-full py-4 px-4 transition-all duration-200 text-sm font-medium tracking-wide",
+                            pathname === "/contact" ? "bg-primary/5 text-primary" : "text-gray-700 hover:text-primary"
+                          )}
                         >
-                          <span className="flex-1">{t.header.contact}</span>
-                          <ChevronRight className={cn("h-4 w-4 transition-transform duration-200", pathname === "/contact" ? "text-white/70" : "text-gray-400")} />
+                          {t.header.contact}
                         </Link>
                       </motion.div>
                     </nav>
                   </div>
 
                   {/* Footer with Language & Login */}
-                  <div className="border-t border-gray-100 p-4 space-y-3 bg-gray-50/50">
+                  <div className="border-t border-gray-100 p-4 space-y-3 bg-white">
                     {/* Language Selector */}
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
@@ -475,7 +504,7 @@ export default function Header({ isStatic = false }: { isStatic?: boolean }) {
                             key={lang.code}
                             onClick={() => setLanguage(lang.code as "en" | "fr" | "es")}
                             className={cn(
-                              "flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg text-sm font-medium transition-all duration-200",
+                              "flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-sm text-sm font-medium transition-all duration-200",
                               lang.code === language
                                 ? "bg-primary text-white shadow-sm"
                                 : "bg-white text-gray-600 border border-gray-200 hover:border-primary/30 hover:bg-primary/5"

@@ -1,6 +1,6 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 
 import { LanguageProvider } from "@/components/language-provider";
@@ -8,8 +8,7 @@ import CookieBanner from "@/components/cookie-banner";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://univers-instrument-service.com"),
@@ -44,11 +43,11 @@ export const metadata: Metadata = {
   classification: "Travel Agency",
   icons: {
     icon: [
-      { url: "/logo.png", sizes: "32x32", type: "image/png" },
-      { url: "/logo.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.png", sizes: "16x16", type: "image/png" },
     ],
-    apple: [{ url: "/logo.png", sizes: "180x180", type: "image/png" }],
-    shortcut: "/logo.png",
+    apple: [{ url: "/favicon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: "/favicon.png",
   },
   manifest: "/site.webmanifest",
   openGraph: {
@@ -66,7 +65,7 @@ export const metadata: Metadata = {
         type: "image/jpeg",
       },
       {
-        url: "/logo.png",
+        url: "/favicon.png",
         width: 512,
         height: 512,
         alt: "Univers Instrument Service Logo",
@@ -128,7 +127,7 @@ const jsonLd = {
       url: "https://univers-instrument-service.com",
       logo: {
         "@type": "ImageObject",
-        url: "https://univers-instrument-service.com/logo.png",
+        url: "https://univers-instrument-service.com/favicon.png",
         width: 512,
         height: 512,
       },
@@ -230,11 +229,7 @@ export default function RootLayout({
         />
         <link rel="dns-prefetch" href="https://fonts.cdnfonts.com" />
 
-        {/* Custom fonts */}
-        <link
-          href="https://fonts.cdnfonts.com/css/urwclassico?display=swap"
-          rel="stylesheet"
-        />
+
 
         {/* Theme color for mobile browsers */}
         <meta name="theme-color" content="#c4a47c" />
@@ -253,7 +248,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`font-sans antialiased`} suppressHydrationWarning>
+      <body className={`${inter.className} antialiased`} suppressHydrationWarning>
         <LanguageProvider>
           {children}
           <CookieBanner />

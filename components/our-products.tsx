@@ -1,13 +1,13 @@
 "use client"
 
 import { useState, useEffect, useMemo } from "react"
-import OffersGrid from "./offers-grid"
+import ProductsGrid from "./products-grid"
 import { useLanguage } from "@/components/language-provider"
 import { offersApi, type ApiError } from "@/lib/api"
 import { type Offer } from "@/lib/offers-data"
 import { Loader2 } from "lucide-react"
 
-export default function OurBestOffers() {
+export default function OurProducts() {
   const { t, language } = useLanguage()
   const [bestOffers, setBestOffers] = useState<Offer[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -166,7 +166,7 @@ export default function OurBestOffers() {
 
   if (isLoading) {
     return (
-      <section className="w-full py-20 px-2 md:px-8 bg-gray-50">
+      <section className="w-full py-20 px-2 md:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-center py-16">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -178,7 +178,7 @@ export default function OurBestOffers() {
 
   if (error) {
     return (
-      <section className="w-full py-20 px-2 md:px-8 bg-gray-50">
+      <section className="w-full py-20 px-2 md:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center py-16">
             <p className="text-muted-foreground">{error}</p>
@@ -189,11 +189,11 @@ export default function OurBestOffers() {
   }
 
   return (
-    <section className="w-full py-20 px-2 md:px-8 bg-gray-50">
+    <section className="w-full py-20 px-2 md:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary mb-4">
-            <span className="text-lg font-semibold">{t.bestOffers.sectionTitle}</span>
+            <span className="text-lg font-semibold">{t.header.ourProducts}</span>
           </div>
           <p className="text-muted-foreground max-w-xl mx-auto">
             {t.bestOffers.sectionDescription}
@@ -213,7 +213,7 @@ export default function OurBestOffers() {
                   )}
                 </div>
 
-                <OffersGrid offers={offersForType} />
+                <ProductsGrid products={offersForType} />
               </div>
             ))}
           </div>

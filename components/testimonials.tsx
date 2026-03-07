@@ -11,70 +11,46 @@ import Image from "next/image"
 
 const testimonials = [
   {
-    name: "Sarah Johnson",
-    role: "Luxury Traveler",
-    text: "Outstanding service and professional drivers. Made our Morocco trip unforgettable! The attention to detail and local knowledge made all the difference.",
+    name: "Fatima-Zahra El Alaoui",
+    location: "Marrakech, Morocco",
+    text: "Univers Instrument Service is our primary partner for laboratory equipment. Their maintenance service is top-notch and ensures our operations run smoothly.",
     rating: 5,
     image: "/profile-woman.jpg",
-    date: "2 weeks ago",
-    platform: "google",
-    helpful: 12,
-    location: "New York, USA",
   },
   {
-    name: "Michael Brown",
-    role: "Business Executive",
-    text: "Reliable, punctual, and always friendly. Highly recommend for any travel needs. Used them for multiple airport transfers during my business trip.",
+    name: "Ahmed Benjelloun",
+    location: "Casablanca, Morocco",
+    text: "Highly recommend Univers Instrument Service for medical instrumentation. We have been working with them for years and the reliability is unmatched.",
     rating: 5,
     image: "/profile-man.jpg",
-    date: "1 month ago",
-    platform: "tripadvisor",
-    helpful: 8,
-    location: "London, UK",
   },
   {
-    name: "Emma Wilson",
-    role: "Tour Group Manager",
-    text: "Perfect coordination and excellent knowledge of local attractions. Top-notch! Our entire group was impressed with the professionalism.",
+    name: "Dr. Youssef El Mansouri",
+    location: "Rabat, Morocco",
+    text: "The technical expertise of the UIS team is impressive. They provided a full solution for our new clinic, from installation to staff training.",
+    rating: 5,
+    image: "/profile-man.jpg",
+  },
+  {
+    name: "Nadia Benkirane",
+    location: "Tanger, Morocco",
+    text: "Fast response times and genuine spare parts. Univers Instrument Service is definitely the best choice for scientific equipment in Morocco.",
     rating: 5,
     image: "/profile-woman-2.jpg",
-    date: "3 weeks ago",
-    platform: "google",
-    helpful: 15,
-    location: "Sydney, Australia",
   },
   {
-    name: "David Martinez",
-    role: "Corporate Travel Manager",
-    text: "Exceptional service for our team retreat. The drivers were knowledgeable and courteous throughout. Would definitely book again!",
+    name: "Dr. Karim Tazi",
+    location: "Fès, Morocco",
+    text: "Professionalism and quality. Every instrument we've sourced from UIS meets the highest standards. Their after-sales support is excellent.",
     rating: 5,
     image: "/profile-man.jpg",
-    date: "1 week ago",
-    platform: "tripadvisor",
-    helpful: 6,
-    location: "Toronto, Canada",
   },
   {
-    name: "Lisa Anderson",
-    role: "Travel Blogger",
-    text: "An incredible experience! From airport to destination, everything was seamlessly organized. Best transfer service I've used in Morocco.",
+    name: "Hind Bousfiha",
+    location: "Agadir, Morocco",
+    text: "A very reactive team that understands the urgency of medical sectors. UIS has never failed us in providing critical maintenance.",
     rating: 5,
     image: "/profile-woman-2.jpg",
-    date: "4 days ago",
-    platform: "google",
-    helpful: 23,
-    location: "Los Angeles, USA",
-  },
-  {
-    name: "James Thompson",
-    role: "Hotel Concierge",
-    text: "We recommend Univers Instrument Service to all our guests. They never disappoint! Consistent quality and reliability every single time.",
-    rating: 5,
-    image: "/profile-man.jpg",
-    date: "2 months ago",
-    platform: "tripadvisor",
-    helpful: 19,
-    location: "Paris, France",
   },
 ]
 
@@ -84,84 +60,15 @@ export default function Testimonials() {
   const { t } = useLanguage()
 
   return (
-    <section id="testimonials" className="py-16 sm:py-24 bg-gray-50">
+    <section id="testimonials" className="py-16 sm:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-2 md:px-6">
         <div className="flex flex-col gap-3 sm:gap-8 mb-3 sm:mb-6">
-          <div className="flex justify-center md:hidden">
+          <div className="flex justify-center">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary">
-              <span className="text-lg font-semibold">{t.testimonials.title} <span className="text-secondary">{t.testimonials.titleHighlight}</span></span>
+              <span className="text-lg font-semibold">
+                {t.testimonials.title} <span className="text-secondary">{t.testimonials.titleHighlight}</span>
+              </span>
             </div>
-          </div>
-
-          <div className="flex items-center justify-center md:justify-between gap-2 sm:gap-6 flex-wrap">
-            <a
-              href="https://www.google.com/search?q=univers+instrument+service"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center bg-white px-1.5 py-1 sm:px-4 sm:py-2 rounded-lg shadow-sm border-2 border-transparent hover:border-primary hover:bg-primary/5 transition-all duration-300"
-            >
-              <svg className="w-4 h-4 sm:w-6 sm:h-6 mr-1.5 sm:mr-2" viewBox="0 0 24 24">
-                <path
-                  fill="#4285F4"
-                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                />
-                <path
-                  fill="#34A853"
-                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                />
-                <path
-                  fill="#FBBC05"
-                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                />
-                <path
-                  fill="#EA4335"
-                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                />
-              </svg>
-              <div className="text-left">
-                <div className="flex items-center">
-                  <span className="text-lg sm:text-2xl font-bold text-gray-900">4.9</span>
-                  <div className="flex ml-1 sm:ml-2">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 fill-yellow-400" />
-                    ))}
-                  </div>
-                </div>
-                <p className="text-[10px] sm:text-xs text-gray-600">{t.testimonials.googleReviews}</p>
-              </div>
-            </a>
-
-            <div className="hidden md:flex justify-center">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary">
-                <span className="text-lg font-semibold">{t.testimonials.title} <span className="text-secondary">{t.testimonials.titleHighlight}</span></span>
-              </div>
-            </div>
-
-            <a
-              href="https://www.tripadvisor.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center bg-white px-1.5 py-1 sm:px-4 sm:py-2 rounded-lg shadow-sm border-2 border-transparent hover:border-primary hover:bg-primary/5 transition-all duration-300"
-            >
-              <Image
-                src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/tripadvisor-icon.png"
-                alt="TripAdvisor"
-                width={24}
-                height={24}
-                className="w-4 h-4 sm:w-6 sm:h-6 mr-1.5 sm:mr-2"
-              />
-              <div className="text-left">
-                <div className="flex items-center">
-                  <span className="text-lg sm:text-2xl font-bold text-gray-900">5.0</span>
-                  <div className="flex ml-1 sm:ml-2">
-                    {[...Array(5)].map((_, i) => (
-                      <div key={i} className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-green-500 mx-0.5"></div>
-                    ))}
-                  </div>
-                </div>
-                <p className="text-[10px] sm:text-xs text-gray-600">{t.testimonials.tripAdvisor}</p>
-              </div>
-            </a>
           </div>
         </div>
 
@@ -185,13 +92,29 @@ export default function Testimonials() {
           >
             {testimonials.map((t, i) => (
               <SwiperSlide key={i}>
-                <div className="px-2 py-2 flex flex-col h-full">
-                  <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6 h-full flex flex-col border border-gray-100">
-                    {/* Platform Badge */}
-                    <div className="flex items-center justify-between mb-4">
-                      {t.platform === "google" ? (
-                        <div className="flex items-center gap-2">
-                          <svg className="w-5 h-5" viewBox="0 0 24 24">
+                <div className="px-1 py-1 flex flex-col h-full">
+                  <div className="bg-[#414141] rounded-md transition-all duration-300 p-4 h-full flex flex-col border border-white/10">
+                    {/* Header: Profile Top Left, Google Info Top Right */}
+                    <div className="flex justify-between items-start mb-6">
+                      <div className="flex items-center gap-3">
+                        <div className="shrink-0 w-12 h-12 rounded-full overflow-hidden bg-gray-600 relative border border-white/10">
+                          <Image
+                            src={t.image || "/placeholder.svg"}
+                            alt={t.name}
+                            fill
+                            className="object-cover"
+                            sizes="48px"
+                          />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-white text-sm leading-tight">{t.name}</h3>
+                          <p className="text-white/60 text-[11px] mt-0.5">{t.location}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex flex-col items-end gap-1">
+                        <div className="flex items-center gap-1.5">
+                          <svg className="w-4 h-4" viewBox="0 0 24 24">
                             <path
                               fill="#4285F4"
                               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -209,70 +132,19 @@ export default function Testimonials() {
                               d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                             />
                           </svg>
-                          <span className="text-sm font-medium text-gray-700">Google</span>
+                          <span className="text-[10px] font-bold text-white/40 uppercase tracking-tighter">Google</span>
                         </div>
-                      ) : (
-                        <div className="flex items-center gap-2">
-                          <Image
-                            src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/tripadvisor-icon.png"
-                            alt="TripAdvisor"
-                            width={20}
-                            height={20}
-                            className="w-5 h-5"
-                          />
-                          <span className="text-sm font-medium text-gray-700">TripAdvisor</span>
-                        </div>
-                      )}
-                      <span className="text-xs text-gray-500">{t.date}</span>
-                    </div>
-
-                    {/* Rating */}
-                    <div className="flex items-center mb-4">
-                      {t.platform === "google" ? (
                         <div className="flex">
                           {[...Array(t.rating)].map((_, idx) => (
-                            <Star key={idx} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                            <Star key={idx} className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" />
                           ))}
                         </div>
-                      ) : (
-                        <div className="flex">
-                          {[...Array(t.rating)].map((_, idx) => (
-                            <div key={idx} className="w-5 h-5 rounded-full bg-green-500 mx-0.5"></div>
-                          ))}
-                        </div>
-                      )}
+                      </div>
                     </div>
 
                     {/* Review Text */}
-                    <div className="grow mb-4">
-                      <p className="text-sm leading-relaxed text-gray-700">{t.text}</p>
-                    </div>
-
-                    {/* User Info */}
-                    <div className="flex items-center pt-4 border-t border-gray-100">
-                      <div className="shrink-0 w-10 h-10 rounded-full overflow-hidden mr-3 bg-gray-200 relative">
-                        <Image
-                          src={t.image || "/placeholder.svg"}
-                          alt={t.name}
-                          fill
-                          className="object-cover"
-                          sizes="40px"
-                          onError={(e) => {
-                            // Removing error handler as next/image handles placeholders differently, 
-                            // but for now keeping it simple or relying on fallback logic if we could.
-                            // Basic error handling isn't directly supported on Image component in the same way for src replacement.
-                            // We heavily rely on the src being correct or the placeholder.
-                          }}
-                        />
-                      </div>
-                      <div className="grow">
-                        <h3 className="font-semibold text-gray-900 text-sm">{t.name}</h3>
-                        <p className="text-gray-500 text-xs">{t.location}</p>
-                      </div>
-                      <div className="flex items-center text-gray-500">
-                        <ThumbsUp className="w-4 h-4 mr-1" />
-                        <span className="text-xs">{t.helpful}</span>
-                      </div>
+                    <div className="grow">
+                      <p className="text-sm leading-relaxed text-white/80 italic">"{t.text}"</p>
                     </div>
                   </div>
                 </div>
