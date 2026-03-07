@@ -52,6 +52,7 @@ export default function SplashScreen() {
         width={200}
         height={200}
         priority
+        className="animate-pulse-slow"
         style={{ objectFit: "contain" }}
       />
     </div>

@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/components/language-provider"
 import { Button } from "@/components/ui/button"
-import { Phone } from "lucide-react"
+import { Phone, ChevronDown } from "lucide-react"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -92,6 +92,25 @@ export default function Hero() {
           </div>
         </div>
       </div>
+
+      {/* Scroll Indicator */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 1 }}
+        className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center justify-center z-20 cursor-pointer"
+        onClick={() => {
+          window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+        }}
+      >
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          className="text-white/60 hover:text-white transition-colors"
+        >
+          <ChevronDown className="w-8 h-8 md:w-10 md:h-10" />
+        </motion.div>
+      </motion.div>
     </section>
   )
 }

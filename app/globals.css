@@ -535,3 +535,22 @@ input[type="password"]::placeholder {
 .hero-search-select option:first-child {
   border-radius: 0.75rem 0.75rem 0 0;
 }
+
+@keyframes logo-pulse {
+  0% {
+    transform: scale(1);
+    filter: brightness(1) drop-shadow(0 0 0px rgba(242, 118, 43, 0));
+  }
+  50% {
+    transform: scale(1.08);
+    filter: brightness(1.1) drop-shadow(0 0 15px rgba(242, 118, 43, 0.3));
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1) drop-shadow(0 0 0px rgba(242, 118, 43, 0));
+  }
+}
+
+.animate-pulse-slow {
+  animation: logo-pulse 3s ease-in-out infinite;
+}
