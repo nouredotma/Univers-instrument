@@ -55,7 +55,7 @@ const ProductsGrid = memo(function ProductsGrid({ products }: ProductsGridProps)
               {/* Content Section */}
               <div className="py-2 md:py-3 flex flex-col grow">
                 <div className="flex mb-1">
-                  <h3 className="text-sm md:text-lg font-semibold text-[#414141] group-hover:text-primary transition-colors line-clamp-1 w-full">
+                  <h3 className="text-sm md:text-lg font-semibold text-[#414141] group-hover:text-primary transition-colors line-clamp-1 w-full font-fauna">
                     {product.name}
                   </h3>
                 </div>
@@ -66,7 +66,7 @@ const ProductsGrid = memo(function ProductsGrid({ products }: ProductsGridProps)
 
                 {/* Bottom Row */}
                 <div className="mt-auto flex items-center justify-between pt-1 md:pt-2">
-                  <div className="bg-primary text-white px-2 py-2 md:px-3 md:py-2.5 rounded-xs md:rounded-sm text-[10px] md:text-[13px] font-medium">
+                  <div className="bg-primary text-white px-2 py-2 md:px-3 md:py-2.5 rounded-xs md:rounded-sm text-[10px] md:text-[13px] font-medium font-fauna">
                     View Product
                   </div>
                   <div className="flex flex-col items-end gap-0.5">
@@ -75,7 +75,7 @@ const ProductsGrid = memo(function ProductsGrid({ products }: ProductsGridProps)
                         {product.oldPrice} MAD
                       </span>
                     )}
-                    <span className="text-sm md:text-lg font-bold text-[#414141] leading-none">
+                    <span className="text-sm md:text-lg font-bold text-[#414141] leading-none font-fauna">
                       {product.price} MAD
                     </span>
                   </div>

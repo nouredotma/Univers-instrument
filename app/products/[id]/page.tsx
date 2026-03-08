@@ -205,7 +205,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 
                 {/* 1. Product Name & Stock */}
                 <div className="flex items-center justify-between gap-4">
-                  <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-neutral-900 tracking-tight">
+                  <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-neutral-900 tracking-tight font-fauna">
                     {product.name}
                   </h1>
                   <div className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-1 border border-emerald-100 shrink-0 rounded-xs">
@@ -233,7 +233,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                       {product.oldPrice} MAD
                     </span>
                   )}
-                  <span className="text-2xl md:text-2xl font-extrabold text-neutral-900 tracking-tight">
+                  <span className="text-2xl md:text-2xl font-extrabold text-neutral-900 tracking-tight font-fauna">
                     {product.price} MAD
                   </span>
                   {product.oldPrice && (
@@ -303,7 +303,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
                 {/* 8. Long Description */}
                 <div className="pt-4 border-t border-neutral-200 flex flex-col gap-2">
-                  <h3 className="text-lg font-bold text-neutral-900 tracking-tight">Overview</h3>
+                  <h3 className="text-lg font-bold text-neutral-900 tracking-tight font-fauna">Overview</h3>
                   <div className="text-sm md:text-base text-neutral-600 leading-relaxed space-y-4 font-light">
                     {product.longDescription}
                   </div>
@@ -312,7 +312,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 {/* 9. Specifications Table */}
                 {product.specificationsTable && (
                   <div className="pt-8 border-t border-neutral-200 flex flex-col gap-4">
-                    <h3 className="text-lg font-bold text-neutral-900 tracking-tight">Technical Specifications</h3>
+                    <h3 className="text-lg font-bold text-neutral-900 tracking-tight font-fauna">Technical Specifications</h3>
                     <div className="rounded-xs border border-neutral-200 overflow-hidden bg-white">
                       <Table className="text-[10px] md:text-xs">
                         <TableHeader className="bg-neutral-50/50">

@@ -126,7 +126,7 @@ export default function ContactPage() {
                   <MessageCircle className="w-3.5 h-3.5" />
                   {t.contact.letsTalk}
                 </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3 font-fauna">
                   {t.contact.readyToPlan} <span className="text-primary">{t.contact.adventure}</span>
                 </h2>
                 <p className="text-muted-foreground text-sm leading-relaxed">
@@ -136,7 +136,7 @@ export default function ContactPage() {
 
               {/* Why Choose Us */}
               <div className="bg-linear-to-br from-primary/5 via-primary/3 to-transparent rounded-xl p-5 border border-primary/10">
-                <h3 className="font-semibold text-foreground mb-3 text-sm">{t.contact.whyChooseUs}</h3>
+                <h3 className="font-semibold text-foreground mb-3 text-sm font-fauna">{t.contact.whyChooseUs}</h3>
                 <ul className="space-y-2.5">
                   {whyChooseUsItems.map((item, i) => (
                     <li key={i} className="flex items-center gap-2.5 text-sm text-muted-foreground">
@@ -249,7 +249,7 @@ export default function ContactPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-3 px-6 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/90 disabled:opacity-70 transition-all duration-300 flex items-center justify-center gap-2 group"
+                    className="w-full py-3 px-6 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/90 disabled:opacity-70 transition-all duration-300 flex items-center justify-center gap-2 group font-fauna"
                   >
                     {isLoading ? (
                       <>
@@ -280,7 +280,7 @@ export default function ContactPage() {
           {/* Map Section */}
           <div className="mt-12 md:mt-16">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl md:text-2xl font-bold text-foreground">{t.contact.ourLocation}</h2>
+              <h2 className="text-xl md:text-2xl font-bold text-foreground font-fauna">{t.contact.ourLocation}</h2>
               <a
                 href="https://maps.google.com/?q=Rue+Bani+marine,+Marrakech"
                 target="_blank"

@@ -65,7 +65,7 @@ export default function Testimonials() {
         <div className="flex flex-col gap-3 sm:gap-8 mb-3 sm:mb-6">
           <div className="flex justify-center">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary">
-              <span className="text-lg font-semibold">
+              <span className="text-lg font-semibold font-fauna">
                 {t.testimonials.title} <span className="text-secondary">{t.testimonials.titleHighlight}</span>
               </span>
             </div>

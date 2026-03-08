@@ -157,7 +157,7 @@ export default function SearchFilter({ onChange, initial }: Props) {
   return (
     <div className="w-full">
       <div className="bg-[#414141] rounded-md px-3 py-4 lg:p-5 h-fit">
-        <h3 className="text-sm font-bold uppercase tracking-widest mb-4 lg:mb-6 border-b border-white/20 pb-3 lg:pb-4 text-amber-400">Filters</h3>
+        <h3 className="text-sm font-bold uppercase tracking-widest mb-4 lg:mb-6 border-b border-white/20 pb-3 lg:pb-4 text-amber-400 font-fauna">Filters</h3>
         
         <div className="flex flex-col gap-4 lg:gap-6">
           {/* Search Bar */}

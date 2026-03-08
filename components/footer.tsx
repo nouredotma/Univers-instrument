@@ -77,7 +77,7 @@ export default function Footer() {
 
           {/* Products List */}
           <div>
-            <h4 className="text-md font-semibold text-amber-400 mb-2">
+            <h4 className="text-md font-semibold text-amber-400 mb-2 font-fauna">
               {t.footer.products}
             </h4>
             <nav className="space-y-2.5">
@@ -95,7 +95,7 @@ export default function Footer() {
 
 {/* Quick Links */}
           <div>
-            <h4 className="text-md font-semibold text-amber-400 mb-2">
+            <h4 className="text-md font-semibold text-amber-400 mb-2 font-fauna">
               {t.footer.explore}
             </h4>
             <nav className="space-y-2.5">
@@ -112,7 +112,7 @@ export default function Footer() {
           </div>
           {/* Contact Info */}
           <div className="col-span-2 md:col-span-1 lg:col-span-1">
-            <h4 className="text-md font-semibold text-amber-400 mb-2">
+            <h4 className="text-md font-semibold text-amber-400 mb-2 font-fauna">
               {t.footer.contactTitle}
             </h4>
             <div className="space-y-2 sm:space-y-4">

@@ -51,7 +51,7 @@ export default function PageHero({ title, backgroundImage, showOverlay = true }:
       
       {/* Content */}
       <Container className="relative z-20 max-w-7xl mx-auto pb-8 flex justify-center">
-        <h1 className="text-xl md:text-3xl font-bold tracking-wider text-white text-center">{title}</h1>
+        <h1 className="text-xl md:text-3xl font-bold tracking-wider text-white text-center font-fauna">{title}</h1>
       </Container>
     </section>
   )

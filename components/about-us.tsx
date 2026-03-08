@@ -46,9 +46,9 @@ export default function AboutUs() {
           {/* Content Column */}
           <div className="lg:col-span-3 order-1 lg:order-2">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary mb-4">
-            <span className="text-base md:text-lg font-semibold">{t.about.ourStory}</span>
+            <span className="text-base md:text-lg font-semibold font-fauna">{t.about.ourStory}</span>
           </div>
-            <h2 className="text-2xl text-[#414141] md:text-4xl font-bold mb-5 leading-tight">
+            <h2 className="text-2xl text-[#414141] md:text-4xl font-bold mb-5 leading-tight font-fauna">
               {t.about.heroTitle} <span className="text-primary">{t.about.heroTitleHighlight}</span>
             </h2>
             <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-4">
@@ -70,7 +70,7 @@ export default function AboutUs() {
 
             <a
               href="/contact"
-              className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
+              className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all font-fauna"
             >
               {t.about.startJourney} <ArrowRight className="w-4 h-4" />
             </a>

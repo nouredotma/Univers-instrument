@@ -196,7 +196,7 @@ export default function Header({ isStatic = false, forceScrolled = false }: { is
                 <Link
                   href="/"
                   className={cn(
-                    "text-sm font-medium transition-all duration-300 relative group font-trajan-pro tracking-wider hover:text-secondary",
+                    "text-sm font-medium transition-all duration-300 relative group font-fauna tracking-wider hover:text-secondary",
                     pathname === "/" ? "text-secondary" : (scrolled || isUsersSection ? "text-gray-800" : "text-white")
                   )}
                 >
@@ -207,7 +207,7 @@ export default function Header({ isStatic = false, forceScrolled = false }: { is
                 <Link
                   href="/about"
                   className={cn(
-                    "text-sm font-medium transition-all duration-300 relative group font-trajan-pro tracking-wider hover:text-secondary",
+                    "text-sm font-medium transition-all duration-300 relative group font-fauna tracking-wider hover:text-secondary",
                     pathname === "/about" ? "text-secondary" : (scrolled || isUsersSection ? "text-gray-800" : "text-white")
                   )}
                 >
@@ -224,7 +224,7 @@ export default function Header({ isStatic = false, forceScrolled = false }: { is
                   <Link
                     href="/products"
                     className={cn(
-                      "flex items-center gap-1 text-sm font-medium transition-all duration-300 relative font-trajan-pro tracking-wider hover:text-secondary py-4",
+                      "flex items-center gap-1 text-sm font-medium transition-all duration-300 relative font-fauna tracking-wider hover:text-secondary py-4",
                       pathname === "/products" || productLinks.some((link: any) => pathname === link.href) ? "text-secondary" : (scrolled || isUsersSection ? "text-gray-800" : "text-white")
                     )}
                   >
@@ -277,7 +277,7 @@ export default function Header({ isStatic = false, forceScrolled = false }: { is
                 <Link
                   href="/products?condition=used"
                   className={cn(
-                    "text-sm font-medium transition-all duration-300 relative group font-trajan-pro tracking-wider hover:text-secondary",
+                    "text-sm font-medium transition-all duration-300 relative group font-fauna tracking-wider hover:text-secondary",
                     pathname === "/products" && typeof window !== 'undefined' && window.location.search.includes('condition=used') ? "text-secondary" : (scrolled || isUsersSection ? "text-gray-800" : "text-white")
                   )}
                 >
@@ -290,7 +290,7 @@ export default function Header({ isStatic = false, forceScrolled = false }: { is
                 <Link
                   href="/contact"
                   className={cn(
-                    "text-sm font-medium transition-all duration-300 relative group font-trajan-pro tracking-wider hover:text-secondary",
+                    "text-sm font-medium transition-all duration-300 relative group font-fauna tracking-wider hover:text-secondary",
                     pathname === "/contact" ? "text-secondary" : (scrolled || isUsersSection ? "text-gray-800" : "text-white")
                   )}
                 >
@@ -379,7 +379,7 @@ export default function Header({ isStatic = false, forceScrolled = false }: { is
                           href="/"
                           onClick={() => setIsMenuOpen(false)}
                           className={cn(
-                            "flex items-center w-full py-4 px-4 transition-all duration-200 text-sm font-medium tracking-wide border-b border-gray-100",
+                            "flex items-center w-full py-4 px-4 transition-all duration-200 text-sm font-medium tracking-wide border-b border-gray-100 font-fauna",
                             pathname === "/" ? "bg-primary/5 text-primary" : "text-gray-700 hover:text-primary"
                           )}
                         >
@@ -396,7 +396,7 @@ export default function Header({ isStatic = false, forceScrolled = false }: { is
                           href="/about"
                           onClick={() => setIsMenuOpen(false)}
                           className={cn(
-                            "flex items-center w-full py-4 px-4 transition-all duration-200 text-sm font-medium tracking-wide border-b border-gray-100",
+                            "flex items-center w-full py-4 px-4 transition-all duration-200 text-sm font-medium tracking-wide border-b border-gray-100 font-fauna",
                             pathname === "/about" ? "bg-primary/5 text-primary" : "text-gray-700 hover:text-primary"
                           )}
                         >
@@ -414,7 +414,7 @@ export default function Header({ isStatic = false, forceScrolled = false }: { is
                           <button
                             onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
                             className={cn(
-                              "flex items-center w-full py-3 px-4 transition-all duration-200 text-sm font-medium tracking-wide group",
+                              "flex items-center w-full py-3 px-4 transition-all duration-200 text-sm font-medium tracking-wide group font-fauna",
                               productLinks.some((link: any) => pathname === link.href) && !mobileProductsOpen
                                 ? "bg-primary/5 text-primary"
                                 : "text-gray-700 hover:bg-primary/5 hover:text-primary"
@@ -465,7 +465,7 @@ export default function Header({ isStatic = false, forceScrolled = false }: { is
                           href="/products?condition=used"
                           onClick={() => setIsMenuOpen(false)}
                           className={cn(
-                            "flex items-center w-full py-4 px-4 transition-all duration-200 text-sm font-medium tracking-wide border-b border-gray-100",
+                            "flex items-center w-full py-4 px-4 transition-all duration-200 text-sm font-medium tracking-wide border-b border-gray-100 font-fauna",
                             pathname === "/products" && typeof window !== 'undefined' && window.location.search.includes('condition=used') ? "bg-primary/5 text-primary" : "text-gray-700 hover:text-primary"
                           )}
                         >
@@ -484,7 +484,7 @@ export default function Header({ isStatic = false, forceScrolled = false }: { is
                           href="/contact"
                           onClick={() => setIsMenuOpen(false)}
                           className={cn(
-                            "flex items-center w-full py-4 px-4 transition-all duration-200 text-sm font-medium tracking-wide",
+                            "flex items-center w-full py-4 px-4 transition-all duration-200 text-sm font-medium tracking-wide font-fauna",
                             pathname === "/contact" ? "bg-primary/5 text-primary" : "text-gray-700 hover:text-primary"
                           )}
                         >

@@ -181,7 +181,7 @@ export default function Partners() {
             <Container className="max-w-full mx-auto px-4 md:px-12">
                 <div className="flex flex-col items-center md:flex-row gap-8">
                     <div className="shrink-0 text-center md:text-right md:max-w-44 md:border-r md:border-gray-200 md:pr-6">
-                        <p className="text-lg font-trajan-pro tracking-widest text-primary font-bold">
+                        <p className="text-lg font-fauna tracking-widest text-primary font-bold">
                             {t.partners?.title || "Our Partners"}
                         </p>
                         <p className="text-sm text-gray-500 mt-1">
