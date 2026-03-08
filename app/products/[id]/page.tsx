@@ -217,11 +217,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 {/* 2. Category & Condition */}
                 <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[11px] md:text-xs">
                   <div className="flex items-center gap-2">
-                    <span className="text-neutral-500 uppercase tracking-wider">Category:</span>
+                    <span className="text-neutral-500 tracking-wider">Category:</span>
                     <span className="font-semibold text-neutral-900 capitalize">{product.category}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-neutral-500 uppercase tracking-wider">Condition:</span>
+                    <span className="text-neutral-500 tracking-wider">Condition:</span>
                     <span className="font-semibold text-neutral-900">{product.category === 'used' ? 'Used' : 'New'}</span>
                   </div>
                 </div>
