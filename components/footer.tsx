@@ -160,7 +160,7 @@ export default function Footer() {
             <p>
               Developed & Designed by{" "}
               <a 
-                href="https://nexusdweb.com" 
+                href="https://wa.me/212613774895" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-amber-400 hover:text-amber-300 transition-colors font-medium"
