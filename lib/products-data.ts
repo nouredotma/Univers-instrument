@@ -43,7 +43,7 @@ export interface Product {
 }
 
 // Single image used across all products
-const PRODUCT_IMAGE = "/example.png"
+const PRODUCT_IMAGE = "/unnamed.jpg"
 
 export const products: Product[] = [
   {
