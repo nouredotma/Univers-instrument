@@ -538,21 +538,42 @@ input[type="password"]::placeholder {
   border-radius: 0.75rem 0.75rem 0 0;
 }
 
-@keyframes logo-pulse {
+/* Splash screen – flip-from-bottom word reveal */
+@keyframes splashFlipIn {
   0% {
-    transform: scale(1);
-    filter: brightness(1) drop-shadow(0 0 0px rgba(242, 118, 43, 0));
-  }
-  50% {
-    transform: scale(1.08);
-    filter: brightness(1.1) drop-shadow(0 0 15px rgba(242, 118, 43, 0.3));
+    transform: rotateX(90deg) translateY(100%);
+    opacity: 0;
   }
   100% {
-    transform: scale(1);
-    filter: brightness(1) drop-shadow(0 0 0px rgba(242, 118, 43, 0));
+    transform: rotateX(0deg) translateY(0);
+    opacity: 1;
   }
 }
 
-.animate-pulse-slow {
-  animation: logo-pulse 3s ease-in-out infinite;
+.splash-flip-in {
+  animation: splashFlipIn 0.5s ease-out forwards;
+  opacity: 0;
+  transform-origin: bottom center;
+}
+
+/* Splash screen – mobile responsive */
+@media (max-width: 650px) {
+  .splash-image {
+    width: 120px !important;
+    height: 120px !important;
+  }
+
+  .splash-word {
+    font-size: 0.875rem !important;
+    line-height: 1 !important;
+  }
+
+  .splash-word-row {
+    line-height: 1;
+  }
+
+  .splash-words {
+    gap: 0.3rem !important;
+  }
+
 }
