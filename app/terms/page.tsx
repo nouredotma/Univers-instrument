@@ -8,11 +8,8 @@ import { Container } from "@/components/ui/container"
 import { ChevronDown } from "lucide-react"
 import { useState } from "react"
 import { useLanguage } from "@/components/language-provider"
-import { useSiteSettings } from "@/hooks/use-site-settings"
-
 export default function TermsPage() {
   const { t } = useLanguage()
-  const { settings } = useSiteSettings()
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
 
   const sections = [
@@ -60,7 +57,7 @@ export default function TermsPage() {
   return (
     <main className="w-full">
       <Header />
-      <PageHero title={t.terms.pageTitle} backgroundImage="https://images.unsplash.com/photo-1579154204601-01588f351e67?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+      <PageHero title={t.terms.pageTitle} backgroundImage="/2.jpg" />
       <section className="py-20 md:py-28 bg-background">
         <Container className="max-w-4xl mx-auto px-4">
           <div className="mb-12">

@@ -103,7 +103,7 @@ function ProductsContent() {
       <Header />
       <PageHero 
         title={t.header.products} 
-        backgroundImage="https://images.unsplash.com/photo-1579154204601-01588f351e67?q=80&w=1170&auto=format&fit=crop"
+        backgroundImage="/2.jpg"
       />
 
       <section className="py-12 md:py-20 bg-white">

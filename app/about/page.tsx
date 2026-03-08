@@ -8,11 +8,8 @@ import AboutUs from "@/components/about-us"
 import { Container } from "@/components/ui/container"
 import { FlaskConical, Users, Award, Microscope, CheckCircle, Globe, Zap, ArrowRight } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
-import { useSiteSettings } from "@/hooks/use-site-settings"
-
 export default function AboutPage() {
   const { t } = useLanguage()
-  const { settings } = useSiteSettings()
 
   const values = [
     {
@@ -40,7 +37,7 @@ export default function AboutPage() {
   return (
     <main className="w-full">
       <Header />
-      <PageHero title={t.about.pageTitle} backgroundImage="/about-hero-lab.png" />
+      <PageHero title={t.about.pageTitle} backgroundImage="/2.jpg" />
 
       <AboutUs />
 

@@ -8,13 +8,11 @@ import Header from "@/components/header"
 import { useLanguage } from "@/components/language-provider"
 import PageHero from "@/components/page-hero"
 import { Container } from "@/components/ui/container"
-import { useSiteSettings } from "@/hooks/use-site-settings"
 import { ArrowRight, Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react"
 import { useState } from "react"
 
 export default function ContactPage() {
   const { t } = useLanguage()
-  const { settings } = useSiteSettings()
   
   const [formData, setFormData] = useState({
     name: "",
@@ -89,7 +87,7 @@ export default function ContactPage() {
   return (
     <main className="w-full">
       <Header />
-      <PageHero title={t.contact.pageTitle} backgroundImage="https://images.unsplash.com/photo-1579154204601-01588f351e67?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+      <PageHero title={t.contact.pageTitle} backgroundImage="/2.jpg" />
 
       <section className="py-16 md:py-24 bg-white">
         <Container className="max-w-full mx-auto px-4 md:px-12">

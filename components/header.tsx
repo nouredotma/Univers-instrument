@@ -338,9 +338,9 @@ export default function Header({ isStatic = false, forceScrolled = false }: { is
               >
                 <div className="h-full flex flex-col">
                   {/* Header with close button */}
-                  <div className="flex items-center justify-between px-5 py-4 bg-primary">
+                  <div className="flex items-center justify-between px-3 py-4 bg-[#414141]">
                     <Link href="/" className="inline-block" onClick={() => setIsMenuOpen(false)}>
-                      <div className="relative h-9 w-24">
+                      <div className="relative h-10 w-32">
                         <Image src="/whitelogo.png" alt="Univers Instrument Service Logo" fill className="object-contain" priority sizes="(max-width: 768px) 96px, 128px" />
                       </div>
                     </Link>
@@ -368,7 +368,7 @@ export default function Header({ isStatic = false, forceScrolled = false }: { is
                   </div>
 
                   {/* Navigation links */}
-                  <div className="flex-1 overflow-y-auto py-3 px-3">
+                  <div className="flex-1 overflow-y-auto py-3 px-1">
                     <nav className="space-y-0.5">
                       <motion.div
                         initial={{ opacity: 0, x: 20 }}
