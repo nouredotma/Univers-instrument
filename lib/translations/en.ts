@@ -518,6 +518,38 @@ export const en = {
     whatsapp: "WhatsApp",
   },
 
+  // Cart
+  cart: {
+    cart: "Cart",
+    myCart: "My Cart",
+    emptyCart: "Your cart is empty",
+    emptyCartDesc: "Browse our products and add items to your cart.",
+    next: "Next",
+    back: "Back",
+    review: "Review Order",
+    total: "Total",
+    subtotal: "Subtotal",
+    placeOrder: "Place Order",
+    orderPlaced: "Order placed successfully!",
+    addToCart: "Add to Cart",
+    addedToCart: "Added to cart!",
+    removeItem: "Remove",
+    quantity: "Qty",
+    orderForm: "Your Information",
+    formName: "Full Name",
+    formNamePlaceholder: "Your name",
+    formEmail: "Email",
+    formEmailPlaceholder: "you@example.com",
+    formPhone: "Phone",
+    formPhonePlaceholder: "+212 6XX XXX XXX",
+    formAddress: "Address",
+    formAddressPlaceholder: "Your address",
+    formCity: "City",
+    formCityPlaceholder: "Your city",
+    formMessage: "Message (optional)",
+    formMessagePlaceholder: "Any additional notes...",
+  },
+
   // Admin Panel
   admin: {
     sidebar: {

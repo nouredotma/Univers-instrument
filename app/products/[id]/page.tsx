@@ -6,9 +6,10 @@ import { notFound } from "next/navigation"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import FloatingContact from "@/components/floating-contact"
+import { useCart } from "@/components/cart-provider"
 import { Container } from "@/components/ui/container"
 import { Button } from "@/components/ui/button"
-import { CheckCircle2, ArrowLeft, Package, Minus, Plus, Truck, ChevronLeft, ChevronRight } from "lucide-react"
+import { CheckCircle2, ArrowLeft, ShoppingCart, Minus, Plus, Truck, ChevronLeft, ChevronRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { use, useState, useRef, useEffect } from "react"
@@ -26,6 +27,7 @@ import OurProducts from "@/components/our-products"
 
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { t, language } = useLanguage()
+  const { addToCart, toggleCartModal } = useCart()
   const resolvedParams = use(params)
   const productRaw = getProductById(resolvedParams.id)
 
@@ -285,11 +287,21 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
                 {/* 7. CTA Buttons */}
                 <div className="flex flex-row gap-2 pt-0">
-                  <Button className="flex-2 h-12 md:h-14 rounded-xs text-xs md:text-sm font-bold" asChild>
-                    <a href={`mailto:uis.instruments@gmail.com?subject=Order for ${product.name}&body=I would like to order ${quantity}x ${product.name}.`}>
-                      <Package className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-                      {t.product.orderNow}
-                    </a>
+                  <Button
+                    className="flex-2 h-12 md:h-14 rounded-xs text-xs md:text-sm font-bold cursor-pointer"
+                    onClick={() => {
+                      addToCart({
+                        productId: product.id,
+                        name: product.name,
+                        price: product.price,
+                        image: product.mainImage,
+                        quantity,
+                      })
+                      toggleCartModal(true)
+                    }}
+                  >
+                    <ShoppingCart className="w-4 h-4 md:w-5 md:h-5 mr-2" />
+                    {t.cart.addToCart}
                   </Button>
                   <Button className="flex-1 h-12 md:h-14 rounded-xs text-xs md:text-sm font-bold bg-[#25D366] hover:bg-[#20bd5a] text-white" asChild>
                     <a href={`https://wa.me/212666166945?text=Hello, I'm interested in ordering ${quantity}x ${product.name}`}>

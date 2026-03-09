@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 
 import { LanguageProvider } from "@/components/language-provider";
+import { CartProvider } from "@/components/cart-provider";
+import CartModal from "@/components/cart-modal";
 import CookieBanner from "@/components/cookie-banner";
 import SplashScreen from "@/components/splash-screen";
 import { Toaster } from "@/components/ui/sonner";
@@ -262,8 +264,11 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`} suppressHydrationWarning>
         <SplashScreen />
         <LanguageProvider>
-          {children}
-          <CookieBanner />
+          <CartProvider>
+            {children}
+            <CartModal />
+            <CookieBanner />
+          </CartProvider>
         </LanguageProvider>
         <Toaster />
         <Analytics />

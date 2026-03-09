@@ -636,6 +636,38 @@ export const es: TranslationKeys = {
     whatsapp: "WhatsApp",
   },
 
+  // Cart
+  cart: {
+    cart: "Carrito",
+    myCart: "Mi Carrito",
+    emptyCart: "Tu carrito está vacío",
+    emptyCartDesc: "Explora nuestros productos y añade artículos a tu carrito.",
+    next: "Siguiente",
+    back: "Volver",
+    review: "Revisar Pedido",
+    total: "Total",
+    subtotal: "Subtotal",
+    placeOrder: "Realizar Pedido",
+    orderPlaced: "¡Pedido realizado con éxito!",
+    addToCart: "Añadir al Carrito",
+    addedToCart: "¡Añadido al carrito!",
+    removeItem: "Eliminar",
+    quantity: "Cant.",
+    orderForm: "Tu Información",
+    formName: "Nombre Completo",
+    formNamePlaceholder: "Tu nombre",
+    formEmail: "Correo Electrónico",
+    formEmailPlaceholder: "tu@ejemplo.com",
+    formPhone: "Teléfono",
+    formPhonePlaceholder: "+212 6XX XXX XXX",
+    formAddress: "Dirección",
+    formAddressPlaceholder: "Tu dirección",
+    formCity: "Ciudad",
+    formCityPlaceholder: "Tu ciudad",
+    formMessage: "Mensaje (opcional)",
+    formMessagePlaceholder: "Notas adicionales...",
+  },
+
   // Admin Panel
   admin: {
     sidebar: {

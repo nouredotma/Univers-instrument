@@ -32,5 +32,5 @@ export const languages = [
   },
 ] as const
 
-export const DEFAULT_LANGUAGE: Language = "en"
+export const DEFAULT_LANGUAGE: Language = "fr"
 export const LANGUAGE_STORAGE_KEY = "mts-language"

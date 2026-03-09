@@ -2,11 +2,12 @@
 
 import { LanguageSwitcher } from "@/components/language-switcher"
 import { useLanguage } from "@/components/language-provider"
+import { useCart } from "@/components/cart-provider"
 import { Button } from "@/components/ui/button"
 import { Container } from "@/components/ui/container"
 import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "framer-motion"
-import { ChevronDown, ChevronRight, Facebook, Instagram, Mail, Phone, User } from "lucide-react"
+import { ChevronDown, ChevronRight, Facebook, Instagram, Mail, Phone, ShoppingCart, User } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -19,6 +20,7 @@ export default function Header({ isStatic = false, forceScrolled = false }: { is
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false)
   const pathname = usePathname()
   const { t, languages, language, setLanguage } = useLanguage()
+  const { totalItems, toggleCartModal } = useCart()
   
   // Check if we're in the users section
   const isUsersSection = pathname?.startsWith("/users") || isStatic
@@ -299,8 +301,27 @@ export default function Header({ isStatic = false, forceScrolled = false }: { is
                 </Link>
               </nav>
 
-              {/* Right: Contact & Language */}
+              {/* Right: Contact, Cart & Language */}
               <div className="flex items-center gap-3 shrink-0">
+                {/* Cart Icon */}
+                <button
+                  onClick={() => toggleCartModal()}
+                  className={cn(
+                    "relative flex items-center justify-center w-8 h-8 md:w-10 md:h-10 transition-colors cursor-pointer",
+                    (scrolled || isUsersSection)
+                      ? "text-primary"
+                      : "text-white"
+                  )}
+                  aria-label={t.cart.cart}
+                >
+                  <ShoppingCart className="w-5 h-5 md:w-6 md:h-6" />
+                  <span className={cn(
+                    "absolute top-0 right-0 w-4 h-4 rounded-full text-white text-[9px] font-light flex items-center justify-center shadow-sm transition-colors",
+                    totalItems === 0 ? "bg-yellow-500" : "bg-green-500"
+                  )}>
+                    {totalItems}
+                  </span>
+                </button>
                 {/* Desktop Language Dropdown */}
                 <LanguageSwitcher
                   buttonClassName={cn(
@@ -538,6 +559,21 @@ export default function Header({ isStatic = false, forceScrolled = false }: { is
           )}
         </AnimatePresence>
       </header>
+
+      {/* Mobile Floating Cart Button - Bottom Left */}
+      <button
+        onClick={() => toggleCartModal()}
+        className="fixed bottom-2 left-2 z-40 md:hidden w-12 h-12 rounded-full bg-primary text-white shadow-lg flex items-center justify-center hover:bg-primary/90 transition-all active:scale-95 cursor-pointer"
+        aria-label={t.cart.cart}
+      >
+        <ShoppingCart className="w-5 h-5" />
+        <span className={cn(
+          "absolute top-0 right-0 w-5 h-5 rounded-full text-white text-[9px] font-light flex items-center justify-center shadow-sm transition-colors border-2 border-primary",
+          totalItems === 0 ? "bg-yellow-500" : "bg-green-500"
+        )}>
+          {totalItems}
+        </span>
+      </button>
     </>
   )
 }
