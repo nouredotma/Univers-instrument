@@ -11,47 +11,6 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
   display: none !important;
 }
 
-/* Ensure password input text/dots are visible - force black color */
-input[type="password"] {
-  color: #1c1917 !important;
-  -webkit-text-fill-color: #1c1917 !important;
-  caret-color: #1c1917 !important;
-  /* Ensure masking glyphs are available and visible across browsers */
-  font-family:
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    sans-serif !important;
-  -webkit-text-security: disc;
-}
-
-input[type="password"]::placeholder {
-  color: #78716b !important;
-  -webkit-text-fill-color: #78716b !important;
-}
-
-.dark input[type="password"] {
-  color: #fafaf9 !important;
-  -webkit-text-fill-color: #fafaf9 !important;
-  caret-color: #fafaf9 !important;
-  font-family:
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    sans-serif !important;
-  -webkit-text-security: disc;
-}
-
-.dark input[type="password"]::placeholder {
-  color: #a8a29e !important;
-  -webkit-text-fill-color: #a8a29e !important;
-}
 
 :root {
   /* Brand colors */
