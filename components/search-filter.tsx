@@ -123,16 +123,16 @@ export default function SearchFilter({ onChange, initial }: Props) {
   const [condition, setCondition] = useState<string>(initial?.condition ?? "all")
 
   const CONDITIONS = [
-    { name: "All Categories", value: "all" },
-    { name: "Laboratory Instruments", value: "laboratory" },
-    { name: "Consumables & Accessories", value: "consumables" },
-    { name: "Water & Environment", value: "water" },
-    { name: "Agricultural Instruments", value: "agriculture" },
-    { name: "Medical", value: "medical" },
-    { name: "Laboratory Furniture", value: "furniture" },
-    { name: "Weighing", value: "weighing" },
-    { name: "Chemicals & Reagents", value: "chemicals" },
-    { name: "Used Products", value: "used" },
+    { name: t.searchFilter.categories.all, value: "all" },
+    { name: t.searchFilter.categories.laboratory, value: "laboratory" },
+    { name: t.searchFilter.categories.consumables, value: "consumables" },
+    { name: t.searchFilter.categories.water, value: "water" },
+    { name: t.searchFilter.categories.agriculture, value: "agriculture" },
+    { name: t.searchFilter.categories.medical, value: "medical" },
+    { name: t.searchFilter.categories.furniture, value: "furniture" },
+    { name: t.searchFilter.categories.weighing, value: "weighing" },
+    { name: t.searchFilter.categories.chemicals, value: "chemicals" },
+    { name: t.searchFilter.categories.used, value: "used" },
   ]
 
   const emit = () => {
@@ -157,13 +157,13 @@ export default function SearchFilter({ onChange, initial }: Props) {
   return (
     <div className="w-full">
       <div className="bg-[#414141] rounded-md px-3 py-4 lg:p-5 h-fit">
-        <h3 className="text-sm font-bold uppercase tracking-widest mb-4 lg:mb-6 border-b border-white/20 pb-3 lg:pb-4 text-amber-400 font-fauna">Filters</h3>
+        <h3 className="text-sm font-bold uppercase tracking-widest mb-4 lg:mb-6 border-b border-white/20 pb-3 lg:pb-4 text-amber-400 font-fauna">{t.searchFilter.title}</h3>
         
         <div className="flex flex-col gap-4 lg:gap-6">
           {/* Search Bar */}
           <div className="space-y-2">
             <label className="text-xs font-bold text-white">
-              Search Products
+              {t.searchFilter.searchProducts}
             </label>
             <input
               type="text"
@@ -171,7 +171,7 @@ export default function SearchFilter({ onChange, initial }: Props) {
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && emit()}
               className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-md text-xs md:text-sm text-white placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-white/40 focus:border-white/40 transition-all"
-              placeholder="Keywords..."
+              placeholder={t.searchFilter.keywords}
             />
           </div>
 
@@ -179,20 +179,20 @@ export default function SearchFilter({ onChange, initial }: Props) {
             {/* Condition / Category */}
             <div className="space-y-2">
               <label className="text-xs font-bold text-white">
-                Category
+                {t.searchFilter.categoryLabel}
               </label>
               <FilterDropdown
                 options={CONDITIONS}
                 value={condition}
                 onChange={(val) => { setCondition(val); }}
-                placeholder="Select category"
+                placeholder={t.searchFilter.selectCategory}
               />
             </div>
 
             {/* Price Range */}
             <div className="space-y-2">
               <label className="text-xs font-bold text-white">
-                Price Range (MAD)
+                {t.searchFilter.priceRangeMad}
               </label>
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <input
@@ -200,7 +200,7 @@ export default function SearchFilter({ onChange, initial }: Props) {
                   value={minPrice as any}
                   onChange={(e) => setMinPrice(e.target.value === "" ? "" : Number(e.target.value))}
                   className="w-full px-2 sm:px-3 py-2 bg-white/10 border border-white/20 rounded-md text-xs md:text-sm text-white placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-white/40 focus:border-white/40 transition-all min-w-0"
-                  placeholder="Min"
+                  placeholder={t.searchFilter.minPrice}
                 />
                 <span className="text-white/50 text-xs shrink-0">-</span>
                 <input
@@ -208,7 +208,7 @@ export default function SearchFilter({ onChange, initial }: Props) {
                   value={maxPrice as any}
                   onChange={(e) => setMaxPrice(e.target.value === "" ? "" : Number(e.target.value))}
                   className="w-full px-2 sm:px-3 py-2 bg-white/10 border border-white/20 rounded-md text-xs md:text-sm text-white placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-white/40 focus:border-white/40 transition-all min-w-0"
-                  placeholder="Max"
+                  placeholder={t.searchFilter.maxPrice}
                 />
               </div>
             </div>
@@ -221,14 +221,14 @@ export default function SearchFilter({ onChange, initial }: Props) {
               onClick={emit}
               className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 bg-white text-[#414141] text-xs font-bold rounded-sm hover:bg-white/90 transition-all cursor-pointer"
             >
-              Apply Filter
+              {t.searchFilter.applyFilter}
             </button>
             <button
               type="button"
               onClick={reset}
               className="flex-1 px-3 py-2.5 text-xs font-medium text-red-500 hover:text-white hover:bg-red-500 border border-red-500 rounded-sm cursor-pointer transition-all"
             >
-              Clear all
+              {t.searchFilter.clearAll}
             </button>
           </div>
         </div>

@@ -48,7 +48,7 @@ const ProductsGrid = memo(function ProductsGrid({ products }: ProductsGridProps)
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute top-0 right-0 bg-green-500 text-white px-2 py-0.5 md:py-1 rounded-none  rounded-bl-md  text-[10px] md:text-xs font-bold z-10 shadow-sm">
-                  Stock: {product.stock}
+                  {t.product.stock.replace("{count}", product.stock.toString())}
                 </div>
               </div>
 
@@ -66,8 +66,9 @@ const ProductsGrid = memo(function ProductsGrid({ products }: ProductsGridProps)
 
                 {/* Bottom Row */}
                 <div className="mt-auto flex items-center justify-between pt-1 md:pt-2">
-                  <div className="bg-primary text-white px-2 py-2 md:px-3 md:py-2.5 rounded-xs md:rounded-sm text-[10px] md:text-[13px] font-medium font-fauna">
-                    View Product
+                  <div className="bg-primary text-white px-3 py-2 md:px-3 md:py-2.5 rounded-xs md:rounded-sm text-[12px] md:text-[13px] font-medium font-fauna">
+                    <span className="md:hidden">View</span>
+                    <span className="hidden md:inline">{t.product.viewProduct}</span>
                   </div>
                   <div className="flex flex-col items-end gap-0.5">
                     {product.oldPrice && (
