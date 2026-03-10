@@ -12,6 +12,7 @@ import {
   MapPin,
   Truck,
   ArrowLeft,
+  FileSpreadsheet,
 } from "lucide-react";
 import { useState, useMemo, useEffect } from "react";
 import {
@@ -200,6 +201,33 @@ export default function SuppliersPage() {
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleExportExcel = () => {
+    const headers = ["ID", "Nom", "Email", "Téléphone", "Ville", "Adresse"];
+    const csvData = filteredSuppliers.map(s => [
+      s.id,
+      s.nom,
+      s.email || "",
+      s.telephone || "",
+      s.ville || "",
+      s.adresse || ""
+    ]);
+    
+    const csvContent = [
+      headers.join(";"),
+      ...csvData.map(row => row.map(v => `"${v?.toString().replace(/"/g, '""')}"`).join(";"))
+    ].join("\r\n");
+
+    const blob = new Blob(["\ufeff" + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", `fournisseurs_${new Date().toISOString().slice(0,10)}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   /* ================================================================ */
@@ -512,14 +540,24 @@ export default function SuppliersPage() {
             className={`${inputBase} pl-10 h-10`}
           />
         </div>
-        <button
-          type="button"
-          onClick={handleNewSupplier}
-          className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-sm bg-[#f2762b] hover:bg-[#d96521] text-xs font-semibold text-white transition-colors cursor-pointer"
-        >
-          <Plus className="w-3.5 h-3.5" />
-          Nouveau fournisseur
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleExportExcel}
+            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-sm border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all cursor-pointer text-xs font-semibold"
+          >
+            <FileSpreadsheet className="w-3.5 h-3.5" />
+            Exporter
+          </button>
+          <button
+            type="button"
+            onClick={handleNewSupplier}
+            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-sm bg-[#f2762b] hover:bg-[#d96521] border border-[#f2762b] hover:border-[#d96521] text-xs font-semibold text-white transition-colors cursor-pointer"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            Nouveau fournisseur
+          </button>
+        </div>
       </div>
 
       {error && (

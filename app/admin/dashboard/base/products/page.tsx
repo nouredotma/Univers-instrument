@@ -792,7 +792,7 @@ export default function ProductsPage() {
         <button
           type="button"
           onClick={handleNewProduct}
-          className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-sm bg-[#f2762b] hover:bg-[#d96521] text-xs font-semibold text-white transition-colors cursor-pointer"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-sm bg-[#f2762b] hover:bg-[#d96521] border border-[#f2762b] hover:border-[#d96521] text-xs font-semibold text-white transition-colors cursor-pointer"
         >
           <Plus className="w-3.5 h-3.5" />
           Nouveau produit

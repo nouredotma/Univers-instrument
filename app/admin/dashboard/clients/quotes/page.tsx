@@ -209,7 +209,7 @@ export default function ClientQuotesPage() {
     <div className="space-y-4 md:space-y-6 animate-in fade-in duration-300">
       <div className="flex flex-col-reverse md:flex-row items-stretch md:items-center justify-between gap-4">
         <div className="relative flex-1 max-w-md"><Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" /><input type="text" placeholder="Rechercher un devis (numéro, client...)" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className={`${inputBase} pl-10 h-10`} /></div>
-        <button type="button" onClick={handleNewItem} className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-sm bg-[#f2762b] hover:bg-[#d96521] text-xs font-semibold text-white transition-colors cursor-pointer"><Plus className="w-3.5 h-3.5" /> Nouveau devis</button>
+        <button type="button" onClick={handleNewItem} className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-sm bg-[#f2762b] hover:bg-[#d96521] border border-[#f2762b] hover:border-[#d96521] text-xs font-semibold text-white transition-colors cursor-pointer"><Plus className="w-3.5 h-3.5" /> Nouveau devis</button>
       </div>
       {error && <div className="rounded-sm border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-600">{error}</div>}
       <div className="bg-white border-2 border-gray-200 rounded-sm overflow-hidden text-[#414141]">
