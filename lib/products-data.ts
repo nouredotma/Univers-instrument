@@ -35,6 +35,7 @@ export interface Product {
   price: number
   oldPrice?: number
   stock: number
+  isBest?: boolean
   translations?: {
     en?: ProductTranslations
     fr?: ProductTranslations
@@ -57,6 +58,7 @@ export const products: Product[] = [
     price: 850,
     oldPrice: 1050,
     stock: 12,
+    isBest: true,
     specificationsTable: {
       headers: ["Parameter", "Range", "Resolution", "Accuracy"],
       rows: [
@@ -108,6 +110,7 @@ export const products: Product[] = [
     price: 1200,
     oldPrice: 1450,
     stock: 8,
+    isBest: true,
     specificationsTable: {
       headers: ["Feature", "Specification"],
       rows: [
@@ -162,6 +165,7 @@ export const products: Product[] = [
     price: 680,
     oldPrice: 850,
     stock: 15,
+    isBest: true,
     specificationsTable: {
       headers: ["Parameter", "Testing Method"],
       rows: [
@@ -216,6 +220,7 @@ export const products: Product[] = [
     price: 2450,
     oldPrice: 2800,
     stock: 5,
+    isBest: true,
     specificationsTable: {
       headers: ["Model Feature", "Analytical Specification"],
       rows: [
@@ -503,4 +508,4 @@ export function getTranslatedProduct(product: Product, language: Language) {
   }
 }
 
-export const bestSellers: Product[] = products.slice(0, 4);
+export const bestSellers: Product[] = products.filter(p => p.isBest).slice(0, 4);

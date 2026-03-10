@@ -289,13 +289,13 @@ export default function OverviewPage() {
                     {order.id}
                   </td>
                   <td className="px-3 md:px-5 py-2.5 text-gray-600">
-                    {order.client}
+                    {order.clientName}
                   </td>
                   <td className="px-3 md:px-5 py-2.5 text-gray-400">
                     {order.date}
                   </td>
                   <td className="px-3 md:px-5 py-2.5 font-medium text-gray-800">
-                    {order.total}
+                    {order.total.toLocaleString("fr-FR")} MAD
                   </td>
                   <td className="px-3 md:px-5 py-2.5">
                     <span
@@ -333,12 +333,12 @@ export default function OverviewPage() {
                   </span>
                 </div>
                 <p className="text-[11px] text-gray-500 truncate">
-                  {order.client}
+                  {order.clientName}
                 </p>
                 <p className="text-[10px] text-gray-400">{order.date}</p>
               </div>
               <p className="text-xs font-semibold text-gray-800 whitespace-nowrap">
-                {order.total}
+                {order.total.toLocaleString("fr-FR")} MAD
               </p>
             </div>
           ))}

@@ -73,114 +73,140 @@ export const ordersPerMonth = [
 /*  Latest Orders                                                      */
 /* ------------------------------------------------------------------ */
 
-export const latestOrders = [
+export type OrderStatus = "En attente" | "En cours" | "Livrée" | "Annulée";
+
+export interface OrderItem {
+  productId: string;
+  name: string;
+  quantity: number;
+  price: number;
+  image: string;
+}
+
+export interface Order {
+  id: string;
+  clientName: string;
+  clientEmail: string;
+  clientPhone: string;
+  clientAddress: string;
+  clientCity: string;
+  clientMessage?: string;
+  date: string;
+  total: number;
+  status: OrderStatus;
+  items: OrderItem[];
+}
+
+export const latestOrders: Order[] = [
   {
     id: "CMD-001",
-    client: "Ahmed Benali",
+    clientName: "Ahmed Benali",
+    clientEmail: "ahmed.benali@email.com",
+    clientPhone: "+212 661-123456",
+    clientAddress: "123 Rue Allal Ben Abdellah",
+    clientCity: "Casablanca",
+    clientMessage: "Besoin d'une livraison urgente avant midi.",
     date: "09 Mar 2026",
-    total: "12 500,00 MAD",
+    total: 12500,
     status: "Livrée",
+    items: [
+      {
+        productId: "prod-1",
+        name: "pH-mètre numérique Pro",
+        quantity: 1,
+        price: 8500,
+        image: "/unnamed.jpg",
+      },
+      {
+        productId: "prod-5",
+        name: "Set de pipettes de laboratoire",
+        quantity: 2,
+        price: 2000,
+        image: "/unnamed.jpg",
+      },
+    ],
   },
   {
     id: "CMD-002",
-    client: "Fatima El-Amrani",
+    clientName: "Fatima El-Amrani",
+    clientEmail: "fatima.amrani@gmail.com",
+    clientPhone: "+212 662-987654",
+    clientAddress: "45 Avenue Hassan II",
+    clientCity: "Rabat",
     date: "08 Mar 2026",
-    total: "8 750,00 MAD",
+    total: 8750,
     status: "En cours",
+    items: [
+      {
+        productId: "prod-2",
+        name: "Turbidimètre portable",
+        quantity: 1,
+        price: 8750,
+        image: "/unnamed.jpg",
+      },
+    ],
   },
   {
     id: "CMD-003",
-    client: "Mohamed Tazi",
+    clientName: "Mohamed Tazi",
+    clientEmail: "m.tazi@entreprise.ma",
+    clientPhone: "+212 522-445566",
+    clientAddress: "Quartier Industriel Ain Sebaa",
+    clientCity: "Casablanca",
+    clientMessage: "Veuillez inclure la facture originale dans le colis.",
     date: "07 Mar 2026",
-    total: "23 100,00 MAD",
+    total: 23100,
     status: "En attente",
+    items: [
+      {
+        productId: "prod-4",
+        name: "Balance analytique de précision",
+        quantity: 2,
+        price: 11550,
+        image: "/unnamed.jpg",
+      },
+    ],
   },
   {
     id: "CMD-004",
-    client: "Karim Najib",
+    clientName: "Karim Najib",
+    clientEmail: "k.najib@outlook.fr",
+    clientPhone: "+212 670-112233",
+    clientAddress: "Résidence Al Mansour, Appt 12",
+    clientCity: "Marrakech",
     date: "06 Mar 2026",
-    total: "5 200,00 MAD",
+    total: 5200,
     status: "Livrée",
+    items: [
+      {
+        productId: "prod-3",
+        name: "Kit d'analyse de sol Pro",
+        quantity: 1,
+        price: 5200,
+        image: "/unnamed.jpg",
+      },
+    ],
   },
   {
     id: "CMD-005",
-    client: "Sara Mouline",
+    clientName: "Sara Mouline",
+    clientEmail: "sara.mouline@ecole.edu",
+    clientPhone: "+212 611-334455",
+    clientAddress: "Cité Universitaire, Bloc B",
+    clientCity: "Fès",
+    clientMessage: "Livraison à l'accueil de la faculté.",
     date: "05 Mar 2026",
-    total: "15 800,00 MAD",
+    total: 15800,
     status: "En cours",
+    items: [
+      {
+        productId: "prod-6",
+        name: "Moniteur de signes vitaux patient",
+        quantity: 1,
+        price: 15800,
+        image: "/unnamed.jpg",
+      },
+    ],
   },
 ];
 
-/* ------------------------------------------------------------------ */
-/*  Mock Products                                                      */
-/* ------------------------------------------------------------------ */
-
-export type MockProduit = {
-  id: string;
-  reference: string;
-  designation: string;
-  description_courte: string;
-  description: string;
-  etat: "neuf" | "occasion";
-  prix_unitaire: number;
-  stock: number;
-  type: string;
-};
-
-export const mockProduits: MockProduit[] = [
-  {
-    id: "p1",
-    reference: "PH-PRO-001",
-    designation: "pH-mètre numérique Pro",
-    description_courte: "pH-mètre de paillasse haute précision",
-    description: "pH-mètre de paillasse haute précision pour analyses en laboratoire.",
-    etat: "neuf",
-    prix_unitaire: 4500,
-    stock: 12,
-    type: "Mesure pH",
-  },
-  {
-    id: "p2",
-    reference: "TURB-200",
-    designation: "Turbidimètre portable",
-    description_courte: "Turbidimètre compact pour test qualité eau",
-    description: "Turbidimètre portable compact pour l'analyse de la qualité de l'eau.",
-    etat: "neuf",
-    prix_unitaire: 6200,
-    stock: 8,
-    type: "Turbidité",
-  },
-  {
-    id: "p3",
-    reference: "SOL-KIT-PRO",
-    designation: "Kit d'analyse de sol Pro",
-    description_courte: "Kit complet pour analyse de sol",
-    description: "Kit portable complet pour analyses de sol en agriculture et agronomie.",
-    etat: "neuf",
-    prix_unitaire: 8900,
-    stock: 5,
-    type: "Analyse sol",
-  },
-  {
-    id: "p4",
-    reference: "COND-350",
-    designation: "Conductimètre de laboratoire",
-    description_courte: "Conductimètre haute gamme",
-    description: "Conductimètre de laboratoire avec compensation automatique de température.",
-    etat: "occasion",
-    prix_unitaire: 3200,
-    stock: 3,
-    type: "Conductivité",
-  },
-  {
-    id: "p5",
-    reference: "SPEC-UV-100",
-    designation: "Spectrophotomètre UV-Vis",
-    description_courte: "Spectrophotomètre double faisceau",
-    description: "Spectrophotomètre UV-Vis double faisceau pour analyses optiques avancées.",
-    etat: "neuf",
-    prix_unitaire: 15600,
-    stock: 2,
-    type: "Spectrophotométrie",
-  },
-];

@@ -17,6 +17,7 @@ import {
   Menu,
   X,
   ChevronDown,
+  ChevronRight,
 } from "lucide-react";
 
 const navItems = [
@@ -29,7 +30,7 @@ const navItems = [
     label: "Base",
     icon: Database,
     children: [
-      { label: "Produits", href: "/admin/dashboard/products" },
+      { label: "Produits", href: "/admin/dashboard/base/products" },
       { label: "Commandes", href: "/admin/dashboard/base/orders" },
       { label: "Clients", href: "/admin/dashboard/base/clients" },
       { label: "Fournisseurs", href: "/admin/dashboard/base/suppliers" },
@@ -265,9 +266,27 @@ export default function DashboardLayout({
         {/* Top Bar */}
         <header className="sticky lg:static top-0 z-30 bg-white border-b border-gray-100 px-3 lg:px-8 h-[60px] flex items-center justify-between gap-4">
           <h2 className="text-lg font-semibold text-gray-800" style={{ fontFamily: "'Fauna One', serif" }}>
-            {pathname === "/admin/dashboard"
-              ? "Vue d'ensemble"
-              : pathname.endsWith("/products") ? "Produits" : pathname.endsWith("/orders") ? "Commandes" : pathname.split("/").pop()}
+            {(() => {
+              if (pathname === "/admin/dashboard") return "Vue d'ensemble";
+              
+              for (const item of navItems) {
+                if (item.children) {
+                  const child = item.children.find(c => c.href === pathname);
+                  if (child) {
+                    return (
+                      <div className="flex items-center gap-1.5 md:gap-2">
+                        <span className="text-gray-400 font-medium">{item.label}</span>
+                        <ChevronRight className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-300" />
+                        <span className="text-gray-800">{child.label}</span>
+                      </div>
+                    );
+                  }
+                }
+              }
+              
+              const pageName = pathname.split("/").pop()?.replace(/-/g, " ");
+              return <span className="capitalize">{pageName}</span>;
+            })()}
           </h2>
           <button
             onClick={() => setSidebarOpen(true)}

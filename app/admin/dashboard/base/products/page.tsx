@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowLeft, ImageIcon, Pencil, Plus, Trash2, X, Upload, Globe } from "lucide-react";
-import { useState } from "react";
+import { ArrowLeft, ImageIcon, Pencil, Plus, Trash2, X, Upload, Globe, Search, Star } from "lucide-react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import type {
   Product,
@@ -10,6 +10,20 @@ import type {
   SpecificationsTable,
 } from "@/lib/products-data";
 import { products as initialProducts } from "@/lib/products-data";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
 /* ------------------------------------------------------------------ */
 /*  Category config                                                    */
@@ -225,6 +239,8 @@ export default function ProductsPage() {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [productToDelete, setProductToDelete] = useState<Product | null>(null);
 
   /* ---- Form state ---- */
   const [mainImage, setMainImage] = useState("");
@@ -233,6 +249,7 @@ export default function ProductsPage() {
   const [price, setPrice] = useState("");
   const [oldPrice, setOldPrice] = useState("");
   const [stock, setStock] = useState("");
+  const [isBest, setIsBest] = useState(false);
 
   /* Translation state for EN */
   const [nameEn, setNameEn] = useState("");
@@ -252,6 +269,25 @@ export default function ProductsPage() {
     rows: [["", ""]],
   });
 
+  /* ---- Filtering ---- */
+  const filteredProducts = useMemo(() => {
+    if (!searchQuery.trim()) return produits;
+    const query = searchQuery.toLowerCase();
+    return produits.filter((p) => {
+      return (
+        p.name.toLowerCase().includes(query) ||
+        p.id.toLowerCase().includes(query) ||
+        p.category.toLowerCase().includes(query) ||
+        p.shortDescription.toLowerCase().includes(query) ||
+        p.translations?.fr?.name.toLowerCase().includes(query)
+      );
+    });
+  }, [produits, searchQuery]);
+
+  const bestProductsCount = useMemo(() => {
+    return produits.filter(p => p.isBest).length;
+  }, [produits]);
+
   /* ---- Helpers ---- */
   const resetForm = () => {
     setEditingId(null);
@@ -261,6 +297,7 @@ export default function ProductsPage() {
     setPrice("");
     setOldPrice("");
     setStock("");
+    setIsBest(false);
     setNameEn("");
     setShortDescEn("");
     setLongDescEn("");
@@ -289,6 +326,7 @@ export default function ProductsPage() {
     setPrice(p.price.toString());
     setOldPrice(p.oldPrice?.toString() ?? "");
     setStock(p.stock.toString());
+    setIsBest(!!p.isBest);
 
     const en = p.translations?.en;
     const fr = p.translations?.fr;
@@ -318,6 +356,26 @@ export default function ProductsPage() {
   const addThumbnail = () => setThumbnailImages((prev) => [...prev, ""]);
   const removeThumbnail = (idx: number) =>
     setThumbnailImages((prev) => prev.filter((_, i) => i !== idx));
+
+  /* ---- Image Upload ---- */
+  const handleFileUpload = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    callback: (val: string) => void
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        callback(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleDeleteProduct = (p: Product) => {
+    setProduits((prev) => prev.filter((x) => x.id !== p.id));
+    setProductToDelete(null);
+  };
 
   /* ---- Submit ---- */
   const handleSubmit = (e: React.FormEvent) => {
@@ -354,6 +412,7 @@ export default function ProductsPage() {
       price: Number(price),
       oldPrice: oldPrice ? Number(oldPrice) : undefined,
       stock: Number(stock),
+      isBest,
       translations: {
         en: buildTranslation(nameEn, shortDescEn, longDescEn, specsEn),
         fr: buildTranslation(nameFr, shortDescFr, longDescFr, specsFr),
@@ -410,7 +469,7 @@ export default function ProductsPage() {
 
           {/* ---- Images Section ---- */}
           <div className="space-y-4 border-b border-gray-100 pb-5">
-            <h3 className="text-xs font-semibold text-gray-700 uppercase tracking-wider flex items-center gap-1.5">
+            <h3 className="text-xs font-semibold text-gray-700 flex items-center gap-1.5">
               <ImageIcon className="w-3.5 h-3.5 text-[#f2762b]" />
               Images
             </h3>
@@ -419,16 +478,27 @@ export default function ProductsPage() {
               {/* Main image */}
               <div className="space-y-1.5">
                 <label className="text-xs text-gray-500" htmlFor="mainImage">
-                  Image principale (URL)
+                  Image principale
                 </label>
                 <div className="flex items-center gap-2">
-                  <input
-                    id="mainImage"
-                    value={mainImage}
-                    onChange={(e) => setMainImage(e.target.value)}
-                    placeholder="/unnamed.jpg"
-                    className={inputBase}
-                  />
+                  <div className="relative flex-1">
+                    <input
+                      id="mainImage"
+                      value={mainImage}
+                      onChange={(e) => setMainImage(e.target.value)}
+                      placeholder="URL de l'image"
+                      className={inputBase + " pr-10"}
+                    />
+                    <label className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer hover:text-[#f2762b] transition-colors">
+                      <Upload className="w-3.5 h-3.5" />
+                      <input
+                        type="file"
+                        className="hidden"
+                        accept="image/*"
+                        onChange={(e) => handleFileUpload(e, setMainImage)}
+                      />
+                    </label>
+                  </div>
                   {mainImage && (
                     <div className="relative w-10 h-10 rounded-sm overflow-hidden border border-gray-200 flex-shrink-0">
                       <Image
@@ -446,53 +516,64 @@ export default function ProductsPage() {
               {/* Thumbnails */}
               <div className="space-y-1.5">
                 <label className="text-xs text-gray-500">Images miniatures (URLs)</label>
-                <div className="space-y-1.5">
-                  {thumbnailImages.map((thumb, idx) => (
-                    <div key={idx} className="flex items-center gap-1.5">
-                      <input
-                        value={thumb}
-                        onChange={(e) => updateThumbnail(idx, e.target.value)}
-                        placeholder="/image.jpg"
-                        className={inputBase}
-                      />
-                      {thumb && (
-                        <div className="relative w-8 h-8 rounded-sm overflow-hidden border border-gray-200 flex-shrink-0">
-                          <Image
-                            src={thumb}
-                            alt="Thumb"
-                            fill
-                            className="object-cover"
-                            unoptimized
+                  <div className="space-y-1.5 pt-2">
+                    {thumbnailImages.map((thumb, idx) => (
+                      <div key={idx} className="flex items-center gap-1.5">
+                        <div className="flex-1 relative">
+                          <input
+                            value={thumb}
+                            onChange={(e) => updateThumbnail(idx, e.target.value)}
+                            placeholder="URL de l'image"
+                            className={inputBase + " pr-10"}
                           />
+                          <label className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer hover:text-[#f2762b] transition-colors">
+                            <Upload className="w-3.5 h-3.5" />
+                            <input
+                              type="file"
+                              className="hidden"
+                              accept="image/*"
+                              onChange={(e) => handleFileUpload(e, (val) => updateThumbnail(idx, val))}
+                            />
+                          </label>
                         </div>
-                      )}
-                      {thumbnailImages.length > 1 && (
-                        <button
-                          type="button"
-                          onClick={() => removeThumbnail(idx)}
-                          className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
-                        >
-                          <X className="w-3.5 h-3.5" />
-                        </button>
-                      )}
-                    </div>
-                  ))}
-                  <button
-                    type="button"
-                    onClick={addThumbnail}
-                    className="text-[11px] text-[#f2762b] hover:text-[#d96521] font-medium cursor-pointer inline-flex items-center gap-1"
-                  >
-                    <Plus className="w-3 h-3" />
-                    Ajouter miniature
-                  </button>
-                </div>
+                        {thumb && (
+                          <div className="relative w-8 h-8 rounded-sm overflow-hidden border border-gray-200 flex-shrink-0">
+                            <Image
+                              src={thumb}
+                              alt="Thumb"
+                              fill
+                              className="object-cover"
+                              unoptimized
+                            />
+                          </div>
+                        )}
+                        {thumbnailImages.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => removeThumbnail(idx)}
+                            className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={addThumbnail}
+                      className="text-[11px] text-[#f2762b] hover:text-[#d96521] font-medium cursor-pointer inline-flex items-center gap-1"
+                    >
+                      <Plus className="w-3 h-3" />
+                      Ajouter miniature
+                    </button>
+                  </div>
               </div>
             </div>
           </div>
 
           {/* ---- Translatable Fields Section ---- */}
           <div className="space-y-5 border-b border-gray-100 pb-5">
-            <h3 className="text-xs font-semibold text-gray-700 uppercase tracking-wider flex items-center gap-1.5">
+            <h3 className="text-xs font-semibold text-gray-700 flex items-center gap-1.5">
               <Globe className="w-3.5 h-3.5 text-[#f2762b]" />
               Informations du produit (Traductions EN / FR)
             </h3>
@@ -559,7 +640,7 @@ export default function ProductsPage() {
 
           {/* ---- Category, Price, Stock ---- */}
           <div className="space-y-4">
-            <h3 className="text-xs font-semibold text-gray-700 uppercase tracking-wider flex items-center gap-1.5">
+            <h3 className="text-xs font-semibold text-gray-700 flex items-center gap-1.5">
               <Upload className="w-3.5 h-3.5 text-[#f2762b]" />
               Catégorie, prix & stock
             </h3>
@@ -636,6 +717,32 @@ export default function ProductsPage() {
                 />
               </div>
             </div>
+
+            {/* Best Product Checkbox */}
+            <div className="flex flex-col gap-2 pt-2">
+              <div className="flex items-center space-x-2">
+                <Checkbox 
+                  id="isBest" 
+                  checked={isBest}
+                  onCheckedChange={(checked) => {
+                    if (checked && bestProductsCount >= 4 && !produits.find(p => p.id === editingId)?.isBest) {
+                      toast.error("Limite atteinte", {
+                        description: "Vous ne pouvez avoir que 4 produits 'coup de cœur' au maximum."
+                      });
+                      return;
+                    }
+                    setIsBest(checked === true);
+                  }}
+                />
+                <Label htmlFor="isBest" className="text-xs font-semibold text-gray-700 flex items-center gap-1.5 cursor-pointer">
+                  <Star className={`w-3.5 h-3.5 ${isBest ? "fill-yellow-400 text-yellow-400" : "text-gray-400"}`} />
+                  Produit "Coup de Coeur" (Best Product)
+                </Label>
+              </div>
+              <p className="text-[10px] text-gray-400 italic">
+                Actuellement: {bestProductsCount}/4 produits sélectionnés sur le site.
+              </p>
+            </div>
           </div>
 
           {/* ---- Actions ---- */}
@@ -671,11 +778,21 @@ export default function ProductsPage() {
   return (
     <div className="space-y-4 md:space-y-6">
       {/* CTA Row */}
-      <div className="flex items-center justify-end">
+      <div className="flex flex-col-reverse md:flex-row items-stretch md:items-center justify-between gap-4">
+        <div className="relative flex-1 max-w-md">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Rechercher un produit (Nom, ID, catégorie...)"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border-2 border-gray-200 rounded-sm text-xs text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-[#f2762b] focus:border-[#f2762b] transition-colors"
+          />
+        </div>
         <button
           type="button"
           onClick={handleNewProduct}
-          className="inline-flex items-center gap-2 px-3 py-2.5 rounded-sm bg-[#f2762b] hover:bg-[#d96521] text-xs font-semibold text-white transition-colors cursor-pointer"
+          className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-sm bg-[#f2762b] hover:bg-[#d96521] text-xs font-semibold text-white transition-colors cursor-pointer"
         >
           <Plus className="w-3.5 h-3.5" />
           Nouveau produit
@@ -697,17 +814,17 @@ export default function ProductsPage() {
               </tr>
             </thead>
             <tbody>
-              {produits.length === 0 ? (
+              {filteredProducts.length === 0 ? (
                 <tr>
                   <td
                     colSpan={6}
                     className="px-3 md:px-5 py-6 text-center text-gray-400"
                   >
-                    Aucun produit pour le moment.
+                    {searchQuery ? "Aucun produit ne correspond à votre recherche." : "Aucun produit pour le moment."}
                   </td>
                 </tr>
               ) : (
-                produits.map((p) => (
+                filteredProducts.map((p) => (
                   <tr
                     key={p.id}
                     className="border-t border-gray-100 hover:bg-gray-50/60 transition-colors"
@@ -733,7 +850,12 @@ export default function ProductsPage() {
                     {/* Name */}
                     <td className="px-3 md:px-5 py-2.5 text-gray-800">
                       <div className="flex flex-col">
-                        <span className="font-medium">{p.name}</span>
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-medium">{p.name}</span>
+                          {p.isBest && (
+                            <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                          )}
+                        </div>
                         <span className="text-[11px] text-gray-400 line-clamp-1">
                           {p.shortDescription}
                         </span>
@@ -773,11 +895,7 @@ export default function ProductsPage() {
                         </button>
                         <button
                           type="button"
-                          onClick={() =>
-                            setProduits((prev) =>
-                              prev.filter((x) => x.id !== p.id)
-                            )
-                          }
+                          onClick={() => setProductToDelete(p)}
                           className="w-7 h-7 flex items-center justify-center rounded-sm border border-red-200 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition-colors cursor-pointer"
                         >
                           <Trash2 className="w-3 h-3" />
@@ -791,6 +909,29 @@ export default function ProductsPage() {
           </table>
         </div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      <AlertDialog open={!!productToDelete} onOpenChange={() => setProductToDelete(null)}>
+        <AlertDialogContent className="sm:max-w-[400px] p-5 gap-3">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-base">Êtes-vous sûr ?</AlertDialogTitle>
+            <AlertDialogDescription className="text-xs">
+              Cette action est irréversible. Cela supprimera définitivement le produit
+              <span className="font-semibold text-gray-900 block mt-1 underline"> {productToDelete?.name} </span>
+              de notre base de données.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="sm:gap-2">
+            <AlertDialogCancel className="h-8 text-[11px] px-4">Annuler</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => productToDelete && handleDeleteProduct(productToDelete)}
+              className="bg-red-600 hover:bg-red-700 focus:ring-red-600 h-8 text-[11px] px-4"
+            >
+              Supprimer
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
