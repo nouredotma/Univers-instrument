@@ -183,7 +183,7 @@ export default function DocumentPreview({ document: doc, onClose }: Props) {
           {/* ── Tiers + Details ─────────────────────────────────────────────── */}
           <div style={{ display: "flex", gap: 40, marginBottom: 36 }}>
             <div style={{ flex: 1, background: "#f9fafb", border: "1px solid #e5e7eb", borderRadius: 4, padding: "16px 20px" }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: "#f2762b", textTransform: "uppercase", letterSpacing: 1, marginBottom: 8 }}>{tiersLabel}</div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: "#f2762b", marginBottom: 8 }}>{tiersLabel}</div>
               <div style={{ fontSize: 13, fontWeight: 700, color: "#111827", marginBottom: 4 }}>{doc.tiers.nom}</div>
               <div style={{ fontSize: 11, color: "#6b7280", lineHeight: 1.7 }}>
                 {doc.tiers.adresse || "—"}<br />
@@ -191,7 +191,7 @@ export default function DocumentPreview({ document: doc, onClose }: Props) {
               </div>
             </div>
             <div style={{ flex: 1, background: "#f9fafb", border: "1px solid #e5e7eb", borderRadius: 4, padding: "16px 20px" }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: "#f2762b", textTransform: "uppercase", letterSpacing: 1, marginBottom: 8 }}>Détails</div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: "#f2762b", marginBottom: 8 }}>Détails</div>
               <table style={{ fontSize: 11, width: "100%", borderCollapse: "collapse" }}>
                 <tbody>
                   <tr>
@@ -217,12 +217,12 @@ export default function DocumentPreview({ document: doc, onClose }: Props) {
           <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: 24, fontSize: 11 }}>
             <thead>
               <tr style={{ background: "#111827" }}>
-                <th style={{ padding: "10px 14px", textAlign: "left", color: "white", fontWeight: 700, fontSize: 10, textTransform: "uppercase", letterSpacing: 0.5 }}>#</th>
-                <th style={{ padding: "10px 14px", textAlign: "left", color: "white", fontWeight: 700, fontSize: 10, textTransform: "uppercase", letterSpacing: 0.5 }}>Référence</th>
-                <th style={{ padding: "10px 14px", textAlign: "left", color: "white", fontWeight: 700, fontSize: 10, textTransform: "uppercase", letterSpacing: 0.5 }}>Désignation</th>
-                <th style={{ padding: "10px 14px", textAlign: "right", color: "white", fontWeight: 700, fontSize: 10, textTransform: "uppercase", letterSpacing: 0.5 }}>P.U.</th>
-                <th style={{ padding: "10px 14px", textAlign: "right", color: "white", fontWeight: 700, fontSize: 10, textTransform: "uppercase", letterSpacing: 0.5 }}>Qté</th>
-                <th style={{ padding: "10px 14px", textAlign: "right", color: "white", fontWeight: 700, fontSize: 10, textTransform: "uppercase", letterSpacing: 0.5 }}>Total HT</th>
+                <th style={{ padding: "10px 14px", textAlign: "left", color: "white", fontWeight: 700, fontSize: 11 }}>#</th>
+                <th style={{ padding: "10px 14px", textAlign: "left", color: "white", fontWeight: 700, fontSize: 11 }}>Référence</th>
+                <th style={{ padding: "10px 14px", textAlign: "left", color: "white", fontWeight: 700, fontSize: 11 }}>Désignation</th>
+                <th style={{ padding: "10px 14px", textAlign: "right", color: "white", fontWeight: 700, fontSize: 11 }}>P.U.</th>
+                <th style={{ padding: "10px 14px", textAlign: "right", color: "white", fontWeight: 700, fontSize: 11 }}>Qté</th>
+                <th style={{ padding: "10px 14px", textAlign: "right", color: "white", fontWeight: 700, fontSize: 11 }}>Total HT</th>
               </tr>
             </thead>
             <tbody>
