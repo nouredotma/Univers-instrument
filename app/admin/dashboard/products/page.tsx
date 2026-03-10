@@ -1,40 +1,274 @@
 "use client";
 
-import { ArrowLeft, Pencil, Plus, Trash2, X } from "lucide-react";
+import { ArrowLeft, ImageIcon, Pencil, Plus, Trash2, X, Upload, Globe } from "lucide-react";
 import { useState } from "react";
-import { mockProduits, type MockProduit } from "@/lib/admin-mock-data";
+import Image from "next/image";
+import type {
+  Product,
+  ProductCategory,
+  ProductTranslations,
+  SpecificationsTable,
+} from "@/lib/products-data";
+import { products as initialProducts } from "@/lib/products-data";
 
-type EtatProduit = "neuf" | "occasion";
+/* ------------------------------------------------------------------ */
+/*  Category config                                                    */
+/* ------------------------------------------------------------------ */
+
+const CATEGORIES: { value: ProductCategory; label: string }[] = [
+  { value: "consumables", label: "Consommables" },
+  { value: "water", label: "Eau" },
+  { value: "agriculture", label: "Agriculture" },
+  { value: "laboratory", label: "Laboratoire" },
+  { value: "medical", label: "Médical" },
+  { value: "furniture", label: "Mobilier" },
+  { value: "weighing", label: "Pesage" },
+  { value: "chemicals", label: "Chimie" },
+  { value: "used", label: "Occasion" },
+];
+
+const categoryLabel = (cat: ProductCategory) =>
+  CATEGORIES.find((c) => c.value === cat)?.label ?? cat;
+
+/* ------------------------------------------------------------------ */
+/*  Shared helpers                                                     */
+/* ------------------------------------------------------------------ */
+
+const inputBase =
+  "w-full rounded-sm bg-gray-50 border border-gray-200 px-3 py-2 text-xs text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-[#f2762b] focus:border-[#f2762b] transition-colors";
+
+const langLabel = (lang: "en" | "fr") =>
+  lang === "en" ? "🇬🇧 English" : "🇫🇷 Français";
+
+/* ------------------------------------------------------------------ */
+/*  Specs Table builder (reusable for each language)                    */
+/* ------------------------------------------------------------------ */
+
+function SpecsTableBuilder({
+  headers,
+  rows,
+  onChange,
+}: {
+  headers: string[];
+  rows: string[][];
+  onChange: (spec: SpecificationsTable) => void;
+}) {
+  const colCount = headers.length || 2;
+
+  const updateHeader = (idx: number, val: string) => {
+    const next = [...headers];
+    next[idx] = val;
+    onChange({ headers: next, rows });
+  };
+
+  const updateCell = (rIdx: number, cIdx: number, val: string) => {
+    const next = rows.map((r) => [...r]);
+    next[rIdx][cIdx] = val;
+    onChange({ headers, rows: next });
+  };
+
+  const addRow = () => {
+    onChange({ headers, rows: [...rows, Array(colCount).fill("")] });
+  };
+
+  const removeRow = (idx: number) => {
+    onChange({ headers, rows: rows.filter((_, i) => i !== idx) });
+  };
+
+  const addColumn = () => {
+    onChange({
+      headers: [...headers, ""],
+      rows: rows.map((r) => [...r, ""]),
+    });
+  };
+
+  const removeColumn = (idx: number) => {
+    if (headers.length <= 2) return;
+    onChange({
+      headers: headers.filter((_, i) => i !== idx),
+      rows: rows.map((r) => r.filter((_, i) => i !== idx)),
+    });
+  };
+
+  return (
+    <div className="space-y-2">
+      <div className="overflow-x-auto">
+        <table className="min-w-full text-xs border border-gray-200 rounded-sm">
+          <thead>
+            <tr className="bg-gray-100">
+              {headers.map((h, i) => (
+                <th key={i} className="px-2 py-1.5 text-left">
+                  <div className="flex items-center gap-1">
+                    <input
+                      value={h}
+                      onChange={(e) => updateHeader(i, e.target.value)}
+                      placeholder={`En-tête ${i + 1}`}
+                      className="flex-1 bg-transparent border-none text-xs font-medium text-gray-700 focus:outline-none placeholder:text-gray-400"
+                    />
+                    {headers.length > 2 && (
+                      <button
+                        type="button"
+                        onClick={() => removeColumn(i)}
+                        className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    )}
+                  </div>
+                </th>
+              ))}
+              <th className="w-8" />
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, rIdx) => (
+              <tr key={rIdx} className="border-t border-gray-100">
+                {row.map((cell, cIdx) => (
+                  <td key={cIdx} className="px-2 py-1">
+                    <input
+                      value={cell}
+                      onChange={(e) => updateCell(rIdx, cIdx, e.target.value)}
+                      placeholder="—"
+                      className="w-full bg-transparent text-xs text-gray-700 focus:outline-none placeholder:text-gray-400"
+                    />
+                  </td>
+                ))}
+                <td className="px-1 py-1">
+                  <button
+                    type="button"
+                    onClick={() => removeRow(rIdx)}
+                    className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
+                  >
+                    <Trash2 className="w-3 h-3" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="flex gap-2">
+        <button
+          type="button"
+          onClick={addRow}
+          className="text-[11px] text-[#f2762b] hover:text-[#d96521] font-medium cursor-pointer"
+        >
+          + Ligne
+        </button>
+        <button
+          type="button"
+          onClick={addColumn}
+          className="text-[11px] text-[#f2762b] hover:text-[#d96521] font-medium cursor-pointer"
+        >
+          + Colonne
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Translatable field component                                       */
+/* ------------------------------------------------------------------ */
+
+function TranslatableInput({
+  label,
+  enValue,
+  frValue,
+  onEnChange,
+  onFrChange,
+  multiline = false,
+  required = false,
+}: {
+  label: string;
+  enValue: string;
+  frValue: string;
+  onEnChange: (val: string) => void;
+  onFrChange: (val: string) => void;
+  multiline?: boolean;
+  required?: boolean;
+}) {
+  const Tag = multiline ? "textarea" : "input";
+  return (
+    <div className="space-y-2">
+      <label className="text-xs text-gray-500 font-medium">{label}</label>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+        {(["en", "fr"] as const).map((lang) => (
+          <div key={lang} className="space-y-1">
+            <span className="text-[11px] text-gray-400 flex items-center gap-1">
+              <Globe className="w-3 h-3" />
+              {langLabel(lang)}
+            </span>
+            <Tag
+              value={lang === "en" ? enValue : frValue}
+              onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+                lang === "en" ? onEnChange(e.target.value) : onFrChange(e.target.value)
+              }
+              required={required && lang === "en"}
+              rows={multiline ? 3 : undefined}
+              placeholder={`${label} (${lang.toUpperCase()})`}
+              className={inputBase + (multiline ? " resize-y min-h-[72px]" : "")}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Main page                                                          */
+/* ------------------------------------------------------------------ */
 
 export default function ProductsPage() {
-  const [produits, setProduits] = useState<MockProduit[]>(mockProduits);
+  const [produits, setProduits] = useState<Product[]>(initialProducts);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
-  const [form, setForm] = useState({
-    reference: "",
-    designation: "",
-    description_courte: "",
-    description: "",
-    etat: "neuf" as EtatProduit,
-    prix_unitaire: "",
-    stock: "",
-    type: "",
+  /* ---- Form state ---- */
+  const [mainImage, setMainImage] = useState("");
+  const [thumbnailImages, setThumbnailImages] = useState<string[]>([""]);
+  const [category, setCategory] = useState<ProductCategory>("laboratory");
+  const [price, setPrice] = useState("");
+  const [oldPrice, setOldPrice] = useState("");
+  const [stock, setStock] = useState("");
+
+  /* Translation state for EN */
+  const [nameEn, setNameEn] = useState("");
+  const [shortDescEn, setShortDescEn] = useState("");
+  const [longDescEn, setLongDescEn] = useState("");
+  const [specsEn, setSpecsEn] = useState<SpecificationsTable>({
+    headers: ["Parameter", "Specification"],
+    rows: [["", ""]],
   });
 
+  /* Translation state for FR */
+  const [nameFr, setNameFr] = useState("");
+  const [shortDescFr, setShortDescFr] = useState("");
+  const [longDescFr, setLongDescFr] = useState("");
+  const [specsFr, setSpecsFr] = useState<SpecificationsTable>({
+    headers: ["Paramètre", "Spécification"],
+    rows: [["", ""]],
+  });
+
+  /* ---- Helpers ---- */
   const resetForm = () => {
     setEditingId(null);
-    setForm({
-      reference: "",
-      designation: "",
-      description_courte: "",
-      description: "",
-      etat: "neuf",
-      prix_unitaire: "",
-      stock: "",
-      type: "",
-    });
+    setMainImage("");
+    setThumbnailImages([""]);
+    setCategory("laboratory");
+    setPrice("");
+    setOldPrice("");
+    setStock("");
+    setNameEn("");
+    setShortDescEn("");
+    setLongDescEn("");
+    setSpecsEn({ headers: ["Parameter", "Specification"], rows: [["", ""]] });
+    setNameFr("");
+    setShortDescFr("");
+    setLongDescFr("");
+    setSpecsFr({ headers: ["Paramètre", "Spécification"], rows: [["", ""]] });
   };
 
   const handleNewProduct = () => {
@@ -47,52 +281,89 @@ export default function ProductsPage() {
     setShowForm(false);
   };
 
-  const handleInputChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
+  const handleEdit = (p: Product) => {
+    setEditingId(p.id);
+    setMainImage(p.mainImage);
+    setThumbnailImages(p.thumbnailImages.length > 0 ? p.thumbnailImages : [""]);
+    setCategory(p.category);
+    setPrice(p.price.toString());
+    setOldPrice(p.oldPrice?.toString() ?? "");
+    setStock(p.stock.toString());
 
-  const handleEdit = (produit: MockProduit) => {
-    setEditingId(produit.id);
-    setForm({
-      reference: produit.reference,
-      designation: produit.designation,
-      description_courte: produit.description_courte,
-      description: produit.description,
-      etat: produit.etat,
-      prix_unitaire: produit.prix_unitaire.toString(),
-      stock: produit.stock.toString(),
-      type: produit.type,
-    });
+    const en = p.translations?.en;
+    const fr = p.translations?.fr;
+
+    setNameEn(en?.name ?? p.name);
+    setShortDescEn(en?.shortDescription ?? p.shortDescription);
+    setLongDescEn(en?.longDescription ?? p.longDescription);
+    setSpecsEn(
+      en?.specificationsTable ??
+        p.specificationsTable ?? { headers: ["Parameter", "Specification"], rows: [["", ""]] }
+    );
+
+    setNameFr(fr?.name ?? "");
+    setShortDescFr(fr?.shortDescription ?? "");
+    setLongDescFr(fr?.longDescription ?? "");
+    setSpecsFr(
+      fr?.specificationsTable ?? { headers: ["Paramètre", "Spécification"], rows: [["", ""]] }
+    );
+
     setShowForm(true);
   };
 
+  /* ---- Thumbnail management ---- */
+  const updateThumbnail = (idx: number, val: string) => {
+    setThumbnailImages((prev) => prev.map((t, i) => (i === idx ? val : t)));
+  };
+  const addThumbnail = () => setThumbnailImages((prev) => [...prev, ""]);
+  const removeThumbnail = (idx: number) =>
+    setThumbnailImages((prev) => prev.filter((_, i) => i !== idx));
+
+  /* ---- Submit ---- */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
 
-    const newProduit: MockProduit = {
-      id: editingId || `p${Date.now()}`,
-      reference: form.reference,
-      designation: form.designation,
-      description_courte: form.description_courte,
-      description: form.description,
-      etat: form.etat,
-      prix_unitaire: Number(form.prix_unitaire),
-      stock: Number(form.stock),
-      type: form.type,
+    const buildTranslation = (
+      name: string,
+      shortDesc: string,
+      longDesc: string,
+      specs: SpecificationsTable
+    ): ProductTranslations => ({
+      name,
+      shortDescription: shortDesc,
+      longDescription: longDesc,
+      specificationsTable:
+        specs.rows.length > 0 && specs.rows.some((r) => r.some((c) => c.trim()))
+          ? specs
+          : undefined,
+    });
+
+    const hasSpecs =
+      specsEn.rows.length > 0 && specsEn.rows.some((r) => r.some((c) => c.trim()));
+
+    const newProduct: Product = {
+      id: editingId || `prod-${Date.now()}`,
+      name: nameEn,
+      shortDescription: shortDescEn,
+      longDescription: longDescEn,
+      specificationsTable: hasSpecs ? specsEn : undefined,
+      mainImage: mainImage || "/unnamed.jpg",
+      thumbnailImages: thumbnailImages.filter((t) => t.trim()),
+      category,
+      price: Number(price),
+      oldPrice: oldPrice ? Number(oldPrice) : undefined,
+      stock: Number(stock),
+      translations: {
+        en: buildTranslation(nameEn, shortDescEn, longDescEn, specsEn),
+        fr: buildTranslation(nameFr, shortDescFr, longDescFr, specsFr),
+      },
     };
 
     if (editingId) {
-      setProduits((prev) =>
-        prev.map((p) => (p.id === editingId ? newProduit : p))
-      );
+      setProduits((prev) => prev.map((p) => (p.id === editingId ? newProduct : p)));
     } else {
-      setProduits((prev) => [newProduit, ...prev]);
+      setProduits((prev) => [newProduct, ...prev]);
     }
 
     resetForm();
@@ -100,7 +371,9 @@ export default function ProductsPage() {
     setSaving(false);
   };
 
-  /* ---- Form View (full page, no table) ---- */
+  /* ================================================================ */
+  /*  FORM VIEW                                                        */
+  /* ================================================================ */
   if (showForm) {
     return (
       <div className="space-y-4 md:space-y-6">
@@ -117,7 +390,7 @@ export default function ProductsPage() {
         {/* Form card */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white border-2 border-gray-200 rounded-sm p-3 md:p-5 space-y-4"
+          className="bg-white border-2 border-gray-200 rounded-sm p-4 md:p-6 space-y-6"
         >
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-sm font-semibold text-gray-800">
@@ -135,142 +408,249 @@ export default function ProductsPage() {
             )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="space-y-1.5">
-              <label className="text-xs text-gray-500" htmlFor="reference">
-                Référence
-              </label>
-              <input
-                id="reference"
-                name="reference"
-                value={form.reference}
-                onChange={handleInputChange}
-                required
-                className="w-full rounded-sm bg-gray-50 border border-gray-200 px-3 py-1.5 text-xs text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-[#f2762b] focus:border-[#f2762b]"
-              />
-            </div>
+          {/* ---- Images Section ---- */}
+          <div className="space-y-4 border-b border-gray-100 pb-5">
+            <h3 className="text-xs font-semibold text-gray-700 uppercase tracking-wider flex items-center gap-1.5">
+              <ImageIcon className="w-3.5 h-3.5 text-[#f2762b]" />
+              Images
+            </h3>
 
-            <div className="space-y-1.5">
-              <label className="text-xs text-gray-500" htmlFor="designation">
-                Désignation
-              </label>
-              <input
-                id="designation"
-                name="designation"
-                value={form.designation}
-                onChange={handleInputChange}
-                required
-                className="w-full rounded-sm md:rounded-md bg-gray-50 border border-gray-200 px-3 py-1.5 text-xs text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-[#f2762b] focus:border-[#f2762b]"
-              />
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Main image */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-500" htmlFor="mainImage">
+                  Image principale (URL)
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    id="mainImage"
+                    value={mainImage}
+                    onChange={(e) => setMainImage(e.target.value)}
+                    placeholder="/unnamed.jpg"
+                    className={inputBase}
+                  />
+                  {mainImage && (
+                    <div className="relative w-10 h-10 rounded-sm overflow-hidden border border-gray-200 flex-shrink-0">
+                      <Image
+                        src={mainImage}
+                        alt="Preview"
+                        fill
+                        className="object-cover"
+                        unoptimized
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
 
-            <div className="space-y-1.5">
-              <label
-                className="text-xs text-gray-500"
-                htmlFor="description_courte"
-              >
-                Description courte
-              </label>
-              <input
-                id="description_courte"
-                name="description_courte"
-                value={form.description_courte}
-                onChange={handleInputChange}
-                required
-                className="w-full rounded-sm md:rounded-md bg-gray-50 border border-gray-200 px-3 py-1.5 text-xs text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-[#f2762b] focus:border-[#f2762b]"
-              />
-            </div>
-
-            <div className="space-y-1.5">
-              <label className="text-xs text-gray-500" htmlFor="etat">
-                État
-              </label>
-              <select
-                id="etat"
-                name="etat"
-                value={form.etat}
-                onChange={handleInputChange}
-                className="w-full rounded-sm bg-gray-50 border border-gray-200 px-3 py-1.5 text-xs text-gray-800 focus:outline-none focus:ring-1 focus:ring-[#f2762b] focus:border-[#f2762b]"
-              >
-                <option value="neuf">Neuf</option>
-                <option value="occasion">Occasion</option>
-              </select>
-            </div>
-
-            <div className="space-y-1.5">
-              <label className="text-xs text-gray-500" htmlFor="prix_unitaire">
-                Prix unitaire (HT)
-              </label>
-              <input
-                id="prix_unitaire"
-                name="prix_unitaire"
-                type="number"
-                step="0.01"
-                min="0"
-                value={form.prix_unitaire}
-                onChange={handleInputChange}
-                required
-                className="w-full rounded-sm bg-gray-50 border border-gray-200 px-3 py-1.5 text-xs text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-[#f2762b] focus:border-[#f2762b]"
-              />
-            </div>
-
-            <div className="space-y-1.5">
-              <label className="text-xs text-gray-500" htmlFor="stock">
-                Stock
-              </label>
-              <input
-                id="stock"
-                name="stock"
-                type="number"
-                min="0"
-                value={form.stock}
-                onChange={handleInputChange}
-                required
-                className="w-full rounded-sm md:rounded-md bg-gray-50 border border-gray-200 px-3 py-1.5 text-xs text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-[#f2762b] focus:border-[#f2762b]"
-              />
-            </div>
-
-            <div className="space-y-1.5 md:col-span-2">
-              <label className="text-xs text-gray-500" htmlFor="type">
-                Type de produit
-              </label>
-              <input
-                id="type"
-                name="type"
-                value={form.type}
-                onChange={handleInputChange}
-                required
-                className="w-full rounded-sm md:rounded-md bg-gray-50 border border-gray-200 px-3 py-1.5 text-xs text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-[#f2762b] focus:border-[#f2762b]"
-              />
-            </div>
-
-            <div className="space-y-1.5 md:col-span-2">
-              <label className="text-xs text-gray-500" htmlFor="description">
-                Description détaillée
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                value={form.description}
-                onChange={handleInputChange}
-                rows={3}
-                className="w-full rounded-sm md:rounded-md bg-gray-50 border border-gray-200 px-3 py-1.5 text-xs text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-[#f2762b] focus:border-[#f2762b]"
-              />
+              {/* Thumbnails */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-500">Images miniatures (URLs)</label>
+                <div className="space-y-1.5">
+                  {thumbnailImages.map((thumb, idx) => (
+                    <div key={idx} className="flex items-center gap-1.5">
+                      <input
+                        value={thumb}
+                        onChange={(e) => updateThumbnail(idx, e.target.value)}
+                        placeholder="/image.jpg"
+                        className={inputBase}
+                      />
+                      {thumb && (
+                        <div className="relative w-8 h-8 rounded-sm overflow-hidden border border-gray-200 flex-shrink-0">
+                          <Image
+                            src={thumb}
+                            alt="Thumb"
+                            fill
+                            className="object-cover"
+                            unoptimized
+                          />
+                        </div>
+                      )}
+                      {thumbnailImages.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => removeThumbnail(idx)}
+                          className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={addThumbnail}
+                    className="text-[11px] text-[#f2762b] hover:text-[#d96521] font-medium cursor-pointer inline-flex items-center gap-1"
+                  >
+                    <Plus className="w-3 h-3" />
+                    Ajouter miniature
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="flex justify-end gap-2 pt-2">
+          {/* ---- Translatable Fields Section ---- */}
+          <div className="space-y-5 border-b border-gray-100 pb-5">
+            <h3 className="text-xs font-semibold text-gray-700 uppercase tracking-wider flex items-center gap-1.5">
+              <Globe className="w-3.5 h-3.5 text-[#f2762b]" />
+              Informations du produit (Traductions EN / FR)
+            </h3>
+
+            <TranslatableInput
+              label="Nom du produit"
+              enValue={nameEn}
+              frValue={nameFr}
+              onEnChange={setNameEn}
+              onFrChange={setNameFr}
+              required
+            />
+
+            <TranslatableInput
+              label="Description courte"
+              enValue={shortDescEn}
+              frValue={shortDescFr}
+              onEnChange={setShortDescEn}
+              onFrChange={setShortDescFr}
+              required
+            />
+
+            <TranslatableInput
+              label="Description longue"
+              enValue={longDescEn}
+              frValue={longDescFr}
+              onEnChange={setLongDescEn}
+              onFrChange={setLongDescFr}
+              multiline
+              required
+            />
+
+            {/* Specifications tables per language */}
+            <div className="space-y-3">
+              <label className="text-xs text-gray-500 font-medium">
+                Tableau des spécifications
+              </label>
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <span className="text-[11px] text-gray-400 flex items-center gap-1">
+                    <Globe className="w-3 h-3" />
+                    {langLabel("en")}
+                  </span>
+                  <SpecsTableBuilder
+                    headers={specsEn.headers}
+                    rows={specsEn.rows}
+                    onChange={setSpecsEn}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <span className="text-[11px] text-gray-400 flex items-center gap-1">
+                    <Globe className="w-3 h-3" />
+                    {langLabel("fr")}
+                  </span>
+                  <SpecsTableBuilder
+                    headers={specsFr.headers}
+                    rows={specsFr.rows}
+                    onChange={setSpecsFr}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ---- Category, Price, Stock ---- */}
+          <div className="space-y-4">
+            <h3 className="text-xs font-semibold text-gray-700 uppercase tracking-wider flex items-center gap-1.5">
+              <Upload className="w-3.5 h-3.5 text-[#f2762b]" />
+              Catégorie, prix & stock
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              {/* Category */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-500" htmlFor="category">
+                  Catégorie
+                </label>
+                <select
+                  id="category"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value as ProductCategory)}
+                  className={inputBase}
+                >
+                  {CATEGORIES.map((c) => (
+                    <option key={c.value} value={c.value}>
+                      {c.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Price */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-500" htmlFor="price">
+                  Prix (MAD)
+                </label>
+                <input
+                  id="price"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  required
+                  placeholder="0.00"
+                  className={inputBase}
+                />
+              </div>
+
+              {/* Old Price */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-500" htmlFor="oldPrice">
+                  Ancien prix (MAD)
+                </label>
+                <input
+                  id="oldPrice"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={oldPrice}
+                  onChange={(e) => setOldPrice(e.target.value)}
+                  placeholder="Optionnel"
+                  className={inputBase}
+                />
+              </div>
+
+              {/* Stock */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-500" htmlFor="stock">
+                  Stock
+                </label>
+                <input
+                  id="stock"
+                  type="number"
+                  min="0"
+                  value={stock}
+                  onChange={(e) => setStock(e.target.value)}
+                  required
+                  placeholder="0"
+                  className={inputBase}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* ---- Actions ---- */}
+          <div className="flex justify-end gap-2 pt-2 border-t border-gray-100">
             <button
               type="button"
               onClick={handleCancel}
-              className="px-3 py-1.5 rounded-sm border border-gray-200 text-xs text-gray-600 hover:bg-gray-50 transition-colors cursor-pointer"
+              className="px-4 py-2 rounded-sm border border-gray-200 text-xs text-gray-600 hover:bg-gray-50 transition-colors cursor-pointer"
             >
               Annuler
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-sm bg-[#f2762b] hover:bg-[#d96521] text-xs font-semibold text-white disabled:opacity-60 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-sm bg-[#f2762b] hover:bg-[#d96521] text-xs font-semibold text-white disabled:opacity-60 transition-colors cursor-pointer"
             >
               <Pencil className="w-3.5 h-3.5" />
               {saving
@@ -285,7 +665,9 @@ export default function ProductsPage() {
     );
   }
 
-  /* ---- List View (CTA + Table) ---- */
+  /* ================================================================ */
+  /*  LIST VIEW                                                        */
+  /* ================================================================ */
   return (
     <div className="space-y-4 md:space-y-6">
       {/* CTA Row */}
@@ -306,34 +688,19 @@ export default function ProductsPage() {
           <table className="min-w-full text-xs">
             <thead className="bg-gray-50 text-gray-500">
               <tr>
-                <th className="px-3 md:px-5 py-2.5 text-left font-medium">
-                  Réf.
-                </th>
-                <th className="px-3 md:px-5 py-2.5 text-left font-medium">
-                  Désignation
-                </th>
-                <th className="px-3 md:px-5 py-2.5 text-left font-medium">
-                  Type
-                </th>
-                <th className="px-3 md:px-5 py-2.5 text-left font-medium">
-                  État
-                </th>
-                <th className="px-3 md:px-5 py-2.5 text-right font-medium">
-                  Prix
-                </th>
-                <th className="px-3 md:px-5 py-2.5 text-right font-medium">
-                  Stock
-                </th>
-                <th className="px-3 md:px-5 py-2.5 text-right font-medium">
-                  Actions
-                </th>
+                <th className="px-3 md:px-5 py-2.5 text-left font-medium">ID</th>
+                <th className="px-3 md:px-5 py-2.5 text-left font-medium">Image</th>
+                <th className="px-3 md:px-5 py-2.5 text-left font-medium">Nom</th>
+                <th className="px-3 md:px-5 py-2.5 text-left font-medium">Catégorie</th>
+                <th className="px-3 md:px-5 py-2.5 text-right font-medium">Prix</th>
+                <th className="px-3 md:px-5 py-2.5 text-right font-medium">Actions</th>
               </tr>
             </thead>
             <tbody>
               {produits.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={7}
+                    colSpan={6}
                     className="px-3 md:px-5 py-6 text-center text-gray-400"
                   >
                     Aucun produit pour le moment.
@@ -345,37 +712,56 @@ export default function ProductsPage() {
                     key={p.id}
                     className="border-t border-gray-100 hover:bg-gray-50/60 transition-colors"
                   >
-                    <td className="px-3 md:px-5 py-2.5 font-semibold text-gray-800">
-                      {p.reference}
+                    {/* ID */}
+                    <td className="px-3 md:px-5 py-2.5 font-mono text-[11px] text-gray-500">
+                      {p.id}
                     </td>
-                    <td className="px-3 md:px-5 py-2.5 text-gray-600">
+
+                    {/* Main Image */}
+                    <td className="px-3 md:px-5 py-2.5">
+                      <div className="relative w-10 h-10 rounded-sm overflow-hidden border border-gray-200 bg-gray-100">
+                        <Image
+                          src={p.mainImage}
+                          alt={p.name}
+                          fill
+                          className="object-cover"
+                          unoptimized
+                        />
+                      </div>
+                    </td>
+
+                    {/* Name */}
+                    <td className="px-3 md:px-5 py-2.5 text-gray-800">
                       <div className="flex flex-col">
-                        <span>{p.designation}</span>
-                        <span className="text-[11px] text-gray-400">
-                          {p.description_courte}
+                        <span className="font-medium">{p.name}</span>
+                        <span className="text-[11px] text-gray-400 line-clamp-1">
+                          {p.shortDescription}
                         </span>
                       </div>
                     </td>
-                    <td className="px-3 md:px-5 py-2.5 text-gray-600">
-                      {p.type}
-                    </td>
+
+                    {/* Category */}
                     <td className="px-3 md:px-5 py-2.5">
-                      <span
-                        className={`inline-block px-2 py-0.5 rounded-full text-[10px] md:text-[11px] font-semibold border capitalize ${
-                          p.etat === "neuf"
-                            ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
-                            : "bg-amber-500/10 text-amber-600 border-amber-500/20"
-                        }`}
-                      >
-                        {p.etat}
+                      <span className="inline-block px-2 py-0.5 rounded-full text-[10px] md:text-[11px] font-semibold border bg-blue-50 text-blue-600 border-blue-200 capitalize">
+                        {categoryLabel(p.category)}
                       </span>
                     </td>
-                    <td className="px-3 md:px-5 py-2.5 text-right font-medium text-gray-800">
-                      {p.prix_unitaire.toLocaleString("fr-FR")} MAD
+
+                    {/* Price */}
+                    <td className="px-3 md:px-5 py-2.5 text-right">
+                      <div className="flex flex-col items-end">
+                        <span className="font-medium text-gray-800">
+                          {p.price.toLocaleString("fr-FR")} MAD
+                        </span>
+                        {p.oldPrice && (
+                          <span className="text-[10px] text-gray-400 line-through">
+                            {p.oldPrice.toLocaleString("fr-FR")} MAD
+                          </span>
+                        )}
+                      </div>
                     </td>
-                    <td className="px-3 md:px-5 py-2.5 text-right text-gray-600">
-                      {p.stock}
-                    </td>
+
+                    {/* Actions */}
                     <td className="px-3 md:px-5 py-2.5 text-right">
                       <div className="inline-flex items-center gap-1.5">
                         <button
@@ -387,7 +773,11 @@ export default function ProductsPage() {
                         </button>
                         <button
                           type="button"
-                          onClick={() => setProduits((prev) => prev.filter((x) => x.id !== p.id))}
+                          onClick={() =>
+                            setProduits((prev) =>
+                              prev.filter((x) => x.id !== p.id)
+                            )
+                          }
                           className="w-7 h-7 flex items-center justify-center rounded-sm border border-red-200 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition-colors cursor-pointer"
                         >
                           <Trash2 className="w-3 h-3" />

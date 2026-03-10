@@ -263,7 +263,7 @@ export default function DashboardLayout({
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-h-svh">
         {/* Top Bar */}
-        <header className="sticky lg:static top-0 z-30 bg-white border-b border-gray-100 px-4 lg:px-8 h-[60px] flex items-center justify-between gap-4">
+        <header className="sticky lg:static top-0 z-30 bg-white border-b border-gray-100 px-3 lg:px-8 h-[60px] flex items-center justify-between gap-4">
           <h2 className="text-lg font-semibold text-gray-800" style={{ fontFamily: "'Fauna One', serif" }}>
             {pathname === "/admin/dashboard"
               ? "Vue d'ensemble"
@@ -278,7 +278,7 @@ export default function DashboardLayout({
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 p-4 lg:p-8">{children}</main>
+        <main className="flex-1 px-3 py-4 lg:p-8">{children}</main>
       </div>
     </div>
   );
