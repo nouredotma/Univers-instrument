@@ -528,7 +528,7 @@ export default function Header({ isStatic = false, forceScrolled = false }: { is
                         {languages.map((lang) => (
                           <button
                             key={lang.code}
-                            onClick={() => setLanguage(lang.code as "en" | "fr" | "es")}
+                            onClick={() => setLanguage(lang.code as "en" | "fr")}
                             className={cn(
                               "flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-sm text-sm font-medium transition-all duration-200",
                               lang.code === language

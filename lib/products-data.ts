@@ -38,7 +38,6 @@ export interface Product {
   translations?: {
     en?: ProductTranslations
     fr?: ProductTranslations
-    es?: ProductTranslations
   }
 }
 
@@ -92,20 +91,6 @@ export const products: Product[] = [
             ["pH", "0.00 à 14.00 pH", "0.01 pH", "±0.01 pH"],
             ["mV", "±1999.9 mV", "0.1 mV", "±0.2 mV"],
             ["Température", "0.0 à 100.0 °C", "0.1 °C", "±0.5 °C"],
-          ],
-        },
-      },
-      es: {
-        name: "Medidor de pH Digital Pro",
-        shortDescription: "Medidor de pH de sobremesa de alta precisión para análisis de laboratorio.",
-        longDescription:
-          "El Medidor de pH Digital Pro es un instrumento de sobremesa de última generación diseñado para mediciones de pH precisas y fiables en laboratorios de investigación y control de calidad. Con una gran pantalla LCD retroiluminada, compensación automática de temperatura (ATC) y un sistema de calibración de 3 puntos, ofrece una precisión excepcional (±0.01 pH). Su diseño robusto incluye un soporte de electrodo integrado, capacidad de registro de datos con exportación USB y resultados conformes con BPL.",
-        specificationsTable: {
-          headers: ["Parámetro", "Rango", "Resolución", "Precisión"],
-          rows: [
-            ["pH", "0.00 a 14.00 pH", "0.01 pH", "±0.01 pH"],
-            ["mV", "±1999.9 mV", "0.1 mV", "±0.2 mV"],
-            ["Temperatura", "0.0 a 100.0 °C", "0.1 °C", "±0.5 °C"],
           ],
         },
       },
@@ -163,21 +148,6 @@ export const products: Product[] = [
           ],
         },
       },
-      es: {
-        name: "Turbidímetro portátil",
-        shortDescription: "Turbidímetro portátil compacto para análisis de calidad del agua.",
-        longDescription:
-          "El Turbidímetro portátil es un instrumento de campo esencial para la medición rápida y precisa de la turbidez en aplicaciones de agua y medio ambiente.",
-        specificationsTable: {
-          headers: ["Característica", "Especificación"],
-          rows: [
-            ["Rango de medición", "0.00 a 1000 NTU"],
-            ["Precisión", "±2% de la lectura o 0.02 NTU"],
-            ["Fuente de luz", "LED Infrarrojo (860 nm)"],
-            ["Memoria", "500 mediciones"],
-          ],
-        },
-      },
     },
   },
   {
@@ -229,21 +199,6 @@ export const products: Product[] = [
             ["NPK", "Colorimétrie / Réactifs"],
             ["Humidité", "Capteur TDR (0-100%)"],
             ["Conductivité", "Électrode de sol directe"],
-          ],
-        },
-      },
-      es: {
-        name: "Kit de análisis de suelo Pro",
-        shortDescription: "Kit completo portátil de análisis de suelo para agricultura y agronomía.",
-        longDescription:
-          "El Kit de análisis de suelo Pro es una solución de pruebas portátil completa diseñada para agrónomos, agricultores y científicos ambientales.",
-        specificationsTable: {
-          headers: ["Parámetro", "Método de prueba"],
-          rows: [
-            ["pH", "Sonda digital (0-14 pH)"],
-            ["NPK", "Colorimétrico / Reactivos"],
-            ["Humedad", "Sensor TDR (0-100%)"],
-            ["Conductividad", "Electrodo de suelo directo"],
           ],
         },
       },
@@ -301,21 +256,6 @@ export const products: Product[] = [
           ],
         },
       },
-      es: {
-        name: "Balanza analítica de precisión",
-        shortDescription: "Balanza analítica con legibilidad de 0.0001 g para pesaje de precisión.",
-        longDescription:
-          "La Balanza analítica de precisión está diseñada para las aplicaciones de pesaje más exigentes en laboratorios farmacéuticos, químicos y de investigación.",
-        specificationsTable: {
-          headers: ["Característica", "Especificación"],
-          rows: [
-            ["Capacidad máx", "220 g"],
-            ["Legibilidad", "0.0001 g (0.1 mg)"],
-            ["Repetibilidad", "±0.0001 g"],
-            ["Platillo", "Ø 90 mm"],
-          ],
-        },
-      },
     },
   },
   {
@@ -360,20 +300,6 @@ export const products: Product[] = [
           "Ce Set de pipettes de laboratoire comprend trois micropipettes monocanal ergonomiques couvrant des volumes de 0,5 µL à 1000 µL.",
         specificationsTable: {
           headers: ["Type de pipette", "Plage de volume", "Incrément"],
-          rows: [
-            ["Monocanal P10", "0,5 – 10 µL", "0,01 µL"],
-            ["Monocanal P200", "20 – 200 µL", "0,2 µL"],
-            ["Monocanal P1000", "100 – 1000 µL", "1,0 µL"],
-          ],
-        },
-      },
-      es: {
-        name: "Set de pipetas de laboratorio",
-        shortDescription: "Set de micropipetas premium con certificado de calibración.",
-        longDescription:
-          "Este Set de pipetas de laboratorio incluye tres micropipetas monocanal ergonómicas que cubren volúmenes de 0,5 µL a 1000 µL.",
-        specificationsTable: {
-          headers: ["Tipo de pipeta", "Rango de volumen", "Incremento"],
           rows: [
             ["Monocanal P10", "0,5 – 10 µL", "0,01 µL"],
             ["Monocanal P200", "20 – 200 µL", "0,2 µL"],
@@ -435,21 +361,6 @@ export const products: Product[] = [
           ],
         },
       },
-      es: {
-        name: "Monitor de signos vitales del paciente",
-        shortDescription: "Monitor multiparamétrico de cabecera para uso clínico.",
-        longDescription:
-          "El Monitor de signos vitales del paciente es un sistema de monitorización multiparamétrico de grado profesional diseñado para hospitales, clínicas y atención ambulatoria.",
-        specificationsTable: {
-          headers: ["Parámetro", "Rango / Especif."],
-          rows: [
-            ["Pantalla", "12.1\" Color TFT LCD"],
-            ["ECG", "3/5-conductores (FC, ST)"],
-            ["SpO2", "0% – 100%"],
-            ["PNI", "Manual, Auto, Continuo"],
-          ],
-        },
-      },
     },
   },
   {
@@ -504,21 +415,6 @@ export const products: Product[] = [
           ],
         },
       },
-      es: {
-        name: "Estación de trabajo de laboratorio en C",
-        shortDescription: "Estación de trabajo modular con superficie resistente a químicos.",
-        longDescription:
-          "La Estación de trabajo de laboratorio en C es un banco modular premium diseñado para laboratorios modernos de investigación y enseñanza.",
-        specificationsTable: {
-          headers: ["Componente", "Especificación"],
-          rows: [
-            ["Estructura", "Acero en C recubierto"],
-            ["Encimera", "Resina fenólica de 30 mm"],
-            ["Ancho estándar", "1500 / 1800 mm"],
-            ["Carga máxima", "250 kg por metro lineal"],
-          ],
-        },
-      },
     },
   },
   {
@@ -570,21 +466,6 @@ export const products: Product[] = [
             ["Acide sulfurique", "Grade ACS (95-98%)"],
             ["Hydroxyde de sodium", "Pastilles analytiques"],
             ["Solutions tampons", "pH 4, 7, 10"],
-          ],
-        },
-      },
-      es: {
-        name: "Kit de reactivos de grado analítico",
-        shortDescription: "Kit completo de reactivos químicos de grado analítico para análisis de laboratorio.",
-        longDescription:
-          "El Kit de reactivos de grado analítico es una colección cuidadosamente seleccionada de químicos de alta pureza esenciales para análisis de laboratorio rutinarios y avanzados.",
-        specificationsTable: {
-          headers: ["Nombre del reactivo", "Grado / Concentración"],
-          rows: [
-            ["Ácido clorhídrico", "Grado ACS (37%)"],
-            ["Ácido sulfúrico", "Grado ACS (95-98%)"],
-            ["Hidróxido de sodio", "Pellets analíticos"],
-            ["Soluciones tampón", "pH 4, 7, 10"],
           ],
         },
       },
