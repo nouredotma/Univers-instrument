@@ -1,6 +1,6 @@
 "use client";
 
-import jsPDF from "jspdf";
+import DocumentPreview, { type DocumentData } from "@/components/document-preview";
 import { FileText, Pencil, Plus, Search, Trash2, X, ArrowLeft, Printer } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -39,7 +39,7 @@ export default function ClientQuotesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [itemToDelete, setItemToDelete] = useState<DevisClient | null>(null);
+  const [itemToDelete, setItemToDelete] = useState<DevisClient | null>(null); const [previewDoc, setPreviewDoc] = useState<DocumentData | null>(null);
 
   const [form, setForm] = useState({ numero: "", date_devis: "", client_id: "", statut: "" });
   const [lignes, setLignes] = useState<LigneForm[]>([]);
@@ -100,29 +100,7 @@ export default function ClientQuotesPage() {
     setItemToDelete(null);
   };
 
-  const handlePrint = (d: DevisClient) => {
-    const doc = new jsPDF(); let y = 20;
-    doc.setFontSize(14); doc.text("Devis client", 20, y); y += 8;
-    doc.setFontSize(10);
-    doc.text(`Numéro: ${d.numero}`, 20, y); y += 6;
-    doc.text(`Date: ${d.date_devis?.slice(0, 10) || "-"}`, 20, y); y += 6;
-    doc.text(`Client: ${d.client?.nom || "Client inconnu"}`, 20, y); y += 6;
-    doc.text(`Statut: ${d.statut || "-"}`, 20, y); y += 10;
-    doc.text("Produit", 20, y); doc.text("PU", 100, y); doc.text("Qté", 130, y); doc.text("Total", 150, y); y += 4;
-    doc.line(20, y, 190, y); y += 6;
-    let totalGl = 0;
-    (d.lignes || []).forEach(l => {
-      const p = produits.find(x => x.id === l.produit_id);
-      doc.text(p ? `${p.reference} - ${p.designation}`.substring(0, 40) : l.produit_id, 20, y);
-      doc.text(`${Number(l.prix_unitaire).toFixed(2)}`, 100, y, { align: "right" });
-      doc.text(`${l.quantite}`, 130, y, { align: "right" });
-      const t = Number(l.total) || 0; totalGl += t;
-      doc.text(`${t.toFixed(2)}`, 170, y, { align: "right" }); y += 6;
-    });
-    y += 4; doc.line(20, y, 190, y); y += 8;
-    doc.text(`Montant total: ${totalGl.toFixed(2)} MAD`, 20, y);
-    doc.save(`devis-${d.numero}.pdf`);
-  };
+  const handlePrint = (d: DevisClient) => { setPreviewDoc({ type: "DEVIS", numero: d.numero, date: d.date_devis, statut: d.statut, tiers: { nom: d.client?.nom || "—" }, tiersLabel: "Client", lignes: (d.lignes || []).map(l => { const p = produits.find(x => x.id === l.produit_id); return { reference: p?.reference, designation: p?.designation, prix_unitaire: Number(l.prix_unitaire), quantite: l.quantite, total: Number(l.total) }; }), montant_ht: Number(d.montant_total) }); };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); setSaving(true); setError(null);
@@ -260,6 +238,7 @@ export default function ClientQuotesPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      {previewDoc && <DocumentPreview document={previewDoc} onClose={() => setPreviewDoc(null)} />}
     </div>
   );
 }

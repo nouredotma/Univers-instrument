@@ -1,6 +1,6 @@
 "use client";
 
-import jsPDF from "jspdf";
+import DocumentPreview, { type DocumentData } from "@/components/document-preview";
 import { CreditCard, Pencil, Plus, Search, Trash2, X, ArrowLeft, Printer } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
@@ -15,7 +15,7 @@ const inputBase = "w-full rounded-sm bg-gray-50 border border-gray-200 px-3 py-2
 export default function ClientCreditNotesPage() {
   const [items, setItems] = useState<AvoirClient[]>([]); const [clients, setClients] = useState<Client[]>([]); const [factures, setFactures] = useState<FactureClient[]>([]);
   const [loading, setLoading] = useState(true); const [error, setError] = useState<string | null>(null); const [saving, setSaving] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(""); const [showForm, setShowForm] = useState(false); const [editingId, setEditingId] = useState<string | null>(null); const [itemToDelete, setItemToDelete] = useState<AvoirClient | null>(null);
+  const [searchQuery, setSearchQuery] = useState(""); const [showForm, setShowForm] = useState(false); const [editingId, setEditingId] = useState<string | null>(null); const [itemToDelete, setItemToDelete] = useState<AvoirClient | null>(null); const [previewDoc, setPreviewDoc] = useState<DocumentData | null>(null);
   const [form, setForm] = useState({ numero: "", montant: "", facture_id: "", client_id: "" });
 
   const resetForm = () => { setEditingId(null); setForm({ numero: "", montant: "", facture_id: "", client_id: "" }); };
@@ -28,7 +28,7 @@ export default function ClientCreditNotesPage() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   const handleEdit = (d: AvoirClient) => { setEditingId(d.id); setForm({ numero: d.numero, montant: d.montant?.toString?.() ?? String(d.montant), facture_id: d.facture_id, client_id: d.client_id }); setShowForm(true); };
   const handleDelete = async (d: AvoirClient) => { setError(null); try { const res = await fetch(`${API}/avoirs-clients/${d.id}`, { method: "DELETE" }); if (!res.ok) throw new Error("Erreur suppression"); await loadData(); if (editingId === d.id) resetForm(); } catch (e: any) { setError(e.message); } setItemToDelete(null); };
-  const handlePrint = (d: AvoirClient) => { const doc = new jsPDF(); let y = 20; doc.setFontSize(14); doc.text("Avoir client", 20, y); y += 10; doc.setFontSize(10); doc.text(`Numéro: ${d.numero}`, 20, y); y += 6; doc.text(`Client: ${d.client?.nom || "-"}`, 20, y); y += 6; doc.text(`Facture liée: ${d.facture?.numero || d.facture_id}`, 20, y); y += 6; doc.text(`Montant: ${d.montant} MAD`, 20, y); doc.save(`avoir-${d.numero}.pdf`); };
+  const handlePrint = (d: AvoirClient) => { setPreviewDoc({ type: "AVOIR", numero: d.numero, date: new Date().toISOString(), tiers: { nom: d.client?.nom || "—" }, tiersLabel: "Client", details: [{ label: "Facture liée", value: d.facture?.numero || d.facture_id }], lignes: [{ designation: "Avoir", prix_unitaire: Number(d.montant), quantite: 1, total: Number(d.montant) }], showTva: false }); };
 
   const handleSubmit = async (e: React.FormEvent) => { e.preventDefault(); setSaving(true); setError(null); try { const payload = { numero: form.numero, montant: Number(form.montant), facture_id: form.facture_id, client_id: form.client_id }; const url = editingId ? `${API}/avoirs-clients/${editingId}` : `${API}/avoirs-clients`; const res = await fetch(url, { method: editingId ? "PUT" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }); if (!res.ok) throw new Error("Erreur enregistrement"); await loadData(); resetForm(); setShowForm(false); } catch (e: any) { setError(e.message); } finally { setSaving(false); } };
 
@@ -63,6 +63,7 @@ export default function ClientCreditNotesPage() {
             <td className="px-3 md:px-5 py-3.5 text-right"><div className="inline-flex items-center gap-1.5"><button onClick={() => handleEdit(d)} className="w-7 h-7 flex items-center justify-center rounded-sm border border-emerald-200 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-colors cursor-pointer" title="Modifier"><Pencil className="w-3 h-3" /></button><button onClick={() => handlePrint(d)} className="w-7 h-7 flex items-center justify-center rounded-sm border border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-colors cursor-pointer" title="Imprimer"><Printer className="w-3 h-3" /></button><button onClick={() => setItemToDelete(d)} className="w-7 h-7 flex items-center justify-center rounded-sm border border-red-200 bg-red-50 text-red-500 hover:bg-red-600 hover:text-white hover:border-red-600 transition-colors cursor-pointer" title="Supprimer"><Trash2 className="w-3 h-3" /></button></div></td></tr>
         ))}</tbody></table></div></div>
       <AlertDialog open={!!itemToDelete} onOpenChange={() => setItemToDelete(null)}><AlertDialogContent className="sm:max-w-[400px] p-5 gap-3"><AlertDialogHeader><AlertDialogTitle className="text-base text-gray-900 border-b border-gray-100 pb-2">Supprimer l&apos;avoir ?</AlertDialogTitle><AlertDialogDescription className="text-xs pt-1">Cette action est irréversible. L&apos;avoir <span className="font-black text-red-600">{itemToDelete?.numero}</span> sera définitivement effacé.</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter className="sm:gap-2"><AlertDialogCancel className="h-8 text-[11px] px-4 font-semibold">Annuler</AlertDialogCancel><AlertDialogAction onClick={() => itemToDelete && handleDelete(itemToDelete)} className="bg-red-600 hover:bg-red-700 text-white h-8 text-[11px] px-4 font-bold">Supprimer</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>
+      {previewDoc && <DocumentPreview document={previewDoc} onClose={() => setPreviewDoc(null)} />}
     </div>
   );
 }

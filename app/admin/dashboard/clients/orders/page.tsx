@@ -1,6 +1,6 @@
 "use client";
 
-import jsPDF from "jspdf";
+import DocumentPreview, { type DocumentData } from "@/components/document-preview";
 import { Pencil, Plus, Search, ShoppingCart, Trash2, X, ArrowLeft, Printer } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -40,7 +40,7 @@ export default function ClientOrdersPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [itemToDelete, setItemToDelete] = useState<CommandeClient | null>(null);
+  const [itemToDelete, setItemToDelete] = useState<CommandeClient | null>(null); const [previewDoc, setPreviewDoc] = useState<DocumentData | null>(null);
   const [form, setForm] = useState({ numero: "", date_commande: "", client_id: "", devis_id: "", statut: "" });
   const [lignes, setLignes] = useState<LigneForm[]>([]);
 
@@ -90,16 +90,7 @@ export default function ClientOrdersPage() {
     setItemToDelete(null);
   };
 
-  const handlePrint = (d: CommandeClient) => {
-    const doc = new jsPDF(); let y = 20;
-    doc.setFontSize(14); doc.text("Commande client", 20, y); y += 10;
-    doc.setFontSize(10); doc.text(`Numéro: ${d.numero}`, 20, y); y += 6; doc.text(`Date: ${d.date_commande?.slice(0, 10) || "-"}`, 20, y); y += 6;
-    doc.text(`Client: ${d.client?.nom || "-"}`, 20, y); y += 6; doc.text(`Statut: ${d.statut || "-"}`, 20, y); y += 10;
-    doc.text("Produit", 20, y); doc.text("PU", 100, y); doc.text("Qté", 130, y); doc.text("Total", 150, y); y += 6; doc.line(20, y, 190, y); y += 6;
-    let total = 0;
-    (d.lignes || []).forEach(l => { const p = produits.find(x => x.id === l.produit_id); doc.text(p ? `${p.reference} - ${p.designation}`.substring(0, 35) : l.produit_id, 20, y); doc.text(`${Number(l.prix_unitaire).toFixed(2)}`, 100, y, { align: "right" }); doc.text(`${l.quantite}`, 130, y, { align: "right" }); const t = Number(l.total) || 0; total += t; doc.text(`${t.toFixed(2)}`, 170, y, { align: "right" }); y += 6; });
-    y += 4; doc.line(20, y, 190, y); y += 8; doc.text(`Montant total: ${total.toFixed(2)} MAD`, 20, y); doc.save(`commande-${d.numero}.pdf`);
-  };
+  const handlePrint = (d: CommandeClient) => { setPreviewDoc({ type: "COMMANDE", numero: d.numero, date: d.date_commande, statut: d.statut, tiers: { nom: d.client?.nom || "—" }, tiersLabel: "Client", details: d.devis_id ? [{ label: "Réf. Devis", value: d.devis_id }] : [], lignes: (d.lignes || []).map(l => { const p = produits.find(x => x.id === l.produit_id); return { reference: p?.reference, designation: p?.designation, prix_unitaire: Number(l.prix_unitaire), quantite: l.quantite, total: Number(l.total) }; }), montant_ht: Number(d.montant_total) }); };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); setSaving(true); setError(null);
@@ -156,6 +147,7 @@ export default function ClientOrdersPage() {
           <tr key={d.id} className="border-t border-gray-100 hover:bg-gray-50/60 transition-colors"><td className="px-3 md:px-5 py-3.5 font-mono text-[11px] text-[#f2762b] font-bold">{d.numero}</td><td className="px-3 md:px-5 py-3.5 text-gray-500">{d.date_commande?.slice(0, 10)}</td><td className="px-3 md:px-5 py-3.5 font-semibold text-gray-800">{d.client?.nom || "—"}</td><td className="px-3 md:px-5 py-3.5"><span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold border ${st.bg} ${st.color} ${st.border}`}>{d.statut || "—"}</span></td><td className="px-3 md:px-5 py-3.5 text-right font-bold text-gray-900">{Number(d.montant_total).toLocaleString("fr-FR")} MAD</td>
             <td className="px-3 md:px-5 py-3.5 text-right"><div className="inline-flex items-center gap-1.5"><button onClick={() => handleEdit(d)} className="w-7 h-7 flex items-center justify-center rounded-sm border border-emerald-200 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-colors cursor-pointer" title="Modifier"><Pencil className="w-3 h-3" /></button><button onClick={() => handlePrint(d)} className="w-7 h-7 flex items-center justify-center rounded-sm border border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-colors cursor-pointer" title="Imprimer"><Printer className="w-3 h-3" /></button><button onClick={() => setItemToDelete(d)} className="w-7 h-7 flex items-center justify-center rounded-sm border border-red-200 bg-red-50 text-red-500 hover:bg-red-600 hover:text-white hover:border-red-600 transition-colors cursor-pointer" title="Supprimer"><Trash2 className="w-3 h-3" /></button></div></td></tr>); })}</tbody></table></div></div>
       <AlertDialog open={!!itemToDelete} onOpenChange={() => setItemToDelete(null)}><AlertDialogContent className="sm:max-w-[400px] p-5 gap-3"><AlertDialogHeader><AlertDialogTitle className="text-base text-gray-900 border-b border-gray-100 pb-2">Supprimer la commande ?</AlertDialogTitle><AlertDialogDescription className="text-xs pt-1">Cette action est irréversible. La commande <span className="font-black text-red-600">{itemToDelete?.numero}</span> sera définitivement effacée.</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter className="sm:gap-2"><AlertDialogCancel className="h-8 text-[11px] px-4 font-semibold">Annuler</AlertDialogCancel><AlertDialogAction onClick={() => itemToDelete && handleDelete(itemToDelete)} className="bg-red-600 hover:bg-red-700 text-white h-8 text-[11px] px-4 font-bold">Supprimer</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>
+      {previewDoc && <DocumentPreview document={previewDoc} onClose={() => setPreviewDoc(null)} />}
     </div>
   );
 }
